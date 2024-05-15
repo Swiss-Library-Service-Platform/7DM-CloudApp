@@ -1,84 +1,48 @@
-import { Observable  } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CloudAppRestService, CloudAppEventsService, Request, HttpMethod, 
-  Entity, RestErrorResponse, AlertService } from '@exlibris/exl-cloudapp-angular-lib';
-import { MatRadioChange } from '@angular/material/radio';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit, OnDestroy {
+export class MainComponent implements OnInit {
+  originalResponse: any;
+  response: any;
+  isLoading = false;
+  searchValue = '';
 
-  loading = false;
-  selectedEntity: Entity;
-  apiResult: any;
-
-  entities$: Observable<Entity[]> = this.eventsService.entities$
-  .pipe(tap(() => this.clear()))
-
-  constructor(
-    private restService: CloudAppRestService,
-    private eventsService: CloudAppEventsService,
-    private alert: AlertService 
-  ) { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.loadPartners();
   }
 
-  ngOnDestroy(): void {
-  }
-
-  entitySelected(event: MatRadioChange) {
-    const value = event.value as Entity;
-    this.loading = true;
-    this.restService.call<any>(value.link)
-    .pipe(finalize(()=>this.loading=false))
-    .subscribe(
-      result => this.apiResult = result,
-      error => this.alert.error('Failed to retrieve entity: ' + error.message)
+  loadPartners() {
+    this.isLoading = true;
+    if (this.originalResponse) {
+      console.log("Partners already loaded");
+      return;
+    }
+    this.http.get('http://localhost:4200/api/v1/partners').subscribe(
+      response => {
+        this.originalResponse = response;
+        this.response = [...this.originalResponse];
+        this.isLoading = false;
+        console.log("Partners retrieved successfully!, at: " + new Date().toLocaleTimeString() + " on " + new Date().toLocaleDateString());
+      },
+      error => {
+        console.error('Error: ' + error);
+        this.isLoading = false;
+      }
     );
   }
 
-  clear() {
-    this.apiResult = null;
-    this.selectedEntity = null;
-  }
-
-  update(value: any) {
-    const requestBody = this.tryParseJson(value)
-    if (!requestBody) return this.alert.error('Failed to parse json');
-
-    this.loading = true;
-    let request: Request = {
-      url: this.selectedEntity.link, 
-      method: HttpMethod.PUT,
-      requestBody
-    };
-    this.restService.call(request)
-    .pipe(finalize(()=>this.loading=false))
-    .subscribe({
-      next: result => {
-        this.apiResult = result;
-        this.eventsService.refreshPage().subscribe(
-          ()=>this.alert.success('Success!')
-        );
-      },
-      error: (e: RestErrorResponse) => {
-        this.alert.error('Failed to update data: ' + e.message);
-        console.error(e);
-      }
-    });    
-  }
-
-  private tryParseJson(value: any) {
-    try {
-      return JSON.parse(value);
-    } catch (e) {
-      console.error(e);
+  search() {
+    if (!this.searchValue) {
+      this.response = [...this.originalResponse];
+    } else {
+      this.response = this.originalResponse.filter((item: any) => item.name.toLowerCase().includes(this.searchValue.toLowerCase()));
     }
-    return undefined;
   }
 }
