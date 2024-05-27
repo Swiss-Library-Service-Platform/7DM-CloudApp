@@ -9,11 +9,14 @@ import { MaterialModule, CloudAppTranslateModule, AlertModule } from '@exlibris/
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { PartnersComponent } from './partners/partners.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainComponent,
+    PartnersComponent
   ],
   imports: [
     MaterialModule,
@@ -23,8 +26,9 @@ import { MainComponent } from './main/main.component';
     HttpClientModule,
     AlertModule,
     FormsModule,
-    ReactiveFormsModule,     
+    ReactiveFormsModule,
     CloudAppTranslateModule.forRoot(),
+    MatTabsModule
   ],
   providers: [
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'standard' } },
