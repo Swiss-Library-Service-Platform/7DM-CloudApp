@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
 
 @Component({
   selector: 'app-main',
@@ -11,20 +12,27 @@ export class MainComponent implements OnInit {
   response: any;
   isLoading = false;
   searchValue = '';
+  authToken: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
 
   ngOnInit() {
-    this.loadPartners();
+    this.eventsService.getAuthToken().subscribe(authToken => {
+      this.authToken = authToken
+      this.loadPartners();
+    });
   }
 
   loadPartners() {
-    this.isLoading = true;
     if (this.originalResponse) {
       console.log("Partners already loaded");
       return;
     }
-    this.http.get('http://localhost:4200/api/v1/partners').subscribe(
+
+    this.isLoading = true;
+    const headers = { 'Authorization': `Bearer ${this.authToken}` };
+    console.log("Headers: " + JSON.stringify(headers));
+    this.http.get('http://localhost:4200/api/v1/partners', { headers }).subscribe(
       response => {
         this.originalResponse = response;
         this.response = [...this.originalResponse];
