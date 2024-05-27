@@ -11,12 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { PartnersComponent } from './partners/partners.component';
+import { RequestsComponent } from './requests/requests.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    PartnersComponent
+    PartnersComponent,
+    RequestsComponent
   ],
   imports: [
     MaterialModule,
