@@ -1,2 +1,29 @@
 <input type="text" [(ngModel)]="requestID" (keyup.enter)="lookUpRequest()">
 <button (click)="lookUpRequest()">Send Request</button>
+
+<div *ngIf="response">
+    <table *ngIf="response">
+        <thead>
+            <tr>
+                <th>Barcode</th>
+                <th>Destination</th>
+                <th>7DM code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ response.barcode }}</td>
+                <td>{{ response.destination }}</td>
+                <td>{{ response.seven_dm_code }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="failed">
+    <p>Error</p>
+</div>
+
+<div *ngIf="isLoading">
+    <p>Loading</p>
+</div>
