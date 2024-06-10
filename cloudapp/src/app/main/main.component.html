@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group *ngIf="!loading && allowed">
     <mat-tab label="Libraries">
         <!-- Temporary just to have something to display -->
         <app-partners></app-partners>
@@ -7,3 +7,16 @@
         <app-requests></app-requests>
     </mat-tab>
 </mat-tab-group>
+
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+
+<div *ngIf="!allowed && !loading">
+    <div class="institution-now-allowed">
+        <h1>
+            <mat-icon inline=true>error</mat-icon>
+            Access Denied
+        </h1>
+    </div>
+</div>
