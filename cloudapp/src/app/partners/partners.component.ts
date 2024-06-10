@@ -10,7 +10,7 @@ import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
 export class PartnersComponent implements OnInit {
     originalResponse: any;
     response: any;
-    isLoading = false;
+    loading = false;
     searchValue = '';
     authToken: string;
 
@@ -25,24 +25,20 @@ export class PartnersComponent implements OnInit {
 
     loadPartners() {
         if (this.originalResponse) {
-            console.log("Partners already loaded");
             return;
         }
 
-        this.isLoading = true;
+        this.loading = true;
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        console.log("Headers: " + JSON.stringify(headers));
         this.http.get('http://localhost:4200/api/v1/partners', { headers }).subscribe(
             response => {
                 this.originalResponse = response;
                 this.response = [...this.originalResponse];
-                this.isLoading = false;
-                console.log("Partners retrieved successfully!, at: " + new Date().toLocaleTimeString() + " on " + new Date().toLocaleDateString());
+                this.loading = false;
             },
             error => {
-                console.error('Error: ' + error);
                 console.log(JSON.stringify(error))
-                this.isLoading = false;
+                this.loading = false;
             }
         );
     }

@@ -2,17 +2,21 @@
 <input [(ngModel)]="searchValue" (keyup)="search()" placeholder="Search libraries by name">
 <table *ngIf="response && response.length">
     <thead>
-    <tr>
-        <th>Library Name</th>
-        <th>Alma code</th>
-        <th>7DM code</th>
-    </tr>
+        <tr>
+            <th>Library Name</th>
+            <th>Alma code</th>
+            <th>7DM code</th>
+        </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of response">
-        <td>{{ item.name }}</td>
-        <td>{{ item.library_code }}</td>
-        <td>{{ item.seven_dm_code }}</td>
-    </tr>
+        <tr *ngFor="let item of response">
+            <td>{{ item.name }}</td>
+            <td>{{ item.library_code }}</td>
+            <td>{{ item.seven_dm_code }}</td>
+        </tr>
     </tbody>
 </table>
+
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>

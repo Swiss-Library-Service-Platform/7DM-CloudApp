@@ -21,9 +21,9 @@
 </div>
 
 <div *ngIf="failed">
-    <p>Error</p>
+    <p> <br /> <i>No request found</i></p>
 </div>
 
-<div *ngIf="isLoading">
-    <p>Loading</p>
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
 </div>
