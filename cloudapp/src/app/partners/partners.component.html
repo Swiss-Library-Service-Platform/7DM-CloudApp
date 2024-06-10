@@ -1,5 +1,9 @@
-<!-- Temporary just to have something to display -->
-<input [(ngModel)]="searchValue" (keyup)="search()" placeholder="Search libraries by name">
+<div class="search-box">
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Library Name" type="text" [(ngModel)]="searchValue" (keyup)="search()">
+    </mat-form-field>
+</div>
 <table *ngIf="response && response.length">
     <thead>
         <tr>

@@ -1,6 +1,9 @@
-<input type="text" [(ngModel)]="requestID" (keyup.enter)="lookUpRequest()">
-<button (click)="lookUpRequest()">Send Request</button>
-
+<div class="search-box">
+    <mat-form-field>
+        <mat-label>Request Barcode</mat-label>
+        <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="lookUpRequest()">
+    </mat-form-field>
+</div>
 <div *ngIf="response">
     <table *ngIf="response">
         <thead>

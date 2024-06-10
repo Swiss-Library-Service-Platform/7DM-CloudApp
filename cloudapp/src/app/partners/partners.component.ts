@@ -10,7 +10,7 @@ import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
 export class PartnersComponent implements OnInit {
     originalResponse: any;
     response: any;
-    loading = false;
+    loading = true;
     searchValue = '';
     authToken: string;
 
