@@ -41,7 +41,11 @@ export class RequestsComponent implements OnInit {
                 this.loading = false;
             },
             error => {
-                this.errorMessage = error.error.message;
+                if (error.error.type == undefined) {
+                    this.errorMessage = "An error occurred while processing your request (contact support with error-id: " + error.error.error_id + ")";
+                } else {
+                    this.errorMessage = error.error.message;
+                }
                 this.failed = true;
                 this.loading = false;
             }
