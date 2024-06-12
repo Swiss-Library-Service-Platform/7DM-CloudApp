@@ -14,6 +14,7 @@ export class RequestsComponent implements OnInit {
     loading = false;
     failed = false;
     response: any;
+    errorMessage: string;
 
     constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
 
@@ -40,7 +41,7 @@ export class RequestsComponent implements OnInit {
                 this.loading = false;
             },
             error => {
-                console.log(JSON.stringify(error));
+                this.errorMessage = error.error.message;
                 this.failed = true;
                 this.loading = false;
             }

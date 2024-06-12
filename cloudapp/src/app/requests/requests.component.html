@@ -23,8 +23,8 @@
     </table>
 </div>
 
-<div *ngIf="failed">
-    <p> <br /> <i>No request found</i></p>
+<div class="request-failed" *ngIf="failed">
+    <p> <br /> <i>{{ errorMessage }}</i></p>
 </div>
 
 <div class="loading-shade" *ngIf="loading">
