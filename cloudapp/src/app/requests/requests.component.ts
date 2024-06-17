@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-requests',
@@ -15,8 +16,9 @@ export class RequestsComponent implements OnInit {
     failed = false;
     response: any;
     errorMessage: string;
+    errorId: string;
 
-    constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
+    constructor(private http: HttpClient, private eventsService: CloudAppEventsService, private translateService: TranslateService) { }
 
     ngOnInit(): void {
         this.eventsService.getAuthToken().subscribe(authToken => this.authToken = authToken);
@@ -41,11 +43,20 @@ export class RequestsComponent implements OnInit {
                 this.loading = false;
             },
             error => {
-                if (error.error.display_message == undefined) {
-                    this.errorMessage = "An error occurred while processing your request (error-id: " + error.error.error_id + ")";
+                // Sometimes (at least in testing) the error object was null
+                if (error.error == null || error.error.type == "DEFAULT") {
+                    this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");
+                } else if (error.error.type == "BAD_STATUS") {
+                    this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
                 } else {
-                    this.errorMessage = error.error.display_message;
+                    // REQUEST_ID_NOT_FOUND,
+                    // BAD_STATUS,
+                    // WRONG_LOCATION,
+                    // SENDER_NON_COURIER_LIBRARY,
+                    // DESTINATION_NON_COURIER_LIBRARY,
+                    this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type);
                 }
+                this.errorId = error.error.error_id;
                 this.failed = true;
                 this.loading = false;
             }

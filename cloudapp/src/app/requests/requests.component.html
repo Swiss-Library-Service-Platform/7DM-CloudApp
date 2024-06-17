@@ -1,6 +1,6 @@
 <div class="search-box">
     <mat-form-field>
-        <mat-label>{{ 'Requests.RequestBarcode' | translate}}</mat-label>
+        <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
         <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="lookUpRequest()">
     </mat-form-field>
 </div>
@@ -8,9 +8,9 @@
     <table *ngIf="response">
         <thead>
             <tr>
-                <th>{{ 'Requests.RequestBarcode' | translate}}</th>
-                <th>{{ 'Requests.Destination' | translate}}</th>
-                <th>{{ 'Requests.7DMCode' | translate}}</th>
+                <th>{{ 'Requests.RequestBarcode' | translate }}</th>
+                <th>{{ 'Requests.Destination' | translate }}</th>
+                <th>{{ 'Requests.7DMCode' | translate }}</th>
             </tr>
         </thead>
         <tbody>
@@ -24,7 +24,19 @@
 </div>
 
 <div class="request-failed" *ngIf="failed">
-    <p> <br /> <i>{{ errorMessage }}</i></p>
+    <h1>
+        <mat-icon inline=true>error</mat-icon>
+        {{ errorMessage }}
+    </h1>
+    <p>
+        {{ 'Requests.ContactSupport1' | translate }}
+        <a href="https://slsp.ch/en/contact">
+            {{ 'Requests.ContactSupport2' | translate }}
+        </a>
+        {{ 'Requests.ContactSupport3' | translate }}
+        {{ errorId }}
+        {{ 'Requests.ContactSupport4' | translate }}
+    </p>
 </div>
 
 <div class="loading-shade" *ngIf="loading">

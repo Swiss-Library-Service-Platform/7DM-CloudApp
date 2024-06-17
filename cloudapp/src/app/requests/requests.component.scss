@@ -1,3 +1,12 @@
 .request-failed {
-    color: rgb(176, 0, 0);
+    padding-top: 1rem;
+
+    h1 {
+        display: flex;
+        font-size: 120%;
+
+        .mat-icon {
+            margin-right: 4px;
+        }
+    }
 }
