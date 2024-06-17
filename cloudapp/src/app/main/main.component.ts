@@ -9,13 +9,20 @@ import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
 })
 
 export class MainComponent implements OnInit {
-    loading = true;
     authToken: string;
-    allowed = false;
+    loading: boolean = true;
+    allowed: boolean = false;
+    isProdEnvironment: boolean = false;
 
     constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
 
-    ngOnInit(): void {
+    async ngOnInit() {
+        let initData = await this.eventsService.getInitData().toPromise();
+        let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
+            currentUrl = initData["urls"]["alma"];
+        console.log(currentUrl);
+        this.isProdEnvironment = !regExp.test(currentUrl);
+
         this.eventsService.getAuthToken().subscribe(authToken => {
             this.authToken = authToken
             this.checkAllowed();

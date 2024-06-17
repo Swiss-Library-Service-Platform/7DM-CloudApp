@@ -1,5 +1,15 @@
+<ng-container *ngIf="!isProdEnvironment">
+    <div class="info-test-env">
+        Test instance using Alma Sandbox environment
+    </div>
+</ng-container>
+
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
+
 <mat-tab-group class="tabs" *ngIf="!loading && allowed">
-    <mat-tab label="Requests">
+    <mat-tab label="{{ 'General.Requests' | translate }}">
         <app-requests></app-requests>
     </mat-tab>
     <mat-tab label="7DM Codes">
@@ -7,15 +17,18 @@
     </mat-tab>
 </mat-tab-group>
 
-<div class="loading-shade" *ngIf="loading">
-    <mat-spinner diameter="50"></mat-spinner>
-</div>
-
-<div *ngIf="!allowed && !loading">
+<ng-container *ngIf="!loading && !allowed">
     <div class="institution-now-allowed">
         <h1>
             <mat-icon inline=true>error</mat-icon>
-            Access Denied
+            {{ 'Welcome.AccessDenied' | translate }}
         </h1>
+        <p>
+            {{ 'Welcome.InstitutionDenied1' | translate }}
+            <a href="https://slsp.ch/en/contact">
+                {{ 'Welcome.InstitutionDenied2' | translate }}
+            </a>
+            {{ 'Welcome.InstitutionDenied3' | translate }}
+        </p>
     </div>
-</div>
+</ng-container>

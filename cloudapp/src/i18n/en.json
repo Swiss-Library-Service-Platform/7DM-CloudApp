@@ -1,0 +1,28 @@
+{
+    "General": {
+        "BackToMenu": "Back",
+        "Yes": "Yes",
+        "No": "No",
+        "Cancel": "Cancel",
+        "Confirm": "Confirm",
+        "Requests": "Requests",
+        "Search": "Search"
+    },
+    "Welcome": {
+        "Welcome": "Welcome to SLSP to 7DM!",
+        "AccessDenied": "Access denied",
+        "InstitutionDenied1": "Unfortunately your institution does not have the permission to use this app. Please ",
+        "InstitutionDenied2": "contact SLSP ",
+        "InstitutionDenied3": "if you have any questions."
+    },
+    "Partners": {
+        "LibraryName": "Library Name",
+        "AlmaCode": "Alma code",
+        "7DMCode": "7DM code"
+    },
+    "Requests": {
+        "RequestBarcode": "Request Barcode",
+        "Destination": "Destination",
+        "7DMCode": "7DM code"
+    }
+}

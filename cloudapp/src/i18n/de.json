@@ -1,0 +1,28 @@
+{
+    "General": {
+        "BackToMenu": "Zurück",
+        "Yes": "Ja",
+        "No": "Nein",
+        "Cancel": "Abbrechen",
+        "Confirm": "Bestätigen",
+        "Requests": "Bestellungen",
+        "Search": "Suche"
+    },
+    "Welcome": {
+        "Welcome": "Willkommen zu SLSP Card!",
+        "AccessDenied": "Zugang gesperrt",
+        "InstitutionDenied1": "Leider ist Ihre Institution nicht dazu berechtigt, diese App zu nutzen. Bitte ",
+        "InstitutionDenied2": "kontaktieren Sie SLSP ",
+        "InstitutionDenied3": "wenn Sie weitere Fragen haben."
+    },
+    "Partners": {
+        "LibraryName": "Bibliotheksname",
+        "AlmaCode": "Alma code",
+        "7DMCode": "7DM code"
+    },
+    "Requests": {
+        "RequestBarcode": "Request Barcode",
+        "Destination": "Ziel",
+        "7DMCode": "7DM code"
+    }
+}

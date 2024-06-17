@@ -1,15 +1,16 @@
 <div class="search-box">
     <mat-form-field>
-        <mat-label>Search</mat-label>
-        <input matInput placeholder="Library Name" type="text" [(ngModel)]="searchValue" (keyup)="search()">
+        <mat-label>{{ 'General.Search' | translate }}</mat-label>
+        <input matInput placeholder="{{ 'Partners.LibraryName' | translate}}" type="text" [(ngModel)]="searchValue"
+            (keyup)="search()">
     </mat-form-field>
 </div>
 <table *ngIf="response && response.length">
     <thead>
         <tr>
-            <th>Library Name</th>
-            <th>Alma code</th>
-            <th>7DM code</th>
+            <th>{{ 'Partners.LibraryName' | translate}}</th>
+            <th>{{ 'Partners.AlmaCode' | translate}}</th>
+            <th>{{ 'Partners.7DMCode' | translate}}</th>
         </tr>
     </thead>
     <tbody>
