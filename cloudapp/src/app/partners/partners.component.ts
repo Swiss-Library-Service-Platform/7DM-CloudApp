@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
 
 @Component({
     selector: 'app-partners',
@@ -8,13 +8,17 @@ import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
     styleUrls: ['./partners.component.scss']
 })
 export class PartnersComponent implements OnInit {
+    data: InitData;
     originalResponse: any;
     response: any;
     loading = true;
     searchValue = '';
     authToken: string;
 
-    constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
+    constructor(private http: HttpClient, private eventsService: CloudAppEventsService) {
+        this.eventsService.getInitData().subscribe(data => this.data = data);
+
+    }
 
     ngOnInit() {
         this.eventsService.getAuthToken().subscribe(authToken => {
@@ -30,7 +34,7 @@ export class PartnersComponent implements OnInit {
 
         this.loading = true;
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get('http://localhost:4200/api/v1/partners', { headers }).subscribe(
+        this.http.get(`http://localhost:4200/api/v1/partners/${this.data.user.currentlyAtLibCode}`, { headers }).subscribe(
             response => {
                 this.originalResponse = response;
                 this.response = [...this.originalResponse];

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
+
 
 @Component({
     selector: 'app-main',
@@ -9,6 +10,7 @@ import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
 })
 
 export class MainComponent implements OnInit {
+    data: InitData;
     authToken: string;
     loading: boolean = true;
     allowed: boolean = false;
@@ -17,11 +19,12 @@ export class MainComponent implements OnInit {
     constructor(private http: HttpClient, private eventsService: CloudAppEventsService) { }
 
     async ngOnInit() {
-        let initData = await this.eventsService.getInitData().toPromise();
+        this.data = await this.eventsService.getInitData().toPromise();
         let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
-            currentUrl = initData["urls"]["alma"];
+            currentUrl = this.data["urls"]["alma"];
         console.log(currentUrl);
         this.isProdEnvironment = !regExp.test(currentUrl);
+        console.log(this.data.user.currentlyAtLibCode)
 
         this.eventsService.getAuthToken().subscribe(authToken => {
             this.authToken = authToken
@@ -35,7 +38,7 @@ export class MainComponent implements OnInit {
         }
 
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get('http://localhost:4200/api/v1/allowed', { headers }).subscribe(
+        this.http.get(`http://localhost:4200/api/v1/allowed/${this.data.user.currentlyAtLibCode}`, { headers }).subscribe(
             _ => {
                 this.loading = false;
                 this.allowed = true;
