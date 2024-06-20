@@ -48,10 +48,11 @@ export class RequestsComponent implements OnInit {
                     this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");
                 } else if (error.error.type == "BAD_STATUS") {
                     this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
+                } else if (error.error.type == "WRONG_LOCATION") {
+                    this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
                 } else {
                     // REQUEST_ID_NOT_FOUND,
                     // BAD_STATUS,
-                    // WRONG_LOCATION,
                     // SENDER_NON_COURIER_LIBRARY,
                     // DESTINATION_NON_COURIER_LIBRARY,
                     this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type);

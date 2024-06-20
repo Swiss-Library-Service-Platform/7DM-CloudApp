@@ -28,13 +28,12 @@
             "DEFAULT": "An error occurred while processing your request.",
             "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
             "BAD_STATUS": "Request ID found, but this request cannot be sent to 7DM. Request status is ",
-            "WRONG_LOCATION": "Request ID found, but current location selected is not related to the sender library",
+            "WRONG_LOCATION": "Request ID found, but the currently selected location is not related to the sender library",
             "SENDER_NON_COURIER_LIBRARY": "Sender library is not SLSP courier valid library.",
             "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library."
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
-        "ContactSupport3": "with the following error code: ",
-        "ContactSupport4": " if you have any questions."
+        "ContactSupport3": "with the following error code if you have any questions."
     }
 }
