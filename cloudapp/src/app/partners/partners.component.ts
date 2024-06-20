@@ -32,16 +32,17 @@ export class PartnersComponent implements OnInit {
             return;
         }
 
+        let escapedLibraryCode = encodeURIComponent(this.data.user.currentlyAtLibCode);
+
         this.loading = true;
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get(`http://localhost:4200/api/v1/partners/${this.data.user.currentlyAtLibCode}`, { headers }).subscribe(
+        this.http.get(`http://localhost:4200/api/v1/partners/${escapedLibraryCode}`, { headers }).subscribe(
             response => {
                 this.originalResponse = response;
                 this.response = [...this.originalResponse];
                 this.loading = false;
             },
             error => {
-                console.log(JSON.stringify(error))
                 this.loading = false;
             }
         );

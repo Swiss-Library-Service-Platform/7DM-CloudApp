@@ -36,8 +36,11 @@ export class RequestsComponent implements OnInit {
         this.failed = false;
         this.response = null;
 
+        let escapedRequestID = encodeURIComponent(this.requestID);
+        let escapedLibraryCode = encodeURIComponent(libraryCode);
+
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get(`http://localhost:4200/api/v1/requests/${this.requestID}/libraries/${libraryCode}`, { headers }).subscribe(
+        this.http.get(`http://localhost:4200/api/v1/requests/${escapedRequestID}/libraries/${escapedLibraryCode}`, { headers }).subscribe(
             response => {
                 this.response = response;
                 this.loading = false;

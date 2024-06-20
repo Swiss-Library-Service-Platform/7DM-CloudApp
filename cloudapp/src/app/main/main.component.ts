@@ -22,9 +22,7 @@ export class MainComponent implements OnInit {
         this.data = await this.eventsService.getInitData().toPromise();
         let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
             currentUrl = this.data["urls"]["alma"];
-        console.log(currentUrl);
         this.isProdEnvironment = !regExp.test(currentUrl);
-        console.log(this.data.user.currentlyAtLibCode)
 
         this.eventsService.getAuthToken().subscribe(authToken => {
             this.authToken = authToken
@@ -37,14 +35,15 @@ export class MainComponent implements OnInit {
             return;
         }
 
+        let escapedLibraryCode = encodeURIComponent(this.data.user.currentlyAtLibCode);
+
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get(`http://localhost:4200/api/v1/allowed/${this.data.user.currentlyAtLibCode}`, { headers }).subscribe(
+        this.http.get(`http://localhost:4200/api/v1/allowed/${escapedLibraryCode}`, { headers }).subscribe(
             _ => {
                 this.loading = false;
                 this.allowed = true;
             },
             error => {
-                console.log(JSON.stringify(error))
                 this.loading = false;
                 this.allowed = false;
             }
