@@ -36,7 +36,7 @@ export class PartnersComponent implements OnInit {
 
         this.loading = true;
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get(`http://localhost:4200/api/v1/partners/${escapedLibraryCode}`, { headers }).subscribe(
+        this.http.get(`https://7dmproxy.swisscovery.network/api/v1/partners/${escapedLibraryCode}`, { headers }).subscribe(
             response => {
                 this.originalResponse = response;
                 this.response = [...this.originalResponse];

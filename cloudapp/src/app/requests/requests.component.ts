@@ -40,7 +40,7 @@ export class RequestsComponent implements OnInit {
         let escapedLibraryCode = encodeURIComponent(libraryCode);
 
         const headers = { 'Authorization': `Bearer ${this.authToken}` };
-        this.http.get(`http://localhost:4200/api/v1/requests/${escapedRequestID}/libraries/${escapedLibraryCode}`, { headers }).subscribe(
+        this.http.get(`https://7dmproxy.swisscovery.network/api/v1/requests/${escapedRequestID}/libraries/${escapedLibraryCode}`, { headers }).subscribe(
             response => {
                 this.response = response;
                 this.loading = false;
