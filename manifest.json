@@ -1,20 +1,20 @@
 {
-    "id": "7-dm",
-    "title": "SLSP to 7DM",
-    "subtitle": "7DM Interface Automatization",
-    "author": "SLSP",
-    "description": "Retrieve requests and view 7-DM library codes. This Alma Cloud App is a product for SLSP libraries.",
-    "pages": {
-        "help": "https://github.com/Swiss-Library-Service-Platform/7DM-CloudApp"
-    },
-    "contentSecurity": {
-        "connectSrc": [
-            "https://7dmproxy.swisscovery.network/"
-        ]
-    },
-    "icon": {
-        "type": "url",
-        "value": "/assets/logo_text.png"
-    },
-    "license": "https://github.com/Swiss-Library-Service-Platform/7DM-CloudApp/blob/main/LICENCE"
+   "id": "7-dm",
+   "title": "SLSP to 7DM",
+   "subtitle": "7DM Interface Automatization",
+   "author": "SLSP",
+   "description": "Retrieve requests and view 7-DM library codes. This Alma Cloud App is a product for SLSP libraries (BETA).",
+   "pages": {
+      "help": "https://github.com/Swiss-Library-Service-Platform/7DM-CloudApp"
+   },
+   "contentSecurity": {
+      "connectSrc": [
+         "https://7dmproxy.swisscovery.network/"
+      ]
+   },
+   "icon": {
+      "type": "url",
+      "value": "/assets/logo_text.png"
+   },
+   "license": "https://github.com/Swiss-Library-Service-Platform/7DM-CloudApp/blob/main/LICENCE"
 }
