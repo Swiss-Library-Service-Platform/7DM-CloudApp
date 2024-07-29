@@ -1,12 +1,10 @@
 {
-    "General": {
-        "BackToMenu": "Back",
-        "Yes": "Yes",
-        "No": "No",
-        "Cancel": "Cancel",
-        "Confirm": "Confirm",
+    "Main": {
         "Requests": "Requests",
-        "Search": "Search"
+        "Search": "Search",
+        "Status": {
+            "Initializing": "Initializing..."
+        }
     },
     "Welcome": {
         "Welcome": "Welcome to SLSP to 7DM!",
@@ -24,6 +22,7 @@
         "RequestBarcode": "Request Barcode",
         "Destination": "Destination",
         "7DMCode": "7DM code",
+        "BoxId": "Box ID",
         "Error": {
             "DEFAULT": "An error occurred while processing your request.",
             "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
@@ -34,6 +33,10 @@
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
-        "ContactSupport3": "with the following error code if you have any questions."
+        "ContactSupport3": "with the following error code if you have any questions.",
+        "Status": {
+            "Loading_Request": "Retrieving request..."
+        },
+        "SendTo7DM": "Send to 7DM"
     }
 }

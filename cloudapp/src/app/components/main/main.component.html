@@ -1,23 +1,30 @@
+<!-- Environment Indicator -->
 <ng-container *ngIf="!isProdEnvironment">
     <div class="info-test-env">
         Test instance using Alma Sandbox environment
     </div>
 </ng-container>
 
-<div class="loading-shade" *ngIf="loading">
+<!-- Loading Spinner -->
+<div class="loading-shade" *ngIf="loader.isLoading | async">
     <mat-spinner diameter="50"></mat-spinner>
+    <p class="loading-info">{{ status.message | async }}</p>
 </div>
 
-<mat-tab-group class="tabs" *ngIf="!loading && allowed">
-    <mat-tab label="{{ 'General.Requests' | translate }}">
-        <app-requests></app-requests>
-    </mat-tab>
-    <mat-tab label="7DM Codes">
-        <app-partners></app-partners>
-    </mat-tab>
-</mat-tab-group>
+<!-- Tab / Main View -->
+<ng-container *ngIf="isInitialized && isLibraryAllowed">
+    <mat-tab-group class="tabs">
+        <mat-tab label="{{ 'Main.Requests' | translate }}">
+            <app-requests></app-requests>
+        </mat-tab>
+        <mat-tab label="7DM Codes">
+            <app-partners></app-partners>
+        </mat-tab>
+    </mat-tab-group>
+</ng-container>
 
-<ng-container *ngIf="!loading && !allowed">
+<!-- Access Denied -->
+<ng-container *ngIf="isInitialized && !isLibraryAllowed">
     <div class="institution-now-allowed">
         <h1>
             <mat-icon inline=true>error</mat-icon>

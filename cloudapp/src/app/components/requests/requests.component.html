@@ -1,8 +1,23 @@
 <div class="search-box">
-    <mat-form-field>
-        <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
-        <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="onClickLookUpRequest()">
-    </mat-form-field>
+    <div class="search-box-box-id">
+       <mat-form-field>
+            <mat-label>{{ 'Requests.BoxId' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="boxID" (keyup.enter)="onClickLookUpBox()">
+
+       </mat-form-field>
+    </div>
+    <div class="search-box-request-id">
+        <mat-form-field>
+            <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="onClickLookUpRequest()">
+            
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)="onClickLookUpRequest()">
+            <mat-icon>send</mat-icon>
+            {{ 'Requests.SendTo7DM' | translate }}
+        </button>
+    </div>
+    
 </div>
 <div *ngIf="response">
     <table>
@@ -23,7 +38,7 @@
     </table>
 </div>
 
-<div class="request-failed" *ngIf="failed">
+<div class="request-failed" *ngIf="isFailed">
     <h1>
         <mat-icon inline=true>error</mat-icon>
         {{ errorMessage }}
@@ -37,8 +52,4 @@
         <br>
         {{ errorId }}
     </p>
-</div>
-
-<div class="loading-shade" *ngIf="loading">
-    <mat-spinner diameter="50"></mat-spinner>
 </div>

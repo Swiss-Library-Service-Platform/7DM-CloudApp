@@ -1,12 +1,3 @@
-@mixin main-component-theme($theme, $typgraphy) {
-    div.highlight {
-        border: mat-color(map-get($theme, primary)) solid 2px;
-        background-color: mat-color(map-get($theme, primary), lighter);
-        padding: 5px;
-        font-weight: bolder;
-    }
-}
-
 table {
     width: 100%;
     border-collapse: separate;
@@ -26,3 +17,22 @@ table td {
     padding: 5px;
     text-align: left;
 }
+
+@mixin main-component-theme($theme, $typgraphy) {
+
+    .loading-shade {
+        height: 300px;
+      flex-direction: column;
+  
+      .loading-info {
+        margin-top: 1rem;
+        padding: 8px;
+        border-radius: 3px;
+        font-size: 1.2em;
+        color: #ffffff;
+        // background-color: rgba($color: #000000, $alpha: 0.4);
+        background: mat-color(map-get($theme, primary));
+      }
+    }
+}
+  

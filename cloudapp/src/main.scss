@@ -5,12 +5,10 @@
     @include main-component-theme($theme, $typography);
 }
 
+// FIXME: clean this mess up
+
 @mixin global-styles {
 
-    /* Add global styles here */
-    .app-loading .spinner .path {
-        stroke: var(--slsp-purple);
-    }
 
     :root {
         height: 100%;
@@ -19,17 +17,13 @@
         --slsp-purple-transparent: rgba(78, 74, 153, 0.1);
     }
 
+    /*
     body[class*=cloudapp-theme] {
         height: 100%;
         margin: 0;
         padding: 0;
     }
-
-    app-usermenu {
-        display: flex;
-        flex-direction: column;
-        height: 100%
-    }
+    */
 
     cloudapp-alert {
         font-weight: bold;
@@ -37,16 +31,6 @@
         top: 1rem;
         width: 100%;
         z-index: 99;
-    }
-
-    .warning {
-        color: #963031;
-        font-weight: bold;
-    }
-
-    .mat-card {
-        margin: 1px;
-        margin-bottom: 20px;
     }
 
     .mat-focused .mat-form-field-label {
@@ -62,125 +46,6 @@
     .mat-form-field-ripple {
         /*change color of underline when focused*/
         background-color: var(--slsp-purple) !important;
-        ;
-    }
-
-    .user-header {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .user-header-text {
-            vertical-align: middle;
-            font-weight: bold;
-        }
-
-        .mat-icon {
-            vertical-align: middle;
-            margin-right: 8px;
-            color: var(--slsp-purple);
-        }
-
-        span {
-            display: flex;
-            align-items: center;
-            margin-right: 5px;
-        }
-    }
-
-    .mat-action-row {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .green-icon {
-        color: green;
-    }
-
-    td {
-        padding: 8px;
-    }
-
-    .mat-flat-button.slsp-purple-button {
-        background-color: var(--slsp-purple) !important;
-        color: white !important;
-
-        &:hover {
-            background-color: var(--slsp-purple) !important;
-        }
-
-        &.mat-button-disabled {
-            background-color: #ADA9BB !important;
-        }
-    }
-
-    button.mat-button .mat-icon,
-    a.mat-button .mat-icon,
-    a.mat-raised-button .mat-icon,
-    button.mat-flat-button .mat-icon,
-    a.mat-stroked-button .mat-icon {
-        vertical-align: top;
-        font-size: 1.25em;
-        padding-right: 4px;
-    }
-
-    .mat-flat-button.info-button .mat-icon {
-        vertical-align: middle;
-    }
-
-    .mat-tab-group.mat-primary .mat-ink-bar {
-        border-radius: 5px;
-        height: 5px;
-        background-color: white !important;
-        margin: 5px;
-        width: calc(100% / 3 - 10px) !important;
-    }
-
-    .mat-tab-labels {
-        background-color: var(--slsp-purple);
-        border-radius: 5px;
-
-        .mat-tab-label {
-            opacity: 0.8;
-        }
-    }
-
-    .mat-tab-label-content {
-        color: white;
-    }
-
-    .mat-tab-label-active {
-        //background-color: #3398dc !important;
-        opacity: 1 !important;
-    }
-
-    .confirm-button {
-        color: white !important;
-        background-color: var(--slsp-purple) !important;
-    }
-
-
-    .mat-card-with-info {
-        .mat-card-header-text {
-            width: 100%;
-            margin-right: 0px;
-
-            .mat-card-title {
-                display: flex;
-                align-items: baseline;
-                justify-content: space-between;
-
-                button {
-                    padding: 0px;
-                }
-
-                .mat-icon {
-                    color: #5e5e5e;
-                }
-            }
-        }
     }
 
     .info-test-env {
@@ -193,9 +58,54 @@
         padding: 0.5rem;
         font-weight: bold;
     }
+}
 
-    .search-box {
-        display: flex;
-        justify-content: center
+@mixin main-component-theme($theme, $typgraphy) {
+   
+    .loading-shade {
+        flex-direction: column;
+
+        .loading-info {
+            margin-top: 1rem;
+            padding: 8px;
+            padding-right: 16px;
+            padding-left: 16px;
+            border-radius: 3px;
+            font-size: 1.2em;
+            color: #ffffff;
+            background: mat-color(map-get($theme, primary));
+        }
     }
+}
+
+body[class*=cloudapp-theme] {
+
+
+.mat-tab-group.mat-primary .mat-ink-bar {
+    border-radius: 5px;
+    height: 5px;
+    background-color: white !important;
+    margin: 5px;
+    width: calc(100% / 3 - 10px) !important;
+}
+
+.mat-tab-labels {
+    background-color: var(--slsp-purple);
+    border-radius: 5px;
+
+    .mat-tab-label {
+        opacity: 0.8;
+    }
+}
+
+.mat-tab-label-content {
+    color: white;
+}
+
+.mat-tab-label-active {
+    //background-color: #3398dc !important;
+    opacity: 1 !important;
+}
+
+
 }

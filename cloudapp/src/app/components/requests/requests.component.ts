@@ -3,6 +3,7 @@ import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { BackendService } from '../../services/backend.service';
+import { StatusIndicatorService } from '../../services/status-indicator.service';
 
 @Component({
     selector: 'app-requests',
@@ -13,8 +14,7 @@ export class RequestsComponent implements OnInit {
     data: InitData;
     requestID: string = '';
     authToken: string;
-    loading = false;
-    failed = false;
+    isFailed = false;
     response: any;
     errorMessage: string;
     errorId: string;
@@ -23,8 +23,10 @@ export class RequestsComponent implements OnInit {
         private http: HttpClient,
         private eventsService: CloudAppEventsService,
         private backendService: BackendService,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private _status: StatusIndicatorService,
     ) { }
+
 
     ngOnInit(): void {
         this.eventsService.getAuthToken().subscribe(authToken => this.authToken = authToken);
@@ -32,15 +34,17 @@ export class RequestsComponent implements OnInit {
     }
 
     onClickLookUpRequest(): void {
-        this.loading = true;
-        this.failed = false;
+       // this._loader.show();
+        //this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
+
+        this.isFailed = false;
         this.response = null;
         this.errorMessage = null;
         this.errorId = null;
 
         this.backendService.lookUpRequest(this.requestID).then(response => {
             this.response = response;
-            this.loading = false;
+            //this._loader.hide();
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");
@@ -57,10 +61,8 @@ export class RequestsComponent implements OnInit {
                 this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }
             this.errorId = error.error.error_id;
-            this.failed = true;
-            this.loading = false;
-
-
+            this.isFailed = true;
+            //this._loader.hide();
         });
     }
 }
