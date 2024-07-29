@@ -12,9 +12,7 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
     styleUrls: ['./requests.component.scss']
 })
 export class RequestsComponent implements OnInit {
-    data: InitData;
     inputRequestId: string = '';
-    authToken: string;
     isFailed = false;
     infoResponse: any;
     errorMessage: string;
@@ -45,10 +43,7 @@ export class RequestsComponent implements OnInit {
         return this._status;
     }
 
-    ngOnInit(): void {
-        this.eventsService.getAuthToken().subscribe(authToken => this.authToken = authToken);
-        this.eventsService.getInitData().subscribe(data => this.data = data);
-    }
+    ngOnInit(): void { }
 
     onClickLookUpRequest(): void {
         this._loader.show();
@@ -61,7 +56,6 @@ export class RequestsComponent implements OnInit {
 
         this.backendService.lookUpRequest(this.inputRequestId).then(response => {
             this.infoResponse = response;
-            //this._loader.hide();
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");

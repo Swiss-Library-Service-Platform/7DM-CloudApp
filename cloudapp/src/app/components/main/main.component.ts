@@ -54,7 +54,7 @@ export class MainComponent implements OnInit {
         this.data = await this.eventsService.getInitData().toPromise();
         let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
             currentUrl = this.data["urls"]["alma"];
-        this.isProdEnvironment = !regExp.test(currentUrl);
+        this.isProdEnvironment = !regExp.test(currentUrl); // FIXME: not used currently, do we need it?
 
         this.backendService.init(this.data).then(() => {
             this.eventsService.getAuthToken().subscribe(authToken => {
