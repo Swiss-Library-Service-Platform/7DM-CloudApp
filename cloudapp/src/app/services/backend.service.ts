@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CloudAppEventsService, Entity, AlertService, CloudAppRestService } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
+import { RequestInfo } from '../models/RequestInfo.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -76,13 +77,13 @@ export class BackendService {
    * Looks up a request in the API
    * 
    */
-  async lookUpRequest(requestID: string): Promise<any> {
+  async lookUpRequest(requestId: string): Promise<RequestInfo> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
-    let escapedRequestID = encodeURIComponent(requestID);
+    let escapedRequestId = encodeURIComponent(requestId);
     let escapedLibraryCode = encodeURIComponent(libraryCode);
 
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.baseUrl}/requests/${escapedRequestID}/libraries/${escapedLibraryCode}`, this.httpOptions).subscribe(
+      this.http.get<RequestInfo>(`${this.baseUrl}/requests/${escapedRequestId}/libraries/${escapedLibraryCode}`, this.httpOptions).subscribe(
         response => {
           resolve(response);
         },

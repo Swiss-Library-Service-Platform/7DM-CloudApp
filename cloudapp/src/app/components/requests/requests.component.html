@@ -1,43 +1,85 @@
+<!-- Input Box ID + Request ID -->
 <div class="search-box">
     <div class="search-box-box-id">
-       <mat-form-field>
+        <mat-form-field>
             <mat-label>{{ 'Requests.BoxId' | translate }}</mat-label>
-            <input matInput placeholder="ID" type="text" [(ngModel)]="boxID" (keyup.enter)="onClickLookUpBox()">
-
-       </mat-form-field>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="boxId" (keyup.enter)="onClickLookUpBox()">
+        </mat-form-field>
+        <button [disabled]="true" mat-flat-button (click)="onClickRefreshBoxId()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <button [disabled]="true" mat-flat-button (click)="onClickPrintBoxId()">
+            <mat-icon>print</mat-icon>
+        </button>
     </div>
     <div class="search-box-request-id">
         <mat-form-field>
             <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
-            <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="onClickLookUpRequest()">
-            
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputRequestId"
+                (keyup.enter)="onClickLookUpRequest()">
+
         </mat-form-field>
-        <button mat-flat-button color="primary" (click)="onClickLookUpRequest()">
+        <button mat-flat-button (click)="onClickLookUpRequest()">
             <mat-icon>send</mat-icon>
             {{ 'Requests.SendTo7DM' | translate }}
         </button>
     </div>
-    
-</div>
-<div *ngIf="response">
-    <table>
-        <thead>
-            <tr>
-                <th>{{ 'Requests.RequestBarcode' | translate }}</th>
-                <th>{{ 'Requests.Destination' | translate }}</th>
-                <th>{{ 'Requests.7DMCode' | translate }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ response.barcode }}</td>
-                <td>{{ response.destination }}</td>
-                <td>{{ response.seven_dm_code }}</td>
-            </tr>
-        </tbody>
-    </table>
+
 </div>
 
+<!-- Request Info -->
+<div class="info-response" *ngIf="infoResponse">
+    <div class="info-message">
+        {{ 'Requests.RequestSent1' | translate }}
+        {{ infoResponse.barcode }}
+        {{ 'Requests.RequestSent2' | translate }}
+    </div>
+    <div class="info-table-wrapper">
+        <table class="info-table">
+            <tr>
+                <!-- Barcode -->
+                <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
+                <td> {{ infoResponse.barcode }} </td>
+            </tr>
+            <tr>
+                <!-- Type  -->
+                <th scope="row"> {{ 'Requests.RequestInfo.Type' | translate }}</th>
+                <td> {{ infoResponse.type }} </td>
+            </tr>
+            <tr>
+                <!-- Sender -->
+                <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
+                <td> {{ infoResponse.sender }} </td>
+            </tr>
+            <tr>
+                <!-- Destination -->
+                <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
+                <td> {{ infoResponse.destination }} </td>
+            </tr>
+            <tr>
+                <!-- Request ID -->
+                <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
+                <td> {{ infoResponse.request_id }} </td>
+            </tr>
+            <tr>
+                <!-- Box ID -->
+                <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
+                <td> {{ infoResponse.box_id }} </td>
+            </tr>
+        </table>
+        <div class="info-table-actions">
+            <button [disabled]="true" mat-icon-button (click)="onClickPrintRequest()">
+                <mat-icon>print</mat-icon>
+            </button>
+            <button [disabled]="true" mat-icon-button (click)="onClickCancelRequest()" color="warn">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Failed Request -->
 <div class="request-failed" *ngIf="isFailed">
     <h1>
         <mat-icon inline=true>error</mat-icon>

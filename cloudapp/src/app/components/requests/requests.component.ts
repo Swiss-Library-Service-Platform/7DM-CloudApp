@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { BackendService } from '../../services/backend.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
+import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 
 @Component({
     selector: 'app-requests',
@@ -12,10 +13,10 @@ import { StatusIndicatorService } from '../../services/status-indicator.service'
 })
 export class RequestsComponent implements OnInit {
     data: InitData;
-    requestID: string = '';
+    inputRequestId: string = '';
     authToken: string;
     isFailed = false;
-    response: any;
+    infoResponse: any;
     errorMessage: string;
     errorId: string;
 
@@ -24,9 +25,25 @@ export class RequestsComponent implements OnInit {
         private eventsService: CloudAppEventsService,
         private backendService: BackendService,
         private translateService: TranslateService,
+        private _loader: LoadingIndicatorService,
         private _status: StatusIndicatorService,
     ) { }
 
+    /**
+     * Getter for LoadingIndicatorService instance.
+     * @returns LoadingIndicatorService instance
+     */
+    get loader(): LoadingIndicatorService {
+        return this._loader;
+    }
+
+    /**
+     * Getter for StatusIndicatorService instance.
+     * @returns StatusIndicatorService instance
+     */
+    get status(): StatusIndicatorService {
+        return this._status;
+    }
 
     ngOnInit(): void {
         this.eventsService.getAuthToken().subscribe(authToken => this.authToken = authToken);
@@ -34,16 +51,16 @@ export class RequestsComponent implements OnInit {
     }
 
     onClickLookUpRequest(): void {
-       // this._loader.show();
-        //this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
+        this._loader.show();
+        this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
 
         this.isFailed = false;
-        this.response = null;
+        this.infoResponse = null;
         this.errorMessage = null;
         this.errorId = null;
 
-        this.backendService.lookUpRequest(this.requestID).then(response => {
-            this.response = response;
+        this.backendService.lookUpRequest(this.inputRequestId).then(response => {
+            this.infoResponse = response;
             //this._loader.hide();
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
@@ -62,7 +79,8 @@ export class RequestsComponent implements OnInit {
             }
             this.errorId = error.error.error_id;
             this.isFailed = true;
-            //this._loader.hide();
+        }).finally(() => {
+            this._loader.hide();
         });
     }
 }

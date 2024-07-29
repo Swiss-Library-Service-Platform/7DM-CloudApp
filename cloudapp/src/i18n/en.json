@@ -37,6 +37,17 @@
         "Status": {
             "Loading_Request": "Retrieving request..."
         },
-        "SendTo7DM": "Send to 7DM"
+        "SendTo7DM": "Send to 7DM",
+        "RequestSent1": "Item ",
+        "RequestSent2": " transfer order sent to 7DM.",
+        "RequestInfo": {
+            "Barcode": "Barcode",
+            "BoxId": "Box ID",
+            "Type": "Type",
+            "Sender": "Sender",
+            "Destination": "Destination",
+            "RequestId": "Request ID",
+            "7DMCode":"7DM code"
+        }
     }
 }
