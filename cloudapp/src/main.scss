@@ -5,25 +5,14 @@
     @include main-component-theme($theme, $typography);
 }
 
-// FIXME: clean this mess up
 
 @mixin global-styles {
-
-
     :root {
         height: 100%;
         --slsp-purple: rgba(78, 74, 153, 1); // or any global you wish to share with components
         --slsp-purple-light: #eeeef7;
         --slsp-purple-transparent: rgba(78, 74, 153, 0.1);
     }
-
-    /*
-    body[class*=cloudapp-theme] {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    */
 
     cloudapp-alert {
         font-weight: bold;
@@ -61,7 +50,7 @@
 }
 
 @mixin main-component-theme($theme, $typgraphy) {
-   
+
     .loading-shade {
         flex-direction: column;
 
@@ -81,31 +70,31 @@
 body[class*=cloudapp-theme] {
 
 
-.mat-tab-group.mat-primary .mat-ink-bar {
-    border-radius: 5px;
-    height: 5px;
-    background-color: white !important;
-    margin: 5px;
-    width: calc(100% / 3 - 10px) !important;
-}
-
-.mat-tab-labels {
-    background-color: var(--slsp-purple);
-    border-radius: 5px;
-
-    .mat-tab-label {
-        opacity: 0.8;
+    .mat-tab-group.mat-primary .mat-ink-bar {
+        border-radius: 5px;
+        height: 5px;
+        background-color: white !important;
+        margin: 5px;
+        width: calc(100% / 3 - 10px) !important;
     }
-}
 
-.mat-tab-label-content {
-    color: white;
-}
+    .mat-tab-labels {
+        background-color: var(--slsp-purple);
+        border-radius: 5px;
 
-.mat-tab-label-active {
-    //background-color: #3398dc !important;
-    opacity: 1 !important;
-}
+        .mat-tab-label {
+            opacity: 0.8;
+        }
+    }
+
+    .mat-tab-label-content {
+        color: white;
+    }
+
+    .mat-tab-label-active {
+        //background-color: #3398dc !important;
+        opacity: 1 !important;
+    }
 
 
 }
