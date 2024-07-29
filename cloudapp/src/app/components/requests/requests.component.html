@@ -3,7 +3,7 @@
     <div class="search-box-box-id">
         <mat-form-field>
             <mat-label>{{ 'Requests.BoxId' | translate }}</mat-label>
-            <input matInput placeholder="ID" type="text" [(ngModel)]="boxId" (keyup.enter)="onClickLookUpBox()">
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputBoxId">
         </mat-form-field>
         <button [disabled]="true" mat-flat-button (click)="onClickRefreshBoxId()">
             <mat-icon>refresh</mat-icon>

@@ -13,14 +13,13 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 })
 export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
+    inputBoxId: string = '';
     isFailed = false;
     infoResponse: any;
     errorMessage: string;
     errorId: string;
 
     constructor(
-        private http: HttpClient,
-        private eventsService: CloudAppEventsService,
         private backendService: BackendService,
         private translateService: TranslateService,
         private _loader: LoadingIndicatorService,
@@ -76,5 +75,21 @@ export class RequestsComponent implements OnInit {
         }).finally(() => {
             this._loader.hide();
         });
+    }
+
+    onClickRefreshBoxId(): void {
+        // unimplemented
+    }
+
+    onClickPrintBoxId(): void {
+        // unimplemented
+    }
+
+    onClickPrintRequest(): void {
+        // unimplemented
+    }
+
+    onClickCancelRequest(): void {
+        // unimplemented
     }
 }
