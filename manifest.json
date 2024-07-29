@@ -9,7 +9,8 @@
    },
    "contentSecurity": {
       "connectSrc": [
-         "https://7dmproxy.swisscovery.network/"
+         "https://7dmproxy.swisscovery.network/",
+         "http://localhost:4201/"
       ]
    },
    "icon": {

@@ -1,11 +1,11 @@
 <div class="search-box">
     <mat-form-field>
         <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
-        <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="lookUpRequest()">
+        <input matInput placeholder="ID" type="text" [(ngModel)]="requestID" (keyup.enter)="onClickLookUpRequest()">
     </mat-form-field>
 </div>
 <div *ngIf="response">
-    <table *ngIf="response">
+    <table>
         <thead>
             <tr>
                 <th>{{ 'Requests.RequestBarcode' | translate }}</th>
