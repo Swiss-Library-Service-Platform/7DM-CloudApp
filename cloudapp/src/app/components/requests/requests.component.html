@@ -1,6 +1,6 @@
 <!-- Input Box ID + Request ID -->
-<div class="search-box">
-    <div class="search-box-box-id">
+<div class="header-area">
+    <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Requests.BoxId' | translate }}</mat-label>
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputBoxId">
@@ -12,14 +12,14 @@
             <mat-icon>print</mat-icon>
         </button>
     </div>
-    <div class="search-box-request-id">
-        <mat-form-field>
+    <div class="header-area-request-area">
+        <mat-form-field class="header-area-request-id">
             <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputRequestId"
                 (keyup.enter)="onClickSendRequest()">
 
         </mat-form-field>
-        <button mat-flat-button (click)="onClickSendRequest()" [disabled]="!inputRequestId || !inputBoxId">
+        <button class="header-area-request-button" (click)="onClickSendRequest()" [disabled]="!inputRequestId || !inputBoxId">
             <mat-icon>send</mat-icon>
             {{ 'Requests.SendTo7DM' | translate }}
         </button>
@@ -27,21 +27,22 @@
 </div>
 
 <!-- Request Info -->
-<div class="info-response" *ngIf="infoResponse">
-    <div class="info-message">
-        {{ 'Requests.RequestSent1' | translate }}
-        {{ infoResponse.barcode }}
-        {{ 'Requests.RequestSent2' | translate }}
-    </div>
-    <app-request-info [requestInfo]="infoResponse"></app-request-info>
-
+<div class="request-success" *ngIf="responseRequest">
+    <h1>
+        <mat-icon color="success" inline=true>check_circle</mat-icon>
+        {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
+    </h1>
+    <app-request-info 
+        [requestInfo]="responseRequest"
+        [onCancelRequest]="cancelRequest.bind(this)"
+    ></app-request-info>
 </div>
 
 <!-- Failed Request -->
-<div class="request-failed" *ngIf="isFailed">
+<div class="request-failed" *ngIf="responseErrorId">
     <h1>
-        <mat-icon inline=true>error</mat-icon>
-        {{ errorMessage }}
+        <mat-icon color="warn" inline=true>error</mat-icon>
+        {{ responseErrorMessage }}
     </h1>
     <p>
         {{ 'Requests.ContactSupport1' | translate }}
@@ -50,6 +51,6 @@
         </a>
         {{ 'Requests.ContactSupport3' | translate }}
         <br>
-        {{ errorId }}
+        {{ responseErrorId }}
     </p>
 </div>

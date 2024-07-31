@@ -1,6 +1,6 @@
 <!-- Input Box ID + Request ID -->
-<div class="search-box">
-    <div class="search-box-box-id">
+<div class="header-area">
+    <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Today.Search' | translate }}</mat-label>
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputSearch" (keyup.enter)="onClickSearch()">
@@ -13,5 +13,12 @@
 
 <!-- Request Info for each of requests Today -->
 <div class="info-response" *ngIf="todayRequests">
-    <app-request-info *ngFor="let request of todayRequests" [requestInfo]="request"></app-request-info>
+    <h1 class="info-response-title">
+        <mat-icon inline=true>today</mat-icon>
+        {{ 'Today.TodayRequests' | translate }}
+    </h1>
+    <app-request-info *ngFor="let request of todayRequests" 
+        [requestInfo]="request"
+        [onCancelRequest]="cancelRequest.bind(this)"  
+    ></app-request-info>
 </div>

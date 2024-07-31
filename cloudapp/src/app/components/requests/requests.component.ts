@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { BackendService } from '../../services/backend.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-requests',
@@ -14,42 +15,41 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
     inputBoxId: string = '';
-    isFailed = false;
-    infoResponse: any;
-    errorMessage: string;
-    errorId: string;
+    responseRequest: any;
+    responseErrorMessage: string;
+    responseErrorId: string;
+    subscriptionTodaysRequests: Subscription;
 
     constructor(
         private backendService: BackendService,
         private translateService: TranslateService,
-        private _loader: LoadingIndicatorService,
-        private _status: StatusIndicatorService,
+        private loader: LoadingIndicatorService,
+        private status: StatusIndicatorService,
     ) { }
 
-    /**
-     * Getter for LoadingIndicatorService instance.
-     * @returns LoadingIndicatorService instance
-     */
-    get loader(): LoadingIndicatorService {
-        return this._loader;
-    }
-
-    /**
-     * Getter for StatusIndicatorService instance.
-     * @returns StatusIndicatorService instance
-     */
-    get status(): StatusIndicatorService {
-        return this._status;
-    }
 
     ngOnInit(): void {
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response.id;
         });
+        this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
+            response => {
+                // if today requests do not include the response request, clear response
+                if (this.responseRequest != null && !response.some(r => r.internal_id === this.responseRequest.internal_id)) {
+                    this.resetResponse();
+                }
+            }
+        );
+    }
+
+    resetResponse(): void {
+        this.responseRequest = null;
+        this.responseErrorMessage = null;
+        this.responseErrorId = null;
     }
 
     onClickRefreshBoxId(): void {
-        this._loader.show();
+        this.loader.show();
         this.status.set(this.translateService.instant("Requests.Status.Loading_BoxId"));
 
         this.backendService.generateBoxLabel().then(response => {
@@ -57,52 +57,51 @@ export class RequestsComponent implements OnInit {
         }).catch(error => {
             alert("Error: " + error);
         }).finally(() => {
-            this._loader.hide();
+            this.loader.hide();
         });
     }
 
     onClickSendRequest(): void {
-        this._loader.show();
+        this.loader.show();
         this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
 
-        this.isFailed = false;
-        this.infoResponse = null;
-        this.errorMessage = null;
-        this.errorId = null;
+        this.resetResponse();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            this.infoResponse = response;
+            this.responseRequest = response;
             this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
-                this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");
+                this.responseErrorMessage = this.translateService.instant("Requests.Error.DEFAULT");
             } else if (error.error.type == "BAD_STATUS") {
-                this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
             } else if (error.error.type == "WRONG_LOCATION") {
-                this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
             }
             // ALL OTHER ERROR TYPES
             else {
-                this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type);
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }
-            this.errorId = error.error.error_id;
-            this.isFailed = true;
+            this.responseErrorId = error.error.error_id;
         }).finally(() => {
-            this._loader.hide();
+            this.loader.hide();
         });
     }
 
-  
+    cancelRequest(internalId: string): void {
+        this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
+        this.loader.show();
+        this.backendService.cancelRequest(internalId).then((res) => {
+            this.resetResponse();
+            this.loader.hide();
+        });
+    }
 
     onClickPrintBoxId(): void {
         // unimplemented
     }
 
     onClickPrintRequest(): void {
-        // unimplemented
-    }
-
-    onClickCancelRequest(): void {
         // unimplemented
     }
 }

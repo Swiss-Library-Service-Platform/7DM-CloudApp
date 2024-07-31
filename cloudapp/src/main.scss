@@ -5,7 +5,6 @@
     @include main-component-theme($theme, $typography);
 }
 
-
 @mixin global-styles {
     :root {
         height: 100%;
@@ -13,39 +12,12 @@
         --slsp-purple-light: #eeeef7;
         --slsp-purple-transparent: rgba(78, 74, 153, 0.1);
     }
-
     cloudapp-alert {
         font-weight: bold;
         position: absolute;
         top: 1rem;
         width: 100%;
         z-index: 99;
-    }
-
-    .mat-focused .mat-form-field-label {
-        /*change color of label*/
-        color: var(--slsp-purple) !important;
-    }
-
-    .mat-form-field-underline {
-        /*change color of underline*/
-        background-color: var(--slsp-purple) !important;
-    }
-
-    .mat-form-field-ripple {
-        /*change color of underline when focused*/
-        background-color: var(--slsp-purple) !important;
-    }
-
-    .info-test-env {
-        color: #963031;
-        border: 2px solid #963031;
-        text-align: center;
-        margin-top: 0.5rem;
-        margin-left: 0.5rem;
-        margin-right: 0.5rem;
-        padding: 0.5rem;
-        font-weight: bold;
     }
 }
 
@@ -69,6 +41,25 @@
 
 body[class*=cloudapp-theme] {
 
+    .mat-focused .mat-form-field-label {
+        /*change color of label*/
+        color: var(--slsp-purple) !important;
+    }
+
+    .mat-form-field-underline {
+        /*change color of underline*/
+        background-color: var(--slsp-purple) !important;
+    }
+
+    .mat-form-field-ripple {
+        /*change color of underline when focused*/
+        background-color: var(--slsp-purple) !important;
+    }
+
+    .mat-tab-body {
+        margin-top: 0 !important;
+    }
+    
     .mat-tab-group {
         flex-grow: 1;
     }
@@ -99,5 +90,55 @@ body[class*=cloudapp-theme] {
         opacity: 1 !important;
     }
 
+    .mat-warn {
+        color: #c94a41 !important;
+    }
+    .mat-success {
+        color: #4CAF50;
+    }
+}
+
+/* Input Header for each Tab */
+.header-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--slsp-purple-light);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    padding-left: 8px;
+    padding-right: 8px;
+
+    .mat-flat-button {
+        margin-left: 1rem;
+        height: fit-content;
+    }
+
+    .header-area-box-id {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+
+        .mat-form-field {
+            width: 100%;
+        }
+    }
+
+    .header-area-request-area {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        column-gap: 4px;
+
+        .header-area-request-id {
+            width: 100%;
+        }
+        .header-area-request-button {
+            display: flex;
+            height: fit-content;
+            align-items: center;
+            white-space: nowrap;
+        }
+    }
 
 }

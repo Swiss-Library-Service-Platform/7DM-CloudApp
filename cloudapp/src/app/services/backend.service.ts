@@ -19,7 +19,6 @@ export class BackendService {
   
   private isInitialized = false;
   private initData: Object;
-  private isProdEnvironment: boolean = false;
   private baseUrl: string =  'http://localhost:4201/api/v1'; // 'https://7dmproxy.swisscovery.network/api/v1'; //
   httpOptions: {};
 
@@ -30,8 +29,6 @@ export class BackendService {
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
     private alert: AlertService,
-    private translate: TranslateService,
-    private restService: CloudAppRestService,
   ) { }
 
   getTodaysRequestsObject(): Observable<Array<RequestInfo>> {
@@ -174,6 +171,32 @@ export class BackendService {
       this.http.get<RequestInfo[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`,  { params, ...this.httpOptions }).subscribe(
         response => {
           this.todaysRequests = response;
+          this._setObservableTodaysRequestsObject(response);
+          resolve(true);
+        },
+        error => {
+          console.error(error);
+          reject(false);
+        }
+      );
+    });
+  }
+
+  /**
+   * Cancel a request
+   * 
+   * @param {string} internalId
+   * @returns {Promise<boolean>}
+   */
+  async cancelRequest(internalId: string): Promise<boolean> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedRequestId = encodeURIComponent(internalId);
+
+    return new Promise((resolve, reject) => {
+      this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
+        response => {
+          this.todaysRequests = this.todaysRequests.filter(request => request.internal_id !== internalId);
           this._setObservableTodaysRequestsObject(this.todaysRequests);
           resolve(true);
         },

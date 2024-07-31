@@ -34,17 +34,18 @@
             "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library.",
             "INVALID_REQUEST_ID": "Invalid request ID.",
             "REQUEST_ALREADY_IN_DATABASE": "Request already sent.",
-            "UNAUTHORIZED": "Unauthorized request."
+            "UNAUTHORIZED": "Unauthorized request.",
+            "BOX_ID_NOT_FOUND": "Box ID not found, please check it."
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
         "ContactSupport3": "with the following error code if you have any questions.",
         "Status": {
-            "Loading_Request": "Retrieving request..."
+            "Loading_Request": "Retrieving request...",
+            "Cancelling_Request": "Cancelling request..."
         },
         "SendTo7DM": "Send to 7DM",
-        "RequestSent1": "Item ",
-        "RequestSent2": " transfer order sent to 7DM.",
+        "RequestSent": "Item{{barcode}} transfer order sent to 7DM",
         "RequestInfo": {
             "Barcode": "Barcode",
             "BoxId": "Box ID",
@@ -56,6 +57,10 @@
         }
     },
     "Today": {
-        "Search": "Barcode, Box ID, Request ID, Destination"
+        "Search": "Barcode, Box ID, Request ID, Destination",
+        "Status": {
+            "Searching_Requests": "Searching..."
+        },
+        "TodayRequests": "Requests sent to 7DM today"
     }
 }
