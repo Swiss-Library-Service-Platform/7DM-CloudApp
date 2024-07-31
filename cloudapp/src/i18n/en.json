@@ -57,7 +57,7 @@
         }
     },
     "Today": {
-        "Search": "Barcode, Box ID, Request ID, Destination",
+        "Search": "Filter",
         "Status": {
             "Searching_Requests": "Searching..."
         },
