@@ -4,6 +4,7 @@ import { CloudAppEventsService, Entity, AlertService, CloudAppRestService } from
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { RequestInfo } from '../models/RequestInfo.model';
+import { BoxLabel } from '../models/BoxLabel.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -17,8 +18,9 @@ import { RequestInfo } from '../models/RequestInfo.model';
 export class BackendService {
   
   private isInitialized = false;
-  private initData: Object
-  private baseUrl: string = 'https://7dmproxy.swisscovery.network/api/v1'; // 'http://localhost:4201/api/v1';
+  private initData: Object;
+  private isProdEnvironment: boolean = false;
+  private baseUrl: string =  'http://localhost:4201/api/v1'; // 'https://7dmproxy.swisscovery.network/api/v1'; //
   httpOptions: {};
 
   constructor(
@@ -36,12 +38,16 @@ export class BackendService {
    * @return {*}  {Promise<void>}
    * @memberof LibraryManagementService
    */
-  async init(initData: Object): Promise<void> {
+  async init(): Promise<void> {
     if (this.isInitialized) {
       return;
     }
-    this.initData = initData;
-    console.log('initData', this.initData);
+    this.initData = await this.eventsService.getInitData().toPromise();
+    /* FIXME: We don't need the isProdEnvironment check currently, do we?
+    let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
+        currentUrl = this.initData["urls"]["alma"];
+    this.isProdEnvironment = !regExp.test(currentUrl);
+    */
     let authToken = await this.eventsService.getAuthToken().toPromise();
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -77,13 +83,56 @@ export class BackendService {
    * Looks up a request in the API
    * 
    */
-  async lookUpRequest(requestId: string): Promise<RequestInfo> {
+  async sendRequestTo7DM(requestId: string, boxId: string): Promise<RequestInfo> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedRequestId = encodeURIComponent(requestId);
     let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedBoxId = encodeURIComponent(boxId);
 
     return new Promise((resolve, reject) => {
-      this.http.get<RequestInfo>(`${this.baseUrl}/requests/${escapedRequestId}/libraries/${escapedLibraryCode}`, this.httpOptions).subscribe(
+      this.http.post<RequestInfo>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { 
+        request_id: escapedRequestId,
+        box_id: escapedBoxId
+      }, this.httpOptions).subscribe(
+        response => {
+          resolve(response);
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  /**
+   * Retrieve the active box label of this library
+   * @returns either the active box label or null
+  */
+  async retrieveActiveBoxLabel(): Promise<BoxLabel> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    return new Promise((resolve, reject) => {
+      this.http.get<BoxLabel>(`${this.baseUrl}/boxlabels/${escapedLibraryCode}`, this.httpOptions).subscribe(
+        response => {
+          resolve(response);
+        },
+        error => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  /**
+   * Generate a new Box Label
+  */
+  async generateBoxLabel(): Promise<BoxLabel> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    return new Promise((resolve, reject) => {
+      this.http.post<BoxLabel>(`${this.baseUrl}/boxlabels/${escapedLibraryCode}`, null, this.httpOptions).subscribe(
         response => {
           resolve(response);
         },

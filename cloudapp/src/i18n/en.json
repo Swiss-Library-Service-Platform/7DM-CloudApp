@@ -29,7 +29,10 @@
             "BAD_STATUS": "Request ID found, but this request cannot be sent to 7DM. Request status is ",
             "WRONG_LOCATION": "Request ID found, but the currently selected location is not related to the sender library",
             "SENDER_NON_COURIER_LIBRARY": "Sender library is not SLSP courier valid library.",
-            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library."
+            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library.",
+            "INVALID_REQUEST_ID": "Invalid request ID.",
+            "REQUEST_ALREADY_IN_DATABASE": "Request already sent.",
+            "UNAUTHORIZED": "Unauthorized request."
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",

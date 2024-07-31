@@ -14,10 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class MainComponent implements OnInit {
-    data: InitData;
-    authToken: string;
     isLibraryAllowed: boolean = false;
-    isProdEnvironment: boolean = false;
     isInitialized: boolean = false;
 
     constructor(
@@ -51,24 +48,16 @@ export class MainComponent implements OnInit {
         const statusText = await this.translateService.get('Main.Status.Initializing').toPromise();
         this.status.set(statusText);
 
-        this.data = await this.eventsService.getInitData().toPromise();
-        let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
-            currentUrl = this.data["urls"]["alma"];
-        this.isProdEnvironment = !regExp.test(currentUrl); // FIXME: not used currently, do we need it?
-
-        this.backendService.init(this.data).then(() => {
-            this.eventsService.getAuthToken().subscribe(authToken => {
-                this.authToken = authToken
-                this.backendService.checkIfLibaryAllowed().then(allowed => {
-                    this.isLibraryAllowed = allowed;
-                    console.log('MainComponent: ngOnInit: allowed', allowed);
-                }).catch(error => {
-                    console.log('MainComponent: ngOnInit: error', error);
-                    this.isLibraryAllowed = false;
-                }).finally(() => {
-                    this.isInitialized = true;
-                    this.loader.hide();
-                });
+        this.backendService.init().then(() => {
+            this.backendService.checkIfLibaryAllowed().then(allowed => {
+                this.isLibraryAllowed = allowed;
+                console.log('MainComponent: ngOnInit: allowed', allowed);
+            }).catch(error => {
+                console.log('MainComponent: ngOnInit: error', error);
+                this.isLibraryAllowed = false;
+            }).finally(() => {
+                this.isInitialized = true;
+                this.loader.hide();
             });
         });
     }

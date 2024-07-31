@@ -1,9 +1,13 @@
 
 export interface RequestInfo {
+    internal_id: string;
+    external_id: string;
+    timestamp: Date;
+    sending_library: string;
+    destination_library: string;
 	barcode: string;
     type: string;
-    sender: string;
-    destination: string;
-    request_id: string;
-    seven_dm_code: string;
+    box_id: string;
+    status: string;
+    message: string;
 }

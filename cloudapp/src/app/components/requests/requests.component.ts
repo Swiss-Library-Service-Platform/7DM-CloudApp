@@ -42,9 +42,26 @@ export class RequestsComponent implements OnInit {
         return this._status;
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        this.backendService.retrieveActiveBoxLabel().then(response => {
+            this.inputBoxId = response.id;
+        });
+    }
 
-    onClickLookUpRequest(): void {
+    onClickRefreshBoxId(): void {
+        this._loader.show();
+        this.status.set(this.translateService.instant("Requests.Status.Loading_BoxId"));
+
+        this.backendService.generateBoxLabel().then(response => {
+            this.inputBoxId = response.id;
+        }).catch(error => {
+            alert("Error: " + error);
+        }).finally(() => {
+            this._loader.hide();
+        });
+    }
+
+    onClickSendRequest(): void {
         this._loader.show();
         this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
 
@@ -53,7 +70,7 @@ export class RequestsComponent implements OnInit {
         this.errorMessage = null;
         this.errorId = null;
 
-        this.backendService.lookUpRequest(this.inputRequestId).then(response => {
+        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             this.infoResponse = response;
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
@@ -63,10 +80,7 @@ export class RequestsComponent implements OnInit {
             } else if (error.error.type == "WRONG_LOCATION") {
                 this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
             }
-            // REQUEST_ID_NOT_FOUND,
-            // BAD_STATUS,
-            // SENDER_NON_COURIER_LIBRARY,
-            // DESTINATION_NON_COURIER_LIBRARY,
+            // ALL OTHER ERROR TYPES
             else {
                 this.errorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }
@@ -77,9 +91,7 @@ export class RequestsComponent implements OnInit {
         });
     }
 
-    onClickRefreshBoxId(): void {
-        // unimplemented
-    }
+  
 
     onClickPrintBoxId(): void {
         // unimplemented

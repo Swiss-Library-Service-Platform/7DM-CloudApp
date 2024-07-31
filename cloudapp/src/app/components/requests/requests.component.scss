@@ -11,6 +11,17 @@
         margin-left: 1rem;
         height: fit-content;
     }
+
+    .search-box-box-id {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+
+        .mat-form-field {
+            width: 100%;
+        }
+    }
 }
 
 .info-response {
