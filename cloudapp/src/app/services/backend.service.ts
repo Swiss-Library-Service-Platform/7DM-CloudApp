@@ -19,7 +19,7 @@ export class BackendService {
   
   private isInitialized = false;
   private initData: Object;
-  private baseUrl: string =  'http://localhost:4201/api/v1'; // 'https://7dmproxy.swisscovery.network/api/v1'; //
+  private baseUrl: string =  'https://7dmproxy.swisscovery.network/api/v1'; //'http://localhost:4201/api/v1'; //  FIXME: this needs to be set automatically
   httpOptions: {};
 
   public todaysRequests: Array<RequestInfo> = [];
