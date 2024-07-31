@@ -69,7 +69,10 @@
 
 body[class*=cloudapp-theme] {
 
-
+    .mat-tab-group {
+        flex-grow: 1;
+    }
+    
     .mat-tab-group.mat-primary .mat-ink-bar {
         border-radius: 5px;
         height: 5px;

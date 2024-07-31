@@ -1,0 +1,42 @@
+<div class="request-info-table-wrapper">
+    <table class="request-info-table">
+        <tr>
+            <!-- Barcode -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
+            <td> {{ requestInfo.barcode }} </td>
+        </tr>
+        <tr>
+            <!-- Type  -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Type' | translate }}</th>
+            <td> {{ requestInfo.type }} </td>
+        </tr>
+        <tr>
+            <!-- Sender -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
+            <td> {{ requestInfo.sending_library }} </td>
+        </tr>
+        <tr>
+            <!-- Destination -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
+            <td> {{ requestInfo.destination_library }} </td>
+        </tr>
+        <tr>
+            <!-- Request ID -->
+            <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
+            <td> {{ requestInfo.internal_id }} </td>
+        </tr>
+        <tr>
+            <!-- Box ID -->
+            <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
+            <td> {{ requestInfo.box_id }} </td>
+        </tr>
+    </table>
+    <div class="request-info-table-actions">
+        <button [disabled]="true" mat-icon-button (click)="onClickPrintRequest()">
+            <mat-icon>print</mat-icon>
+        </button>
+        <button [disabled]="true" mat-icon-button (click)="onClickCancelRequest()" color="warn">
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </div>
+</div>

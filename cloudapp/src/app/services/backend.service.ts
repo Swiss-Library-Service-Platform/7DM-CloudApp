@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CloudAppEventsService, Entity, AlertService, CloudAppRestService } from '@exlibris/exl-cloudapp-angular-lib';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 import { RequestInfo } from '../models/RequestInfo.model';
 import { BoxLabel } from '../models/BoxLabel.model';
@@ -23,6 +23,9 @@ export class BackendService {
   private baseUrl: string =  'http://localhost:4201/api/v1'; // 'https://7dmproxy.swisscovery.network/api/v1'; //
   httpOptions: {};
 
+  public todaysRequests: Array<RequestInfo> = [];
+  private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestInfo>>(new Array<RequestInfo>());
+
   constructor(
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
@@ -30,6 +33,15 @@ export class BackendService {
     private translate: TranslateService,
     private restService: CloudAppRestService,
   ) { }
+
+  getTodaysRequestsObject(): Observable<Array<RequestInfo>> {
+    return this._todaysRequestsObject.asObservable();
+  }
+
+
+  private _setObservableTodaysRequestsObject(todaysRequests: Array<RequestInfo>): void {
+    this._todaysRequestsObject.next(todaysRequests);
+  }
 
   /**
    * Initializes service
@@ -95,6 +107,7 @@ export class BackendService {
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
         response => {
+          this.todaysRequests.push(response);
           resolve(response);
         },
         error => {
@@ -138,6 +151,35 @@ export class BackendService {
         },
         error => {
           reject(error);
+        }
+      );
+    });
+  }
+
+  /**
+   * Get all requests for the current library
+   * 
+   * @returns {Promise<RequestInfo[]>}
+  */
+  async getRequests(searchString: string = null): Promise<boolean> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    let params = new HttpParams();
+    if (searchString) {
+      params = params.set('search', searchString);
+    }
+
+    return new Promise((resolve, reject) => {
+      this.http.get<RequestInfo[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`,  { params, ...this.httpOptions }).subscribe(
+        response => {
+          this.todaysRequests = response;
+          this._setObservableTodaysRequestsObject(this.todaysRequests);
+          resolve(true);
+        },
+        error => {
+          console.error(error);
+          reject(false);
         }
       );
     });

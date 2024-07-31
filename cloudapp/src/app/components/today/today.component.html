@@ -1,0 +1,17 @@
+<!-- Input Box ID + Request ID -->
+<div class="search-box">
+    <div class="search-box-box-id">
+        <mat-form-field>
+            <mat-label>{{ 'Today.Search' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputSearch" (keyup.enter)="onClickSearch()">
+        </mat-form-field>
+        <button mat-icon-button (click)="onClickSearch()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+</div>
+
+<!-- Request Info for each of requests Today -->
+<div class="info-response" *ngIf="todayRequests">
+    <app-request-info *ngFor="let request of todayRequests" [requestInfo]="request"></app-request-info>
+</div>

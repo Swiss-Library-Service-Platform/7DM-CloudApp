@@ -1,6 +1,8 @@
 {
     "Main": {
         "Requests": "Requests",
+        "Today": "Today",
+        "History": "History",
         "Search": "Search",
         "Status": {
             "Initializing": "Initializing..."
@@ -52,5 +54,8 @@
             "RequestId": "Request ID",
             "7DMCode":"7DM code"
         }
+    },
+    "Today": {
+        "Search": "Barcode, Box ID, Request ID, Destination"
     }
 }

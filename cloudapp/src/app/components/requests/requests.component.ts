@@ -72,6 +72,7 @@ export class RequestsComponent implements OnInit {
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             this.infoResponse = response;
+            this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.errorMessage = this.translateService.instant("Requests.Error.DEFAULT");

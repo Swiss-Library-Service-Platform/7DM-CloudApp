@@ -24,7 +24,6 @@
             {{ 'Requests.SendTo7DM' | translate }}
         </button>
     </div>
-
 </div>
 
 <!-- Request Info -->
@@ -34,48 +33,7 @@
         {{ infoResponse.barcode }}
         {{ 'Requests.RequestSent2' | translate }}
     </div>
-    <div class="info-table-wrapper">
-        <table class="info-table">
-            <tr>
-                <!-- Barcode -->
-                <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
-                <td> {{ infoResponse.barcode }} </td>
-            </tr>
-            <tr>
-                <!-- Type  -->
-                <th scope="row"> {{ 'Requests.RequestInfo.Type' | translate }}</th>
-                <td> {{ infoResponse.type }} </td>
-            </tr>
-            <tr>
-                <!-- Sender -->
-                <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
-                <td> {{ infoResponse.sending_library }} </td>
-            </tr>
-            <tr>
-                <!-- Destination -->
-                <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
-                <td> {{ infoResponse.destination_library }} </td>
-            </tr>
-            <tr>
-                <!-- Request ID -->
-                <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
-                <td> {{ infoResponse.internal_id }} </td>
-            </tr>
-            <tr>
-                <!-- Box ID -->
-                <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
-                <td> {{ infoResponse.box_id }} </td>
-            </tr>
-        </table>
-        <div class="info-table-actions">
-            <button [disabled]="true" mat-icon-button (click)="onClickPrintRequest()">
-                <mat-icon>print</mat-icon>
-            </button>
-            <button [disabled]="true" mat-icon-button (click)="onClickCancelRequest()" color="warn">
-                <mat-icon>cancel</mat-icon>
-            </button>
-        </div>
-    </div>
+    <app-request-info [requestInfo]="infoResponse"></app-request-info>
 
 </div>
 
