@@ -17,7 +17,7 @@ export class RequestInfoComponent implements OnInit {
 
   @Input()
   onCancelRequest: (requestId: string) => void;
-  
+
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
@@ -31,5 +31,9 @@ export class RequestInfoComponent implements OnInit {
   onClickCancelRequest(): void {
     var requestId = this.requestInfo.internal_id;
     this.onCancelRequest(requestId);
+  }
+
+  onClickPrintRequest(): void {
+    // unimplemented
   }
 }

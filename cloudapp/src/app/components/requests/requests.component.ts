@@ -100,8 +100,4 @@ export class RequestsComponent implements OnInit {
     onClickPrintBoxId(): void {
         // unimplemented
     }
-
-    onClickPrintRequest(): void {
-        // unimplemented
-    }
 }
