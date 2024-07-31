@@ -30,7 +30,7 @@ export class RequestsComponent implements OnInit {
 
     ngOnInit(): void {
         this.backendService.retrieveActiveBoxLabel().then(response => {
-            this.inputBoxId = response.id;
+            this.inputBoxId = response.box_id;
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {
@@ -53,7 +53,7 @@ export class RequestsComponent implements OnInit {
         this.status.set(this.translateService.instant("Requests.Status.Loading_BoxId"));
 
         this.backendService.generateBoxLabel().then(response => {
-            this.inputBoxId = response.id;
+            this.inputBoxId = response.box_id;
         }).catch(error => {
             alert("Error: " + error);
         }).finally(() => {

@@ -1,6 +1,6 @@
 
 export interface BoxLabel {
-	id: string,
+	box_id: string,
     creation_time: Date,
     request_date: Date,
     library: any,
