@@ -42,7 +42,8 @@
         "ContactSupport3": "with the following error code if you have any questions.",
         "Status": {
             "Loading_Request": "Retrieving request...",
-            "Cancelling_Request": "Cancelling request..."
+            "Cancelling_Request": "Cancelling request...",
+            "Loading_BoxId": "Retrieving box ID..."
         },
         "SendTo7DM": "Send to 7DM",
         "RequestSent": "Item{{barcode}} transfer order sent to 7DM",
@@ -61,6 +62,7 @@
         "Status": {
             "Searching_Requests": "Searching..."
         },
-        "TodayRequests": "Requests sent to 7DM today"
+        "TodayRequests": "Requests sent to 7DM today",
+        "NoRequests": "No requests sent to 7DM today"
     }
 }

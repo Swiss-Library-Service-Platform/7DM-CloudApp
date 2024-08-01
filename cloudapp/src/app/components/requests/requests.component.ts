@@ -30,7 +30,7 @@ export class RequestsComponent implements OnInit {
 
     ngOnInit(): void {
         this.backendService.retrieveActiveBoxLabel().then(response => {
-            this.inputBoxId = response.box_id;
+            this.inputBoxId = response?.box_id;
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {

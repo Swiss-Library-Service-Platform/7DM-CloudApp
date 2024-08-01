@@ -17,7 +17,6 @@
             <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputRequestId"
                 (keyup.enter)="onClickSendRequest()">
-
         </mat-form-field>
         <button class="header-area-request-button" (click)="onClickSendRequest()" [disabled]="!inputRequestId || !inputBoxId">
             <mat-icon>send</mat-icon>

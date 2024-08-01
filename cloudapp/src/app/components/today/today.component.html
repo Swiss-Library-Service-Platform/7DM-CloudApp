@@ -12,13 +12,19 @@
 </div>
 
 <!-- Request Info for each of requests Today -->
-<div class="info-response" *ngIf="todayRequests">
+<div class="info-response">
     <h1 class="info-response-title">
         <mat-icon inline=true>today</mat-icon>
         {{ 'Today.TodayRequests' | translate }}
     </h1>
-    <app-request-info *ngFor="let request of todayRequests" 
-        [requestInfo]="request"
-        [onCancelRequest]="cancelRequest.bind(this)"  
-    ></app-request-info>
+    <!-- If there are requests today -->
+    <ng-container *ngIf="todayRequests">
+        <app-request-info *ngFor="let request of todayRequests" [requestInfo]="request"
+            [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+    </ng-container>
+
+    <!-- If there are no requests today -->
+    <div *ngIf="todayRequests.length === 0" class="no-requests">
+        <p>{{ 'Today.NoRequests' | translate }}</p>
+    </div>
 </div>

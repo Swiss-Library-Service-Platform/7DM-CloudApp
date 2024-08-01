@@ -128,7 +128,7 @@ body[class*=cloudapp-theme] {
         display: flex;
         width: 100%;
         align-items: center;
-        column-gap: 4px;
+        column-gap: 8px;
 
         .header-area-request-id {
             width: 100%;
@@ -138,6 +138,14 @@ body[class*=cloudapp-theme] {
             height: fit-content;
             align-items: center;
             white-space: nowrap;
+            background: white;
+            border-radius: 5px;
+            border: 2px solid var(--slsp-purple);
+            cursor: pointer;
+
+            &:disabled {
+                border: 2px solid #ccc;
+            }
         }
     }
 

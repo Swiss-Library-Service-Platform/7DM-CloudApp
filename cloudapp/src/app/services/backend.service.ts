@@ -17,9 +17,11 @@ import { BoxLabel } from '../models/BoxLabel.model';
 })
 export class BackendService {
   
+  private isDevelopmentEnviroment: boolean = false;
   private isInitialized = false;
   private initData: Object;
-  private baseUrl: string =  'https://7dmproxy.swisscovery.network/api/v1'; //'http://localhost:4201/api/v1'; //  FIXME: this needs to be set automatically
+  private baseUrlProd: string =  'https://7dmproxy.swisscovery.network/api/v1';
+  private baseUrlEnv: string = 'http://localhost:4201/api/v1';
   httpOptions: {};
 
   public todaysRequests: Array<RequestInfo> = [];
@@ -40,6 +42,10 @@ export class BackendService {
     this._todaysRequestsObject.next(todaysRequests);
   }
 
+  private get baseUrl(): string {
+    return this.isDevelopmentEnviroment ? this.baseUrlEnv : this.baseUrlProd;
+  }
+
   /**
    * Initializes service
    * Gets the Alma Auth Token and defined HTTPOptions
@@ -52,11 +58,9 @@ export class BackendService {
       return;
     }
     this.initData = await this.eventsService.getInitData().toPromise();
-    /* FIXME: We don't need the isProdEnvironment check currently, do we?
-    let regExp = new RegExp('^https(.*)psb(.*)com/?$|.*localhost.*'), // contains "PSB" (Premium Sandbox) or "localhost"
+    let regExp = new RegExp('^.*localhost.*'), // contains "localhost"
         currentUrl = this.initData["urls"]["alma"];
-    this.isProdEnvironment = !regExp.test(currentUrl);
-    */
+    this.isDevelopmentEnviroment = regExp.test(currentUrl);
     let authToken = await this.eventsService.getAuthToken().toPromise();
     this.httpOptions = {
       headers: new HttpHeaders({
