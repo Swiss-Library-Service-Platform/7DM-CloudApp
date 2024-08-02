@@ -13,12 +13,12 @@
         <tr>
             <!-- Sender -->
             <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
-            <td> {{ requestInfo.sending_library_name }} </td>
+            <td> {{ requestInfo.sending_library_name }} ({{ requestInfo.sending_library_alma_code }})</td>
         </tr>
         <tr>
             <!-- Destination -->
             <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
-            <td> {{ requestInfo.destination_library_name }} </td>
+            <td> {{ requestInfo.destination_library_name }} ({{ requestInfo.destination_library_alma_code }})</td>
         </tr>
         <tr>
             <!-- Request ID -->
