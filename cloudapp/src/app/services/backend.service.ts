@@ -109,6 +109,7 @@ export class BackendService {
       }, this.httpOptions).subscribe(
         response => {
           this.todaysRequests.push(response);
+          this._setObservableTodaysRequestsObject(this.todaysRequests);
           resolve(response);
         },
         error => {

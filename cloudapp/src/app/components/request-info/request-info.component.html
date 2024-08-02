@@ -8,17 +8,17 @@
         <tr>
             <!-- Type  -->
             <th scope="row"> {{ 'Requests.RequestInfo.Type' | translate }}</th>
-            <td> {{ requestInfo.type }} </td>
+            <td> {{ 'Requests.RequestInfo.TypeValue.' + requestInfo.type | translate }} </td>
         </tr>
         <tr>
             <!-- Sender -->
             <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
-            <td> {{ requestInfo.sending_library }} </td>
+            <td> {{ requestInfo.sending_library_name }} </td>
         </tr>
         <tr>
             <!-- Destination -->
             <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
-            <td> {{ requestInfo.destination_library }} </td>
+            <td> {{ requestInfo.destination_library_name }} </td>
         </tr>
         <tr>
             <!-- Request ID -->

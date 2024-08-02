@@ -3,9 +3,9 @@
     <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Today.Search' | translate }}</mat-label>
-            <input matInput placeholder="ID" type="text" [(ngModel)]="inputSearch" (keyup.enter)="onClickSearch()">
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputSearch" (keyup)="onFilterRequests()">
         </mat-form-field>
-        <button mat-icon-button (click)="onClickSearch()">
+        <button mat-icon-button (click)="onFilterRequests()">
             <mat-icon>search</mat-icon>
         </button>
     </div>
@@ -18,13 +18,18 @@
         {{ 'Today.TodayRequests' | translate }}
     </h1>
     <!-- If there are requests today -->
-    <ng-container *ngIf="todayRequests">
-        <app-request-info *ngFor="let request of todayRequests" [requestInfo]="request"
+    <ng-container *ngIf="filteredRequests">
+        <app-request-info *ngFor="let request of filteredRequests" [requestInfo]="request"
             [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
     </ng-container>
 
     <!-- If there are no requests today -->
-    <div *ngIf="todayRequests.length === 0" class="no-requests">
+    <div *ngIf="filteredRequests.length === 0 && !inputSearch" class="no-requests">
         <p>{{ 'Today.NoRequests' | translate }}</p>
+    </div>
+
+    <!-- If there are no requests found upon search -->
+    <div *ngIf="filteredRequests.length === 0 && inputSearch" class="no-requests">
+        <p>{{ 'Today.NoRequestsSearch' | translate }}</p>
     </div>
 </div>
