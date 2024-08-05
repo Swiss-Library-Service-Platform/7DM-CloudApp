@@ -77,7 +77,10 @@ export class RequestsComponent implements OnInit {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
             } else if (error.error.type == "WRONG_LOCATION") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
+            } else if (error.error.type == "DESTINATION_NOT_FOUND") {
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.libraryCode + ")";
             }
+
             // ALL OTHER ERROR TYPES
             else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);

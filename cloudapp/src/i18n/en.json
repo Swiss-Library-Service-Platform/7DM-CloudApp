@@ -36,7 +36,8 @@
             "REQUEST_ALREADY_IN_DATABASE": "Request already sent.",
             "UNAUTHORIZED": "Unauthorized request.",
             "BOX_ID_NOT_FOUND": "Box ID not found, please check it.",
-            "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same."
+            "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same.",
+            "DESTINATION_NOT_FOUND": "Destination library not found."
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
