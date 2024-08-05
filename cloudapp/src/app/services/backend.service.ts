@@ -66,6 +66,7 @@ export class BackendService {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${authToken}`,
         //'Content-Type': 'application/json'
+        'Accept': 'application/json'
       }),
       withCredentials: true
     };
@@ -204,6 +205,33 @@ export class BackendService {
           this.todaysRequests = this.todaysRequests.filter(request => request.internal_id !== internalId);
           this._setObservableTodaysRequestsObject(this.todaysRequests);
           resolve(true);
+        },
+        error => {
+          console.error(error);
+          reject(false);
+        }
+      );
+    });
+  }
+
+  /**
+   * Test the generation of a JSON object to send to 7DM
+   * @param {string} boxId
+   * 
+   * @returns {Promise<any>}
+   */
+  async generateJson(boxId: string): Promise<any> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedBoxId = encodeURIComponent(boxId);
+
+    let params = new HttpParams();
+    params = params.set('boxId', escapedBoxId);
+    
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.baseUrl}/testjson/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
+        response => {
+          resolve(response);
         },
         error => {
           console.error(error);

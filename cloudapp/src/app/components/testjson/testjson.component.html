@@ -1,0 +1,17 @@
+<!-- Input Box ID -->
+<div class="header-area">
+    <div class="header-area-request-area">
+        <mat-form-field class="header-area-request-id">
+            <mat-label> Box ID </mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputBoxId"
+                (keyup.enter)="onClickGenerateJson()">
+        </mat-form-field>
+        <button class="header-area-request-button" (click)="onClickGenerateJson()" [disabled]="!inputBoxId">
+            Generate JSON
+        </button>
+    </div>
+</div>
+
+<div *ngIf="responseJson">
+    <textarea [ngModel]="responseJson | json" disabled></textarea>
+</div>
