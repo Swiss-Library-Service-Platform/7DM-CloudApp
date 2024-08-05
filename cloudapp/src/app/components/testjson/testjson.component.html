@@ -15,3 +15,12 @@
 <div *ngIf="responseJson">
     <textarea [ngModel]="responseJson | json" disabled></textarea>
 </div>
+
+
+<div *ngIf="responseError">
+    <h1>
+        <mat-icon color="warn" inline=true>error</mat-icon>
+        {{ responseError }}
+    </h1>
+</div>
+

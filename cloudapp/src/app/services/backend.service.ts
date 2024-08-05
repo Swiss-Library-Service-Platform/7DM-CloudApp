@@ -235,7 +235,7 @@ export class BackendService {
         },
         error => {
           console.error(error);
-          reject(false);
+          reject(error);
         }
       );
     });

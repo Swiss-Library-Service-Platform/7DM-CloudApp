@@ -10,6 +10,7 @@ export class TestjsonComponent implements OnInit {
 
   inputBoxId: string = '';
   responseJson: string = '';
+  responseError: string = '';
 
   constructor(
     private backendService: BackendService
@@ -24,6 +25,10 @@ export class TestjsonComponent implements OnInit {
   onClickGenerateJson(): void {
     this.backendService.generateJson(this.inputBoxId).then(response => {
       this.responseJson = response;
+      this.responseError = '';
+    }).catch(error => {
+      this.responseJson = '';
+      this.responseError = error.error?.message;
     });
   }
 
