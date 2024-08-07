@@ -68,7 +68,7 @@ export class BackendService {
         //'Content-Type': 'application/json'
         'Accept': 'application/json'
       }),
-      withCredentials: true
+      withCredentials: true,
     };
   }
 
@@ -230,6 +230,33 @@ export class BackendService {
     
     return new Promise((resolve, reject) => {
       this.http.get(`${this.baseUrl}/testjson/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
+        response => {
+          resolve(response);
+        },
+        error => {
+          console.error(error);
+          reject(error);
+        }
+      );
+    });
+  }
+
+  /**
+   * Get boxlabel pdf
+   * 
+   * @param {string} boxId
+   * @returns {Promise<any>}
+   */
+  async getBoxLabelPdf(boxId: string): Promise<any> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedBoxId = encodeURIComponent(boxId);
+    let localHttpOptions = this.httpOptions;
+    localHttpOptions['responseType'] = 'blob';
+    localHttpOptions['headers'] = localHttpOptions['headers'].set('Accept', 'application/pdf');
+
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/pdf`, localHttpOptions).subscribe(
         response => {
           resolve(response);
         },

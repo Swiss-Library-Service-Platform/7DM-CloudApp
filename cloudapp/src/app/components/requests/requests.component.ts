@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { BackendService } from '../../services/backend.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { Subscription } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-requests',
@@ -25,6 +26,7 @@ export class RequestsComponent implements OnInit {
         private translateService: TranslateService,
         private loader: LoadingIndicatorService,
         private status: StatusIndicatorService,
+        protected sanitizer: DomSanitizer
     ) { }
 
 
@@ -101,6 +103,12 @@ export class RequestsComponent implements OnInit {
     }
 
     onClickPrintBoxId(): void {
-        // unimplemented
+        this.backendService.getBoxLabelPdf(this.inputBoxId).then(response => {
+            let url = URL.createObjectURL(response);
+            console.log(url);
+            window.open(url, '_blank');
+        }).catch(error => {
+            alert("Error: " + error); // FIXME: show error message
+        });
     }
 }
