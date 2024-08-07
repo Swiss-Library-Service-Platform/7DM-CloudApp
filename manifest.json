@@ -20,7 +20,7 @@
       "frameSrc": [
          "https://7dmproxy.swisscovery.network/",
          "http://localhost:4201/",
-         "http://localhost:4200/",
+         "http://localhost:4200/"
       ]
    },
    "icon": {
