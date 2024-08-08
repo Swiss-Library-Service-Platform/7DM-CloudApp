@@ -50,19 +50,6 @@ export class RequestsComponent implements OnInit {
             }
         );
     }
-
-    async loadPDF() {
-        const pdfBlob = await this.backendService.getBoxLabelPdf(this.inputBoxId);
-        const arrayBuffer = await pdfBlob.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1 });
-        const renderContext = {
-            canvasContext: this.ctx,
-            viewport: viewport
-        };
-        await page.render(renderContext).promise; // Up until this point, the code works fine
-    }
     
     resetResponse(): void {
         this.responseRequest = null;
@@ -124,5 +111,18 @@ export class RequestsComponent implements OnInit {
 
     onClickPrintBoxId(): void {
         this.loadPDF();
+    }
+
+    async loadPDF() {
+        const pdfBlob = await this.backendService.getBoxLabelPdf(this.inputBoxId);
+        const arrayBuffer = await pdfBlob.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 1 });
+        const renderContext = {
+            canvasContext: this.ctx,
+            viewport: viewport
+        };
+        await page.render(renderContext).promise; // Up until this point, the code works fine
     }
 }
