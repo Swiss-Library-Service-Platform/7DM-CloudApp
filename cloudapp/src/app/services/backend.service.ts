@@ -241,6 +241,21 @@ export class BackendService {
     });
   }
 
+  /*
+    * Get url of pdf
+    * @param {string} boxId
+    * @returns {Promise<any>}
+    */
+  async getBoxLabelPdfUrl(boxId: string): Promise<any> {
+
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedBoxId = encodeURIComponent(boxId);
+
+    return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`;
+
+  }
+
   /**
    * Get boxlabel pdf
    * 

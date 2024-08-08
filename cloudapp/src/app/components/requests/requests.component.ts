@@ -6,8 +6,6 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ViewChild, ElementRef } from '@angular/core';
-
-// PDFJS (workaround for loading pdf.worker.js)
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
 
@@ -50,7 +48,52 @@ export class RequestsComponent implements OnInit {
             }
         );
     }
-    
+
+    loadPDF(): void {
+        const pdfurl = `http://localhost:4201/api/v1/boxlabels/E02/${this.inputBoxId}/generatepdf`;
+        const loadingTask = pdfjsLib.getDocument(pdfurl);
+        loadingTask.promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+                const scale = 1;
+                const viewport = page.getViewport({ scale: scale });
+
+                this.canvas.nativeElement.height = viewport.height;
+                this.canvas.nativeElement.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: this.ctx,
+                    viewport: viewport
+                };
+
+                page.render(renderContext).promise.then(() => {
+                    this.printPDFWorking();
+                });
+            });
+        }, reason => {
+            console.error(reason);
+        });
+    }
+
+    printPDFWorking(): void {
+        const dataUrl = this.canvas.nativeElement.toDataURL();
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+            printWindow.document.write('<html><head><title>Print PDF</title></head><body>');
+            printWindow.document.write(`<img src="${dataUrl}" />`);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+
+            // Use setTimeout to delay the print command
+            setTimeout(() => {
+               // printWindow.focus();
+               // printWindow.print();
+               // printWindow.close();
+            }, 100); // Adjust the timeout as needed
+        }
+    }
+
+   
+
     resetResponse(): void {
         this.responseRequest = null;
         this.responseErrorMessage = null;
@@ -111,18 +154,5 @@ export class RequestsComponent implements OnInit {
 
     onClickPrintBoxId(): void {
         this.loadPDF();
-    }
-
-    async loadPDF() {
-        const pdfBlob = await this.backendService.getBoxLabelPdf(this.inputBoxId);
-        const arrayBuffer = await pdfBlob.arrayBuffer();
-        const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-        const page = await pdf.getPage(1);
-        const viewport = page.getViewport({ scale: 1 });
-        const renderContext = {
-            canvasContext: this.ctx,
-            viewport: viewport
-        };
-        await page.render(renderContext).promise; // Up until this point, the code works fine
     }
 }
