@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "allowJs":true,
+        "rootDir": ".",
+        "outDir": "dist",
+        "moduleResolution": "node",
+        "target": "ES2018",
+        "experimentalDecorators": true
+    },
+     "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "**/*.spec.ts",
+        "dist/**/*"
+    ]
+}

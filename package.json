@@ -22,8 +22,11 @@
     "@exlibris/exl-cloudapp-angular-lib": "^1.4.7",
     "@exlibris/exl-cloudapp-base": "^1.4.7",
     "@ngx-translate/core": "~13.0.0",
+    "@types/pdfjs-dist": "^2.10.377",
     "lodash": "~4.17.21",
+    "pdfjs-dist": "^2.0",
     "rxjs": "~6.5.5",
+    "typescript": "^4.1.6",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
@@ -40,7 +43,6 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "~1.5.4",
-    "postcss": "~8.3.0",
-    "typescript": "~4.1.5"
+    "postcss": "~8.3.0"
   }
 }

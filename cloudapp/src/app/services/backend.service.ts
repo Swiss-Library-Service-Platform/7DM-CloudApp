@@ -256,7 +256,7 @@ export class BackendService {
     localHttpOptions['headers'] = localHttpOptions['headers'].set('Accept', 'application/pdf');
 
     return new Promise((resolve, reject) => {
-      this.http.get(`${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/pdf`, localHttpOptions).subscribe(
+      this.http.get<Blob>(`${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`, localHttpOptions).subscribe(
         response => {
           resolve(response);
         },

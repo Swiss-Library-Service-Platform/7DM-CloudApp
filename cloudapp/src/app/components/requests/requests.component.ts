@@ -1,12 +1,15 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
-import { CloudAppEventsService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BackendService } from '../../services/backend.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ViewChild, ElementRef } from '@angular/core';
+
+// PDFJS (workaround for loading pdf.worker.js)
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
 
 @Component({
     selector: 'app-requests',
@@ -29,8 +32,12 @@ export class RequestsComponent implements OnInit {
         protected sanitizer: DomSanitizer
     ) { }
 
+    @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
+    ctx: CanvasRenderingContext2D;
 
     ngOnInit(): void {
+        this.ctx = this.canvas.nativeElement.getContext('2d');
+
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.box_id;
         });
@@ -44,6 +51,19 @@ export class RequestsComponent implements OnInit {
         );
     }
 
+    async loadPDF() {
+        const pdfBlob = await this.backendService.getBoxLabelPdf(this.inputBoxId);
+        const arrayBuffer = await pdfBlob.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+        const page = await pdf.getPage(1);
+        const viewport = page.getViewport({ scale: 1 });
+        const renderContext = {
+            canvasContext: this.ctx,
+            viewport: viewport
+        };
+        await page.render(renderContext).promise; // Up until this point, the code works fine
+    }
+    
     resetResponse(): void {
         this.responseRequest = null;
         this.responseErrorMessage = null;
@@ -103,12 +123,6 @@ export class RequestsComponent implements OnInit {
     }
 
     onClickPrintBoxId(): void {
-        this.backendService.getBoxLabelPdf(this.inputBoxId).then(response => {
-            let url = URL.createObjectURL(response);
-            console.log(url);
-            window.open(url, '_blank');
-        }).catch(error => {
-            alert("Error: " + error); // FIXME: show error message
-        });
+        this.loadPDF();
     }
 }
