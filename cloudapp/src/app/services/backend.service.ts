@@ -253,7 +253,6 @@ export class BackendService {
     let escapedBoxId = encodeURIComponent(boxId);
 
     return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`;
-
   }
 
   /**

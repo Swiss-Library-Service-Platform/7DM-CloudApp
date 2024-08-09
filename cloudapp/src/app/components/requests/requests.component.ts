@@ -49,7 +49,7 @@ export class RequestsComponent implements OnInit {
         );
     }
 
-    loadPDF(): void {
+    loadPDFWorking(): void {
         const pdfurl = `http://localhost:4201/api/v1/boxlabels/E02/${this.inputBoxId}/generatepdf`;
         const loadingTask = pdfjsLib.getDocument(pdfurl);
         loadingTask.promise.then(pdf => {
@@ -85,14 +85,21 @@ export class RequestsComponent implements OnInit {
 
             // Use setTimeout to delay the print command
             setTimeout(() => {
-               // printWindow.focus();
-               // printWindow.print();
-               // printWindow.close();
+                // printWindow.focus();
+                // printWindow.print();
+                // printWindow.close();
             }, 100); // Adjust the timeout as needed
         }
     }
 
-   
+    loadPDF(): void {
+        this.testPrintTesting();
+    }
+
+    async testPrintTesting(): Promise<void> {
+        const url = await this.backendService.getBoxLabelPdfUrl(this.inputBoxId);
+        window.open(url, '_blank');
+    }
 
     resetResponse(): void {
         this.responseRequest = null;
