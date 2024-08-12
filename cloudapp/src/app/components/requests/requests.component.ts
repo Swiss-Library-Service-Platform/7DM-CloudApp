@@ -6,8 +6,10 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ViewChild, ElementRef } from '@angular/core';
+/*
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
+*/
 
 @Component({
     selector: 'app-requests',
@@ -48,6 +50,7 @@ export class RequestsComponent implements OnInit {
             }
         );
     }
+    /*
 
     loadPDFWorking(): void {
         const pdfurl = `http://localhost:4201/api/v1/boxlabels/E02/${this.inputBoxId}/generatepdf`;
@@ -91,6 +94,7 @@ export class RequestsComponent implements OnInit {
             }, 100); // Adjust the timeout as needed
         }
     }
+    */
 
     loadPDF(): void {
         this.testPrintTesting();
