@@ -32,11 +32,12 @@ export class RequestsComponent implements OnInit {
         protected sanitizer: DomSanitizer
     ) { }
 
+    /*
     @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
     ctx: CanvasRenderingContext2D;
-
+    */
     ngOnInit(): void {
-        this.ctx = this.canvas.nativeElement.getContext('2d');
+        //this.ctx = this.canvas.nativeElement.getContext('2d');
 
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.box_id;
