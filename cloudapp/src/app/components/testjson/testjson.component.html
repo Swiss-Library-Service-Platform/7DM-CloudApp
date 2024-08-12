@@ -12,10 +12,15 @@
     </div>
 </div>
 
-<div *ngIf="responseJson">
+<div class="response-area" *ngIf="responseJson">
     <textarea [ngModel]="responseJson | json" disabled></textarea>
-</div>
+    
+    <button (click)="onClickSend()">
+        Sent to 7MD API
+    </button>
 
+    <textarea disabled *ngIf="response7DM" [ngModel]="response7DM | json"></textarea>
+</div>
 
 <div *ngIf="responseError">
     <h1>

@@ -12,6 +12,8 @@ export class TestjsonComponent implements OnInit {
   responseJson: string = '';
   responseError: string = '';
 
+  response7DM: string = '';
+
   constructor(
     private backendService: BackendService
   ) { }
@@ -29,6 +31,14 @@ export class TestjsonComponent implements OnInit {
     }).catch(error => {
       this.responseJson = '';
       this.responseError = error.error?.message;
+    });
+  }
+
+  onClickSend(): void {
+    this.backendService.sendJsonTo7DM(this.responseJson).then(response => {
+      this.response7DM = response;
+    }).catch(error => {
+      this.response7DM = error.error?.message;
     });
   }
 

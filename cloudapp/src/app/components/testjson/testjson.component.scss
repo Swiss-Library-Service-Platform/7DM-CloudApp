@@ -2,5 +2,27 @@ textarea {
     width: -webkit-fill-available;
     margin-top: 10px;
     height: 700px;
+}
 
+.response-area {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: center;
+
+    button {
+        display: flex;
+        width: fit-content;
+        height: fit-content;
+        align-items: center;
+        white-space: nowrap;
+        background: white;
+        border-radius: 5px;
+        border: 2px solid var(--slsp-purple);
+        cursor: pointer;
+    }
+
+    textarea {
+        height: 300px;
+    }
 }

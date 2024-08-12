@@ -281,4 +281,32 @@ export class BackendService {
       );
     });
   }
+
+
+  /**
+   * Send JSON to 7DM
+   * 
+   * @param {string} json
+   * @returns {Promise<any>}
+   */
+  async sendJsonTo7DM(json: string): Promise<any> {
+    const url7dm = 'https://pudosvc.7days-group.com/PUDOIntegrationSvc/pudosvc.svc/rtorder';
+    return new Promise((resolve, reject) => {
+      this.http.post(url7dm, json, 
+        {
+          headers: new HttpHeaders({
+            'Content-Type': 'text/plain'
+          })
+        }
+      ).subscribe(
+        response => {
+          resolve(response);
+        },
+        error => {
+          console.error(error);
+          reject(error);
+        }
+      );
+    });
+  }
 }
