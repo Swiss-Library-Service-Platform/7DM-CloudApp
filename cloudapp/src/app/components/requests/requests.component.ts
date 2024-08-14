@@ -5,11 +5,11 @@ import { StatusIndicatorService } from '../../services/status-indicator.service'
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ViewChild, ElementRef } from '@angular/core';
-/*
-import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
-*/
+
+// Set the worker source for pdfjs
+// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+// pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
+
 
 @Component({
     selector: 'app-requests',
@@ -36,6 +36,7 @@ export class RequestsComponent implements OnInit {
     @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
     ctx: CanvasRenderingContext2D;
     */
+
     ngOnInit(): void {
         //this.ctx = this.canvas.nativeElement.getContext('2d');
 
@@ -51,59 +52,20 @@ export class RequestsComponent implements OnInit {
             }
         );
     }
-    /*
 
-    loadPDFWorking(): void {
-        const pdfurl = `http://localhost:4201/api/v1/boxlabels/E02/${this.inputBoxId}/generatepdf`;
-        const loadingTask = pdfjsLib.getDocument(pdfurl);
-        loadingTask.promise.then(pdf => {
-            pdf.getPage(1).then(page => {
-                const scale = 1;
-                const viewport = page.getViewport({ scale: scale });
-
-                this.canvas.nativeElement.height = viewport.height;
-                this.canvas.nativeElement.width = viewport.width;
-
-                const renderContext = {
-                    canvasContext: this.ctx,
-                    viewport: viewport
-                };
-
-                page.render(renderContext).promise.then(() => {
-                    this.printPDFWorking();
-                });
-            });
-        }, reason => {
-            console.error(reason);
-        });
-    }
-
-    printPDFWorking(): void {
-        const dataUrl = this.canvas.nativeElement.toDataURL();
-        const printWindow = window.open('', '_blank');
-        if (printWindow) {
-            printWindow.document.write('<html><head><title>Print PDF</title></head><body>');
-            printWindow.document.write(`<img src="${dataUrl}" />`);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-
-            // Use setTimeout to delay the print command
-            setTimeout(() => {
-                // printWindow.focus();
-                // printWindow.print();
-                // printWindow.close();
-            }, 100); // Adjust the timeout as needed
-        }
-    }
-    */
-
-    loadPDF(): void {
-        this.testPrintTesting();
-    }
-
-    async testPrintTesting(): Promise<void> {
+    async onClickPrintBoxIdPdf(): Promise<void> {
         const url = await this.backendService.getBoxLabelPdfUrl(this.inputBoxId);
         window.open(url, '_blank');
+    }
+
+    async onClickPrintBoxIdHtml(): Promise<void> {
+        const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
+        window.open(url, '_blank');
+    }
+
+    async onClickPrintBoxIdJs(): Promise<void> {
+        const response = await this.backendService.generateJson(this.inputBoxId);
+        console.log(response);
     }
 
     resetResponse(): void {
@@ -164,7 +126,50 @@ export class RequestsComponent implements OnInit {
         });
     }
 
-    onClickPrintBoxId(): void {
-        this.loadPDF();
+    /*
+    // The build failed with pdf js, because we need tsconfig.json, and somehow it is not working
+    loadPdfWithPdfJs(): void {
+        const pdfurl = `http://localhost:4201/api/v1/boxlabels/E02/${this.inputBoxId}/generatepdf`;
+        const loadingTask = pdfjsLib.getDocument(pdfurl);
+        loadingTask.promise.then(pdf => {
+            pdf.getPage(1).then(page => {
+                const scale = 1;
+                const viewport = page.getViewport({ scale: scale });
+
+                this.canvas.nativeElement.height = viewport.height;
+                this.canvas.nativeElement.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: this.ctx,
+                    viewport: viewport
+                };
+
+                page.render(renderContext).promise.then(() => {
+                    this.printPdfWithPdfJs();
+                });
+            });
+        }, reason => {
+            console.error(reason);
+        });
     }
+
+    printPdfWithPdfJs(): void {
+        const dataUrl = this.canvas.nativeElement.toDataURL();
+        const printWindow = window.open('', '_blank');
+        if (printWindow) {
+            printWindow.document.write('<html><head><title>Print PDF</title></head><body>');
+            printWindow.document.write(`<img src="${dataUrl}" />`);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+
+            // Use setTimeout to delay the print command
+            setTimeout(() => {
+                // printWindow.focus();
+                // printWindow.print();
+                // printWindow.close();
+            }, 100); // Adjust the timeout as needed
+        }
+    }
+    */
+
 }
