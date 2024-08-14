@@ -17,7 +17,12 @@
          "popups": true,
          "downloads": true,
          "modals": true
-      }
+      },
+      "frameSrc": [
+         "https://7dmproxy.swisscovery.network/",
+         "http://localhost:4201/",
+         "https://pudosvc.7days-group.com/"
+      ]
    },
    "icon": {
       "type": "url",

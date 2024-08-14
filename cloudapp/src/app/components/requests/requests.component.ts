@@ -63,9 +63,12 @@ export class RequestsComponent implements OnInit {
         window.open(url, '_blank');
     }
 
-    async onClickPrintBoxIdJs(): Promise<void> {
-        const response = await this.backendService.generateJson(this.inputBoxId);
-        console.log(response);
+    async onClickPrintBoxIdHtmlFromIframe(): Promise<void> {
+        const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = url;
+        document.body.appendChild(iframe);
     }
 
     resetResponse(): void {
