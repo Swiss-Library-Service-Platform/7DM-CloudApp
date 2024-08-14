@@ -255,10 +255,11 @@ export class BackendService {
     return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`;
   }
 
-  /*
-    * Get url of html
-    * @param {string} boxId
-    * @returns {Promise<string>}
+  /**
+   * Get the pdf as html page
+   * 
+   * @param {string} boxId
+   * @returns {Promise<string>}
   */
   async getBoxLabelHtmlUrl(boxId: string): Promise<string> {
       

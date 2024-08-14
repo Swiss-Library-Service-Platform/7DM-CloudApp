@@ -54,6 +54,7 @@ export class RequestsComponent implements OnInit {
     }
 
     async onClickPrintBoxIdPdf(): Promise<void> {
+        // This is getting blocked by Ex Libris, see Developer Forum thread
         const url = await this.backendService.getBoxLabelPdfUrl(this.inputBoxId);
         window.open(url, '_blank');
     }
@@ -61,14 +62,6 @@ export class RequestsComponent implements OnInit {
     async onClickPrintBoxIdHtml(): Promise<void> {
         const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
         window.open(url, '_blank');
-    }
-
-    async onClickPrintBoxIdHtmlFromIframe(): Promise<void> {
-        const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = url;
-        document.body.appendChild(iframe);
     }
 
     resetResponse(): void {
