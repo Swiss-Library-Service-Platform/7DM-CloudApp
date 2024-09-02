@@ -1,7 +1,15 @@
- .entities-radio-group {
+.entities-radio-group {
     display: flex;
     flex-direction: column;
     margin: 15px 0;
+}
+
+.beta-warning {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 0.25rem;
 }
 
 textarea {

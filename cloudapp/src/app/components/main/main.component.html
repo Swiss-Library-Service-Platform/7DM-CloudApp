@@ -4,6 +4,12 @@
     <p class="loading-info">{{ status.message | async }}</p>
 </div>
 
+<!-- Beta Warning -->
+<ng-container *ngIf="isInitialized">
+    <div class="beta-warning">
+        Warning: This app is in beta status.
+    </div>
+</ng-container>
 <!-- Tab / Main View -->
 <ng-container *ngIf="isInitialized && isLibraryAllowed">
     <mat-tab-group mat-stretch-tabs>
