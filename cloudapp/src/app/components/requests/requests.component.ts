@@ -53,11 +53,13 @@ export class RequestsComponent implements OnInit {
         );
     }
 
+    /*
+    // This is getting blocked by Ex Libris, see Developer Forum thread
     async onClickPrintBoxIdPdf(): Promise<void> {
-        // This is getting blocked by Ex Libris, see Developer Forum thread
         const url = await this.backendService.getBoxLabelPdfUrl(this.inputBoxId);
         window.open(url, '_blank');
     }
+    */
 
     async onClickPrintBoxIdHtml(): Promise<void> {
         const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
