@@ -10,12 +10,22 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 
 .request-info-table {
     width: 100%;
     border-collapse: collapse;
+
+    &.deleted {
+        color:rgb(183, 0, 0);
+    }
 
     tr:nth-child(even) {
         background-color: #f2f2f2;

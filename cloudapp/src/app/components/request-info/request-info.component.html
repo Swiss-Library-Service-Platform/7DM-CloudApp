@@ -1,5 +1,5 @@
 <div class="request-info-table-wrapper">
-    <table class="request-info-table">
+    <table class="request-info-table" [class.deleted] = "requestInfo.isDeleting">
         <tr>
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
@@ -35,8 +35,9 @@
         <button mat-icon-button (click)="onClickPrintRequestHtml()">
             <mat-icon>print</mat-icon>
         </button>
-        <button  mat-icon-button (click)="onClickCancelRequest()" color="warn">
-            <mat-icon>cancel</mat-icon>
+        <button [disabled]="requestInfo.isDeleting" mat-icon-button (click)="onClickCancelRequest()" color="warn">
+            <mat-icon *ngIf="!requestInfo.isDeleting">cancel</mat-icon>
+            <mat-spinner *ngIf="requestInfo.isDeleting" diameter="24"></mat-spinner>
         </button>
     </div>
 </div>

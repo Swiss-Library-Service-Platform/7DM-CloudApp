@@ -14,6 +14,8 @@ export class RequestInfo {
     status: string;
     message: string;
 
+    isDeleting: boolean;
+
     constructor(init?: Partial<RequestInfo>) {
         Object.assign(this, init);
     }
