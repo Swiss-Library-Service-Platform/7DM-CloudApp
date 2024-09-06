@@ -1,13 +1,15 @@
 .request-info-table-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: center;
     width: 100%;
 }
 
 .request-info-table-actions {
+    padding-top: 10px;
+    padding-bottom: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
 }
 
 
