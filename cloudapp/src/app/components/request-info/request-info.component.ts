@@ -33,7 +33,9 @@ export class RequestInfoComponent implements OnInit {
     this.onCancelRequest(requestId);
   }
 
-  onClickPrintRequest(): void {
-    // unimplemented
+  async onClickPrintRequestHtml(): Promise<void> {
+      var requestId = this.requestInfo.internal_id;
+      const url = await this.backendService.getRequestSlipHtmlUrl(requestId);
+      window.open(url, '_blank');
   }
 }

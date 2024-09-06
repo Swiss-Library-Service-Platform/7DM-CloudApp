@@ -270,6 +270,20 @@ export class BackendService {
       return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatehtml`;
   }
 
+  /**
+   * Get the request slip as html page
+   * 
+   * @param {string} requestId
+   * @returns {Promise<string>}
+   */
+  async getRequestSlipHtmlUrl(requestId: string): Promise<string> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedRequestId = encodeURIComponent(requestId);
+
+    return `${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}/generatehtml`;
+  }
+
 
   /**
    * Get boxlabel pdf
