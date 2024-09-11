@@ -11,7 +11,6 @@ export class TestjsonComponent implements OnInit {
   inputBoxId: string = '';
   responseJson: string = '';
   responseError: string = '';
-
   response7DM: string = '';
 
   constructor(
@@ -25,6 +24,7 @@ export class TestjsonComponent implements OnInit {
   }
 
   onClickGenerateJson(): void {
+    this.clearResponse();
     this.backendService.generateJson(this.inputBoxId).then(response => {
       this.responseJson = response;
       this.responseError = '';
@@ -32,6 +32,12 @@ export class TestjsonComponent implements OnInit {
       this.responseJson = '';
       this.responseError = error.error?.message;
     });
+  }
+
+  clearResponse(): void {
+    this.responseJson = '';
+    this.responseError = '';
+    this.response7DM = '';
   }
 
   onClickSend(): void {
