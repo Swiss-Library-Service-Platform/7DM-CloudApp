@@ -10,7 +10,8 @@
    "contentSecurity": {
       "connectSrc": [
          "https://7dmproxy.swisscovery.network/",
-         "http://localhost:4201/"
+         "http://localhost:4201/",
+         "https://pudosvc.7days-group.com"
       ],
       "sandbox": {
          "popups": true,
