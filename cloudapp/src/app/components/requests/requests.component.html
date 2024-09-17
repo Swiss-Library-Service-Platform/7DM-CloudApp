@@ -23,11 +23,22 @@
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputRequestId"
                 (keyup.enter)="onClickSendRequest()">
         </mat-form-field>
-        <button class="header-area-request-button" (click)="onClickSendRequest()" [disabled]="!inputRequestId || !inputBoxId">
+        <button class="header-area-request-button" (click)="onClickSendRequest()" [disabled]="!inputRequestId || !inputBoxId || !isTimeValid">
             <mat-icon>send</mat-icon>
             {{ 'Requests.SendTo7DM' | translate }}
         </button>
     </div>
+</div>
+
+<!-- Current Time is not valid (after 7pm )-->
+<div class="request-failed" *ngIf="!isTimeValid">
+    <h1>
+        <mat-icon color="warn" inline=true>timelapse</mat-icon>
+        {{ 'Requests.TimeNotValid' | translate }}
+    </h1>
+    <p>
+        {{ 'Requests.TimeNotValidInfo' | translate }}
+    </p>
 </div>
 
 <!-- Request Info -->

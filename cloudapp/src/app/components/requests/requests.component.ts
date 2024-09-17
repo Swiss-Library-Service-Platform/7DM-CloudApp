@@ -23,6 +23,7 @@ export class RequestsComponent implements OnInit {
     responseErrorMessage: string;
     responseErrorId: string;
     subscriptionTodaysRequests: Subscription;
+    isTimeValid: boolean = true;
 
     constructor(
         private backendService: BackendService,
@@ -40,6 +41,15 @@ export class RequestsComponent implements OnInit {
     ngOnInit(): void {
         //this.ctx = this.canvas.nativeElement.getContext('2d');
 
+        // Check if current time is valid (between 00:00 and 18:59)
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+        if (currentHour >= 19) {
+            this.isTimeValid = false;
+            this.loader.hide();
+            return;
+        }
+           
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.box_id;
         });
