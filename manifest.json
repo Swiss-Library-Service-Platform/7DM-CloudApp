@@ -16,7 +16,8 @@
       "sandbox": {
          "popups": true,
          "downloads": true,
-         "modals": true
+         "modals": true,
+         "popups-to-escape-sandbox": true
       },
       "frameSrc": [
          "https://7dmproxy.swisscovery.network/",

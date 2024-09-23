@@ -32,7 +32,12 @@
         </tr>
     </table>
     <div class="request-info-table-actions">
+        <!--
         <button mat-icon-button (click)="onClickPrintRequestHtml()">
+            <mat-icon>print</mat-icon>
+        </button>
+        -->
+        <button mat-icon-button (click)="onClickPrintRequestPdf()">
             <mat-icon>print</mat-icon>
         </button>
         <button [disabled]="requestInfo.isDeleting" mat-icon-button (click)="onClickCancelRequest()" color="warn">

@@ -38,4 +38,10 @@ export class RequestInfoComponent implements OnInit {
       const url = await this.backendService.getRequestSlipHtmlUrl(requestId);
       window.open(url, '_blank');
   }
+
+  async onClickPrintRequestPdf(): Promise<void> {
+    var requestId = this.requestInfo.internal_id;
+    const url = await this.backendService.getRequestSlipPdfUrl(requestId);
+    window.open(url, '_blank');
+  }
 }

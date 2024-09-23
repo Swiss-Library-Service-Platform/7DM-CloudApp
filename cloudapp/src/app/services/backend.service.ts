@@ -263,6 +263,20 @@ export class BackendService {
     return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`;
   }
 
+    /*
+    * Get url of pdf
+    * @param {string} requestId
+    * @returns {Promise<string>}
+    */
+    async getRequestSlipPdfUrl(requestId: string): Promise<string> {
+
+      let libraryCode = this.initData['user']['currentlyAtLibCode'];
+      let escapedLibraryCode = encodeURIComponent(libraryCode);
+      let escapedRequestId = encodeURIComponent(requestId);
+  
+      return `${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}/generatepdf`;
+    }
+
   /**
    * Get the pdf as html page
    * 
