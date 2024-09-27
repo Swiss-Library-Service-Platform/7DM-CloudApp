@@ -21,9 +21,14 @@
             <td> {{ requestInfo.destination_library_name }} ({{ requestInfo.destination_library_alma_code }})</td>
         </tr>
         <tr>
-            <!-- Request ID -->
+            <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
             <td> {{ requestInfo.internal_id }} </td>
+        </tr>
+        <tr>
+            <!-- Request ID (External) -->
+            <th scope="row"> {{ 'Requests.RequestInfo.RequestIdExternal' | translate }}</th>
+            <td> {{ requestInfo.external_id }} </td>
         </tr>
         <tr>
             <!-- Box ID -->

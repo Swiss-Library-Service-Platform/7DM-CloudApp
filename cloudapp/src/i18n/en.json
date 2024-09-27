@@ -60,6 +60,7 @@
             "Sender": "Sender",
             "Destination": "Destination",
             "RequestId": "Request ID",
+            "RequestIdExternal": "External ID",
             "7DMCode":"7DM code"
         },
         "TimeNotValid": "Cloud App is currently disabled.",
