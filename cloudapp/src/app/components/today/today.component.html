@@ -15,7 +15,7 @@
 <div class="info-response">
     <h1 class="info-response-title">
         <mat-icon inline=true>today</mat-icon>
-        {{ 'Today.TodayRequests' | translate }}
+        {{ 'Today.TodayRequests' | translate: { number: filteredRequests.length } }}
     </h1>
     <!-- If there are requests today -->
     <ng-container *ngIf="filteredRequests">

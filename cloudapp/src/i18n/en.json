@@ -48,7 +48,7 @@
             "Loading_BoxId": "Retrieving box ID..."
         },
         "SendTo7DM": "Send to 7DM",
-        "RequestSent": "Item {{barcode}} transfer order sent to 7DM",
+        "RequestSent": "Item {barcode} transfer order sent to 7DM",
         "RequestInfo": {
             "Barcode": "Barcode",
             "BoxId": "Box ID",
@@ -71,7 +71,7 @@
         "Status": {
             "Searching_Requests": "Searching..."
         },
-        "TodayRequests": "Requests sent to 7DM today",
+        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM today",
         "NoRequests": "No requests sent to 7DM today",
         "NoRequestsSearch": "No requests found for the selected filter"
     }
