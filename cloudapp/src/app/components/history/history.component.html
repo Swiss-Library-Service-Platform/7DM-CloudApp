@@ -1,0 +1,67 @@
+<!-- Input Box ID + Request ID -->
+<div class="header-area">
+    <div class="header-area-from-to">
+        <mat-form-field>
+            <mat-label>{{ 'History.From' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="date" [(ngModel)]="inputDateFrom"
+                (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'History.To' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="date" [(ngModel)]="inputDateTo" (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+    </div>
+    <div class="header-area-box-request">
+        <mat-form-field>
+            <mat-label>{{ 'History.BoxId' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputBoxId" (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'History.RequestId' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputRequestId"
+                (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+    </div>
+    <div class="header-area-destination-buttons">
+        <mat-form-field>
+            <mat-label>{{ 'History.Destination' | translate }}</mat-label>
+            <input matInput placeholder="ID" type="text" [(ngModel)]="inputDestination"
+                (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+        <button mat-icon-button (click)="onFilterHistoryRequests()">
+            <mat-icon>search</mat-icon>
+        </button>
+    </div>
+</div>
+
+
+<!-- Request Info for each of requests Today -->
+<div class="info-response">
+    <!-- Pagination with buttons to go up and down-->
+    <div class="info-response-pagination">
+        <button mat-icon-button (click)="onClickPage('prev')" [disabled]="pagedHistory.currentPage === 1">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <p>{{ 'History.HistoryRequestsPaging' | translate: { from: pagedHistory.from, to: pagedHistory.to, total:
+            pagedHistory.totalResults } }}</p>
+        <button mat-icon-button (click)="onClickPage('next')"
+            [disabled]="pagedHistory.currentPage === pagedHistory.totalPages">
+            <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+    </div>
+
+    <!-- If there are requests today -->
+    <ng-container *ngIf="pagedHistory.results">
+        <app-request-info *ngFor="let request of pagedHistory.results" [requestInfo]="request"></app-request-info>
+    </ng-container>
+
+    <!-- If there are no requests today -->
+    <div *ngIf="pagedHistory.totalResults === 0 && !inputSearch" class="no-requests">
+        <p>{{ 'History.NoRequests' | translate }}</p>
+    </div>
+
+    <!-- If there are no requests found upon search -->
+    <div *ngIf="pagedHistory.totalResults === 0 && inputSearch" class="no-requests">
+        <p>{{ 'History.NoRequestsSearch' | translate }}</p>
+    </div>
+</div>

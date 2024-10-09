@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CloudAppEventsService, Entity, AlertService, CloudAppRestService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CloudAppEventsService, AlertService } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
 import { RequestInfo } from '../models/RequestInfo.model';
 import { BoxLabel } from '../models/BoxLabel.model';
+import { PagedHistory } from '../models/PagedHistory.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -27,6 +27,8 @@ export class BackendService {
   public todaysRequests: Array<RequestInfo> = [];
   private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestInfo>>(new Array<RequestInfo>());
 
+  private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(new PagedHistory());
+
   constructor(
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
@@ -37,9 +39,16 @@ export class BackendService {
     return this._todaysRequestsObject.asObservable();
   }
 
+  getPagedHistoryObject(): Observable <PagedHistory> {
+    return this._pagedHistoryObject.asObservable();
+  }
 
   private _setObservableTodaysRequestsObject(todaysRequests: Array<RequestInfo>): void {
     this._todaysRequestsObject.next(todaysRequests);
+  }
+
+  private _setObservablePagedHistoryObject(historyRequests: PagedHistory): void {
+    this._pagedHistoryObject.next(historyRequests);
   }
 
   private get baseUrl(): string {
@@ -222,33 +231,6 @@ export class BackendService {
     });
   }
 
-  /**
-   * Test the generation of a JSON object to send to 7DM
-   * @param {string} boxId
-   * 
-   * @returns {Promise<any>}
-   */
-  async generateJson(boxId: string): Promise<any> {
-    let libraryCode = this.initData['user']['currentlyAtLibCode'];
-    let escapedLibraryCode = encodeURIComponent(libraryCode);
-    let escapedBoxId = encodeURIComponent(boxId);
-
-    let params = new HttpParams();
-    params = params.set('boxId', escapedBoxId);
-    
-    return new Promise((resolve, reject) => {
-      this.http.get(`${this.baseUrl}/testjson/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
-        response => {
-          resolve(response);
-        },
-        error => {
-          console.error(error);
-          reject(error);
-        }
-      );
-    });
-  }
-
   /*
     * Get url of pdf
     * @param {string} boxId
@@ -336,29 +318,26 @@ export class BackendService {
 
 
   /**
-   * Send JSON to 7DM
+   * Get history requests
    * 
-   * @param {string} json
-   * @returns {Promise<any>}
-   */
-  async sendJsonTo7DM(json: string): Promise<any> {
-    const url7dm = 'https://pudosvc.7days-group.com/PUDOIntegrationSvc/pudosvc.svc/rtorder';
+   * @returns {Promise<boolean>}
+  */
+  async getHistory(filterObject = null): Promise<boolean> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
     return new Promise((resolve, reject) => {
-      this.http.post(url7dm, json, 
-        {
-          headers: new HttpHeaders({
-            'Content-Type': 'text/plain'
-          })
-        }
-      ).subscribe(
+      this.http.get<PagedHistory>(`${this.baseUrl}/history/${escapedLibraryCode}`, { params: filterObject, ...this.httpOptions }).subscribe(
         response => {
-          resolve(response);
+          this._setObservablePagedHistoryObject(response);
+          resolve(true);
         },
         error => {
           console.error(error);
-          reject(error);
+          reject(false);
         }
       );
     });
   }
+
 }
