@@ -1,13 +1,13 @@
 {
     "History": {
         "BoxId": "Box ID",
-        "Destination": "Destination",
+        "Destination": "Dest. Library Code",
         "From": "From",
         "To": "To",
         "RequestId": "Request ID",
         "Search": "Filter",
         "Status": {
-            "Searching_Requests": "Searching..."
+            "Loading": "Loading..."
         },
         "HistoryRequestsPaging": "Showing {from} - {to} of {total} requests",
         "NoRequests": "No requests sent to 7DM",

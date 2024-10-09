@@ -20,7 +20,9 @@
             <app-today></app-today>
         </mat-tab>
         <mat-tab label="{{ 'Main.History' | translate }}">
-            <app-history></app-history>
+            <ng-template matTabContent>
+                <app-history></app-history>
+            </ng-template>
         </mat-tab>
     </mat-tab-group>
 </ng-container>

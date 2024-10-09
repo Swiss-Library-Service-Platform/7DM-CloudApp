@@ -3,6 +3,9 @@ import { BackendService } from '../../services/backend.service';
 import { Subscription } from 'rxjs';
 import { RequestInfo } from '../../models/RequestInfo.model';
 import { PagedHistory } from '../../models/PagedHistory.model';
+import { LoadingIndicatorService } from '../../services/loading-indicator.service';
+import { StatusIndicatorService } from '../../services/status-indicator.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-history',
@@ -24,20 +27,44 @@ export class HistoryComponent implements OnInit {
   inputDestination: string;
 
   constructor(
-    private backendService: BackendService
+    private backendService: BackendService,
+    private loader: LoadingIndicatorService,
+    private status: StatusIndicatorService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.loader.show();
+    this.status.set(this.translateService.instant("History.Status.Loading"));
     this.backendService.getHistory();
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
-        this.pagedHistory = response
+        this.pagedHistory = response;
+        this.loader.hide();
       }
     );
   }
 
-  onFilterHistoryRequests(): void {
+  onFilterHistoryRequests(resetPage: boolean = true): void {
+    if (resetPage) {
+      this.resetPage();
+    }
+    this.loader.show();
+    this.status.set(this.translateService.instant("History.Status.Loading"));
     this.backendService.getHistory(this.buildFilterObject());
+  }
+
+  resetPage(): void {
+    this.inputPage = 1;
+  }
+
+  onResetFilter(): void {
+    this.inputDateFrom = null;
+    this.inputDateTo = null;
+    this.inputBoxId = null;
+    this.inputRequestId = null;
+    this.inputDestination = null;
+    this.onFilterHistoryRequests();
   }
 
   onClickPage(direction: string): void {
@@ -46,17 +73,17 @@ export class HistoryComponent implements OnInit {
     } else if (direction === 'prev') {
       this.inputPage = this.pagedHistory.currentPage - 1;
     }
-    this.onFilterHistoryRequests();
+    this.onFilterHistoryRequests(false);
   }
 
   buildFilterObject(): any {
     const filterObject = {
-      page: this.inputPage,
+      page: this.inputPage ?? null,
       dateFrom: this.inputDateFrom ?? null,
       dateTo: this.inputDateTo ?? null,
       boxId: this.inputBoxId ?? null,
       requestId: this.inputRequestId ?? null,
-      destination: this.inputDestination ?? null,
+      destinationLibraryCode: this.inputDestination ?? null,
     };
 
     // Remove properties with null values
@@ -67,6 +94,10 @@ export class HistoryComponent implements OnInit {
       }
     }
     return filteredObject;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionHistoryRequests.unsubscribe();
   }
 
 }

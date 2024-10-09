@@ -105,8 +105,14 @@ body[class*=cloudapp-theme] {
     justify-content: center;
     background-color: var(--slsp-purple-light);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 0px 8px;
+
+    .mat-form-field {
+        width: 100%;
+    }
+    .mat-form-field-infix {
+       width: 100%;
+    }
 
     .mat-flat-button {
         margin-left: 1rem;
@@ -173,6 +179,17 @@ body[class*=cloudapp-theme] {
         align-items: center;
         width: 100%;
         column-gap: 16px;
+        .mat-form-field {
+            width: 50%;
+        }
+        .header-area-destinations-buttons-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 50%;
+        }
     }
+
 
 }
