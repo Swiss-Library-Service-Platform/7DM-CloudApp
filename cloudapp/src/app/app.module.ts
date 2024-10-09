@@ -10,7 +10,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './components/main/main.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { PartnersComponent } from './components/partners/partners.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { TodayComponent } from './components/today/today.component';
 import { RequestInfoComponent } from './components/request-info/request-info.component';
@@ -34,7 +33,6 @@ export function getTranslateModuleWithICU() {
   declarations: [
     AppComponent,
     MainComponent,
-    PartnersComponent,
     RequestsComponent,
     TodayComponent,
     RequestInfoComponent,
