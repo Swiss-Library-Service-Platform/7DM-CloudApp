@@ -14,9 +14,9 @@ import { PartnersComponent } from './components/partners/partners.component';
 import { RequestsComponent } from './components/requests/requests.component';
 import { TodayComponent } from './components/today/today.component';
 import { RequestInfoComponent } from './components/request-info/request-info.component';
-import { TestjsonComponent } from './components/testjson/testjson.component';
 import { TranslateICUParser } from 'ngx-translate-parser-plural-select';
 import { TranslateLoader, TranslateModule, TranslateParser } from '@ngx-translate/core';
+import { HistoryComponent } from './components/history/history.component';
 
 export function getTranslateModuleWithICU() {
   return TranslateModule.forRoot({
@@ -38,7 +38,7 @@ export function getTranslateModuleWithICU() {
     RequestsComponent,
     TodayComponent,
     RequestInfoComponent,
-    TestjsonComponent
+    HistoryComponent
   ],
   imports: [
     MaterialModule,
