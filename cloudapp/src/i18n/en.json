@@ -82,6 +82,7 @@
     },
     "Today": {
         "Search": "Filter",
+        "SearchPlaceholder": "barcode, box ID, request ID, destination library code",
         "Status": {
             "Searching_Requests": "Searching..."
         },

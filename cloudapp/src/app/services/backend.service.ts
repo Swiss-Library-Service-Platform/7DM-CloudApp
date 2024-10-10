@@ -16,11 +16,11 @@ import { PagedHistory } from '../models/PagedHistory.model';
   providedIn: 'root'
 })
 export class BackendService {
-  
+
   private isDevelopmentEnviroment: boolean = false;
   private isInitialized = false;
   private initData: Object;
-  private baseUrlProd: string =  'https://7dmproxy.swisscovery.network/api/v1';
+  private baseUrlProd: string = 'https://7dmproxy.swisscovery.network/api/v1';
   private baseUrlEnv: string = 'http://localhost:4201/api/v1';
   httpOptions: {};
 
@@ -39,7 +39,7 @@ export class BackendService {
     return this._todaysRequestsObject.asObservable();
   }
 
-  getPagedHistoryObject(): Observable <PagedHistory> {
+  getPagedHistoryObject(): Observable<PagedHistory> {
     return this._pagedHistoryObject.asObservable();
   }
 
@@ -68,7 +68,7 @@ export class BackendService {
     }
     this.initData = await this.eventsService.getInitData().toPromise();
     let regExp = new RegExp('^.*localhost.*'), // contains "localhost"
-        currentUrl = this.initData["urls"]["alma"];
+      currentUrl = this.initData["urls"]["alma"];
     this.isDevelopmentEnviroment = regExp.test(currentUrl);
     let authToken = await this.eventsService.getAuthToken().toPromise();
     this.httpOptions = {
@@ -113,7 +113,7 @@ export class BackendService {
     let escapedBoxId = encodeURIComponent(boxId);
 
     return new Promise((resolve, reject) => {
-      this.http.post<RequestInfo>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { 
+      this.http.post<RequestInfo>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
         request_id: escapedRequestId,
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
@@ -183,7 +183,7 @@ export class BackendService {
     }
 
     return new Promise((resolve, reject) => {
-      this.http.get<RequestInfo[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`,  { params, ...this.httpOptions }).subscribe(
+      this.http.get<RequestInfo[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
           this.todaysRequests = response;
           this._setObservableTodaysRequestsObject(response);
@@ -215,7 +215,7 @@ export class BackendService {
           let request = this.todaysRequests.find(request => request.internal_id === internalId);
           request.isDeleting = true;
           this._setObservableTodaysRequestsObject(this.todaysRequests);
-          
+
           // Wait 3 seconds before removing the request from the list
           setTimeout(() => {
             this.todaysRequests = this.todaysRequests.filter(request => request.internal_id !== internalId);
@@ -245,52 +245,24 @@ export class BackendService {
     return `${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`;
   }
 
-    /*
-    * Get url of pdf
-    * @param {string} requestId
-    * @returns {Promise<string>}
-    */
-    async getRequestSlipPdfUrl(requestId: string): Promise<string> {
+  /*
+  * Get url of pdf
+  * @param {string} requestId
+  * @returns {Promise<string>}
+  */
+  async getRequestSlipPdfUrl(requestId: string): Promise<string> {
 
-      let libraryCode = this.initData['user']['currentlyAtLibCode'];
-      let escapedLibraryCode = encodeURIComponent(libraryCode);
-      let escapedRequestId = encodeURIComponent(requestId);
-  
-      return `${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}/generatepdf`;
-    }
-
-
-  /**
-   * Get boxlabel pdf
-   * 
-   * @param {string} boxId
-   * @returns {Promise<any>}
-   */
-  async getBoxLabelPdf(boxId: string): Promise<any> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);
-    let escapedBoxId = encodeURIComponent(boxId);
-    let localHttpOptions = this.httpOptions;
-    localHttpOptions['responseType'] = 'blob';
-    localHttpOptions['headers'] = localHttpOptions['headers'].set('Accept', 'application/pdf');
+    let escapedRequestId = encodeURIComponent(requestId);
 
-    return new Promise((resolve, reject) => {
-      this.http.get<Blob>(`${this.baseUrl}/boxlabels/${escapedLibraryCode}/${escapedBoxId}/generatepdf`, localHttpOptions).subscribe(
-        response => {
-          resolve(response);
-        },
-        error => {
-          console.error(error);
-          reject(error);
-        }
-      );
-    });
+    return `${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}/generatepdf`;
   }
-
 
   /**
    * Get history requests
-   * 
+   *
+   * @param {any} filterObject
    * @returns {Promise<boolean>}
   */
   async getHistory(filterObject = null): Promise<boolean> {
@@ -311,4 +283,35 @@ export class BackendService {
     });
   }
 
+  /*
+  * Download history
+  *
+  * @param {any} filterObject
+  * @returns {Promise<any>}
+  */
+  async downloadHistory(filterObject = null): Promise<Blob> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    // Clone the httpOptions object
+    let localHttpOptions = {
+      ...this.httpOptions,
+      headers: this.httpOptions['headers'].set('Accept', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'),
+      responseType: 'blob'
+    };
+
+    return new Promise((resolve, reject) => {
+      this.http.get<Blob>(`${this.baseUrl}/history/${escapedLibraryCode}/download`, { params: filterObject, ...localHttpOptions, responseType: 'blob' as 'json' }).subscribe(
+        response => {
+          resolve(response);
+        },
+        error => {
+          console.error(error);
+          reject(error);
+        }
+      );
+    });
+  }
 }
+
+

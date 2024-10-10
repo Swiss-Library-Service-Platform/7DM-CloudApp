@@ -16,6 +16,7 @@ export class HistoryComponent implements OnInit {
 
   pagedHistory: PagedHistory;
   subscriptionHistoryRequests: Subscription;
+  isDownloading: boolean = false;
 
   // Filter
   inputPage: number;
@@ -52,6 +53,21 @@ export class HistoryComponent implements OnInit {
     this.loader.show();
     this.status.set(this.translateService.instant("History.Status.Loading"));
     this.backendService.getHistory(this.buildFilterObject());
+  }
+
+  async onClickDownloadHistory(): Promise<void> {
+    this.isDownloading = true;
+    const responseBlob = await this.backendService.downloadHistory(this.buildFilterObject());
+    this.isDownloading = false;
+    const blob = new Blob([responseBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'history.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 
   resetPage(): void {

@@ -3,7 +3,8 @@
     <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Today.Search' | translate }}</mat-label>
-            <input matInput placeholder="ID" type="text" [(ngModel)]="inputSearch" (keyup)="onFilterRequests()">
+            <input matInput placeholder="{{ 'Today.SearchPlaceholder' | translate }}" 
+            type="text" [(ngModel)]="inputSearch" (keyup)="onFilterRequests()">
         </mat-form-field>
         <button mat-icon-button (click)="onFilterRequests()">
             <mat-icon>search</mat-icon>

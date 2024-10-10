@@ -188,6 +188,9 @@ body[class*=cloudapp-theme] {
             align-items: center;
             justify-content: space-between;
             width: 50%;
+            .mat-spinner {
+                margin-left: 8px;
+            }
         }
     }
 
