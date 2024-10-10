@@ -16,7 +16,7 @@ export class RequestInfoComponent implements OnInit {
   requestInfo: RequestInfo
 
   @Input()
-  onCancelRequest: (requestId: string) => void;
+  onCancelRequest: Function = undefined;
 
   constructor(
     private backendService: BackendService,
@@ -33,15 +33,15 @@ export class RequestInfoComponent implements OnInit {
     this.onCancelRequest(requestId);
   }
 
-  async onClickPrintRequestHtml(): Promise<void> {
-      var requestId = this.requestInfo.internal_id;
-      const url = await this.backendService.getRequestSlipHtmlUrl(requestId);
-      window.open(url, '_blank');
-  }
-
   async onClickPrintRequestPdf(): Promise<void> {
     var requestId = this.requestInfo.internal_id;
     const url = await this.backendService.getRequestSlipPdfUrl(requestId);
+    window.open(url, '_blank');
+  }
+
+  async onClickPrintBoxIdPdf(): Promise<void> {
+    var boxId = this.requestInfo.box_id;
+    const url = await this.backendService.getBoxLabelPdfUrl(boxId);
     window.open(url, '_blank');
   }
 }

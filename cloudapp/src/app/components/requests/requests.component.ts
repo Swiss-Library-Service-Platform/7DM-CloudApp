@@ -68,11 +68,6 @@ export class RequestsComponent implements OnInit {
         window.open(url, '_blank');
     }
 
-    async onClickPrintBoxIdHtml(): Promise<void> {
-        const url = await this.backendService.getBoxLabelHtmlUrl(this.inputBoxId);
-        window.open(url, '_blank');
-    }
-
     resetResponse(): void {
         this.responseRequest = null;
         this.responseErrorMessage = null;

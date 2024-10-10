@@ -1,9 +1,15 @@
 <div class="request-info-table-wrapper">
-    <table class="request-info-table" [class.deleted] = "requestInfo.isDeleting">
+    <table class="request-info-table" [class.deleted]="requestInfo.isDeleting">
         <tr>
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
-            <td> {{ requestInfo.barcode }} </td>
+            <td>
+                <div class="cell-with-icon">
+                    {{ requestInfo.barcode ? requestInfo.barcode : 'N/A' }}
+                    <mat-icon *ngIf="onCancelRequest !== undefined && !requestInfo.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
+                    <mat-spinner color="warn" *ngIf="requestInfo.isDeleting" diameter="18"></mat-spinner>
+                </div>
+            </td>
         </tr>
         <tr>
             <!-- Type  -->
@@ -23,7 +29,12 @@
         <tr>
             <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
-            <td> {{ requestInfo.internal_id }} </td>
+            <td>
+                <div class="cell-with-icon">
+                    {{ requestInfo.internal_id }}
+                    <mat-icon  (click)="onClickPrintRequestPdf()">print</mat-icon>
+                </div>
+            </td>
         </tr>
         <tr>
             <!-- Request ID (External) -->
@@ -33,15 +44,16 @@
         <tr>
             <!-- Box ID -->
             <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
-            <td> {{ requestInfo.box_id }} </td>
+            <td>
+                <div class="cell-with-icon">
+                    {{ requestInfo.box_id }}
+                    <mat-icon (click)="onClickPrintBoxIdPdf()">print</mat-icon>
+                </div>
+            </td>
         </tr>
     </table>
+    <!-- 
     <div class="request-info-table-actions">
-        <!--
-        <button mat-icon-button (click)="onClickPrintRequestHtml()">
-            <mat-icon>print</mat-icon>
-        </button>
-        -->
         <button mat-icon-button (click)="onClickPrintRequestPdf()">
             <mat-icon>print</mat-icon>
         </button>
@@ -50,4 +62,5 @@
             <mat-spinner *ngIf="requestInfo.isDeleting" diameter="24"></mat-spinner>
         </button>
     </div>
+    -->
 </div>
