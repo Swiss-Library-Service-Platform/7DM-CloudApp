@@ -36,7 +36,7 @@ export class HistoryComponent implements OnInit {
   ngOnInit(): void {
 
     this.status.set(this.translateService.instant("History.Status.Loading"));
-    Promise.resolve().then(() => this.loader.show()); // Fix for ExpressionChangedAfterItHasBeenCheckedError
+    Promise.resolve().then(() => this.loader.show()); // Workardoun for ExpressionChangedAfterItHasBeenCheckedError, https://v17.angular.io/errors/NG0100
     this.backendService.getHistory();
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
