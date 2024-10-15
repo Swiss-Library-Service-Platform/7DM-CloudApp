@@ -11,13 +11,25 @@ export class RequestInfo {
 	barcode: string;
     type: string;
     box_id: string;
-    status: string;
+    state: string;
     message: string;
 
     isDeleting: boolean;
 
     constructor(init?: Partial<RequestInfo>) {
         Object.assign(this, init);
+    }
+    
+    public isReady(): boolean {
+        return this.state === 'READY';
+    }
+
+    public isSent(): boolean {
+        return this.state === 'SENT';
+    }
+
+    public isForceSent(): boolean {
+        return this.state === 'FORCE_SENT';
     }
 
     public checkForSearch(search: string): boolean {
@@ -37,11 +49,13 @@ export class RequestInfo {
             this.barcode,
             this.type,
             this.box_id,
-            this.status,
+            this.state,
             this.message
         ];
     
         // Check if any of the fields include the search term (case-insensitive)
         return fieldsToSearch.some(field => field?.toLowerCase().includes(lowerSearch));
     }
+
+  
 }

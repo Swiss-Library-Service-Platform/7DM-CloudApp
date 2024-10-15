@@ -5,6 +5,7 @@ import { StatusIndicatorService } from '../../services/status-indicator.service'
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
+import { RequestInfo } from '../../models/RequestInfo.model';
 
 // Set the worker source for pdfjs
 // import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
@@ -19,7 +20,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
     inputBoxId: string = '';
-    responseRequest: any;
+    responseRequest: RequestInfo;
     responseErrorMessage: string;
     responseErrorId: string;
     subscriptionTodaysRequests: Subscription;
@@ -94,7 +95,7 @@ export class RequestsComponent implements OnInit {
         this.resetResponse();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            this.responseRequest = response;
+            this.responseRequest = new RequestInfo(response);
             this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {

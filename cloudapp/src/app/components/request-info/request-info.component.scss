@@ -52,11 +52,20 @@
         text-align: left;
     }
 
-    .cell-with-icon {
+    .cell-with-status-icon {
+        font-weight: 400;
+        gap: 5px;
+        justify-content: start;
+        color:rgb(183, 0, 0)
+    }
+    .cell-with-action-icon {
+        justify-content: space-between;
+    }
+
+    .cell-with-status-icon, .cell-with-action-icon {
         display: flex;
         align-items: center;
         width: 100%;
-        justify-content: space-between;
 
         .mat-icon {
             font-size: 18px;

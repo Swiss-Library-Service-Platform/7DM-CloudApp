@@ -21,7 +21,7 @@ export class BackendService {
   private isInitialized = false;
   private initData: Object;
   private baseUrlProd: string = 'https://7dmproxy.swisscovery.network/api/v1';
-  private baseUrlEnv: string = 'http://localhost:4201/api/v1';
+  private baseUrlLocal: string = 'http://localhost:4201/api/v1';
   httpOptions: {};
 
   public todaysRequests: Array<RequestInfo> = [];
@@ -52,7 +52,7 @@ export class BackendService {
   }
 
   private get baseUrl(): string {
-    return this.isDevelopmentEnviroment ? this.baseUrlEnv : this.baseUrlProd;
+    return this.isDevelopmentEnviroment ? this.baseUrlLocal : this.baseUrlProd;
   }
 
   /**

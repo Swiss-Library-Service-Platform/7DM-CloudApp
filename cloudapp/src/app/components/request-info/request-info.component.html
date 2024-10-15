@@ -4,7 +4,7 @@
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
             <td>
-                <div class="cell-with-icon">
+                <div class="cell-with-action-icon">
                     {{ requestInfo.barcode ? requestInfo.barcode : 'N/A' }}
                     <mat-icon *ngIf="onCancelRequest !== undefined && !requestInfo.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
                     <mat-spinner color="warn" *ngIf="requestInfo.isDeleting" diameter="18"></mat-spinner>
@@ -30,7 +30,7 @@
             <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
             <td>
-                <div class="cell-with-icon">
+                <div class="cell-with-action-icon">
                     {{ requestInfo.internal_id }}
                     <mat-icon  (click)="onClickPrintRequestPdf()">print</mat-icon>
                 </div>
@@ -45,9 +45,19 @@
             <!-- Box ID -->
             <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
             <td>
-                <div class="cell-with-icon">
+                <div class="cell-with-action-icon">
                     {{ requestInfo.box_id }}
                     <mat-icon (click)="onClickPrintBoxIdPdf()">print</mat-icon>
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="!requestInfo.isReady() && !requestInfo.isSent()">
+            <!-- Message (Warning, Error, ...) -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Info' | translate }}</th>
+            <td>
+                <div class="cell-with-status-icon" color="warn">
+                    <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
+                    {{ requestInfo.message }}
                 </div>
             </td>
         </tr>

@@ -29,7 +29,8 @@
 
 }
 
-.request-failed {
+.request-failed,
+.request-warning {
     padding-top: 1rem;
     white-space: pre-line;
     h1 {
@@ -39,5 +40,11 @@
         .mat-icon {
             margin-right: 4px;
         }
+    }
+}
+
+.request-warning {
+    .mat-icon {
+        color:  rgb(255, 165, 0);
     }
 }

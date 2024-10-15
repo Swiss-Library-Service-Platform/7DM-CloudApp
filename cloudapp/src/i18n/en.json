@@ -63,9 +63,11 @@
         },
         "SendTo7DM": "Send to 7DM",
         "RequestSent": "Item {barcode} transfer order sent to 7DM",
+        "RequestSent_ForceSent": "Item {barcode} transfer order sent. \n It has already been sent to 7DM.",
         "RequestInfo": {
             "Barcode": "Barcode",
             "BoxId": "Box ID",
+            "Info": "Info",
             "Type": "Type",
             "TypeValue": {
                 "STANDARD": "Standard",

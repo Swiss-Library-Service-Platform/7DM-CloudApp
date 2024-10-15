@@ -38,10 +38,19 @@
 </div>
 
 <!-- Request Info -->
-<div class="request-success" *ngIf="responseRequest">
+<div class="request-success" *ngIf="responseRequest && responseRequest.isReady()">
     <h1>
         <mat-icon color="success" inline=true>check_circle</mat-icon>
         {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
+    </h1>
+    <app-request-info [requestInfo]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+</div>
+
+<!-- Force Sent twice Info -->
+<div class="request-warning" *ngIf="responseRequest && responseRequest.isForceSent()">
+    <h1>
+        <mat-icon inline=true>check_circle</mat-icon>
+        {{ 'Requests.RequestSent_ForceSent' | translate: { barcode: responseRequest.barcode } }}
     </h1>
     <app-request-info [requestInfo]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>

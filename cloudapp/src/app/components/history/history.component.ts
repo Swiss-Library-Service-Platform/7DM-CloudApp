@@ -40,7 +40,7 @@ export class HistoryComponent implements OnInit {
     this.backendService.getHistory();
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
-        this.pagedHistory = response;
+        this.pagedHistory = new PagedHistory(response);
         this.loader.hide();
       }
     );
