@@ -18,16 +18,16 @@ import { PagedHistory } from '../models/PagedHistory.model';
 export class BackendService {
 
   private isDevelopmentEnviroment: boolean = false;
-  private isInitialized = false;
+  private isServiceInitialized = false;
   private initData: Object;
   private baseUrlProd: string = 'https://7dmproxy.swisscovery.network/api/v1';
   private baseUrlLocal: string = 'http://localhost:4201/api/v1';
-  httpOptions: {};
+  private httpOptions: {};
 
   public todaysRequests: Array<RequestInfo> = [];
   private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestInfo>>(new Array<RequestInfo>());
 
-  private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(new PagedHistory());
+  private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
 
   constructor(
     private http: HttpClient,
@@ -35,7 +35,7 @@ export class BackendService {
     private alert: AlertService,
   ) { }
 
-  getTodaysRequestsObject(): Observable<Array<RequestInfo>> {
+  getTodaysRequestsObject(): Observable<RequestInfo[]> {
     return this._todaysRequestsObject.asObservable();
   }
 
@@ -63,7 +63,7 @@ export class BackendService {
    * @memberof LibraryManagementService
    */
   async init(): Promise<void> {
-    if (this.isInitialized) {
+    if (this.isServiceInitialized) {
       return;
     }
     this.initData = await this.eventsService.getInitData().toPromise();
@@ -118,8 +118,9 @@ export class BackendService {
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
         response => {
-          this.todaysRequests.push(response);
-          this._setObservableTodaysRequestsObject(this.todaysRequests);
+         // this.todaysRequests.push(response);
+         // this._setObservableTodaysRequestsObject(this.todaysRequests);
+         this.getRequests();
           resolve(response);
         },
         error => {

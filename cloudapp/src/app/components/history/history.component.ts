@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../../services/backend.service';
 import { Subscription } from 'rxjs';
-import { RequestInfo } from '../../models/RequestInfo.model';
 import { PagedHistory } from '../../models/PagedHistory.model';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
@@ -31,17 +30,20 @@ export class HistoryComponent implements OnInit {
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
   ) { }
 
   ngOnInit(): void {
-    this.loader.show();
+
     this.status.set(this.translateService.instant("History.Status.Loading"));
+    Promise.resolve().then(() => this.loader.show()); // Fix for ExpressionChangedAfterItHasBeenCheckedError
     this.backendService.getHistory();
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
         this.pagedHistory = new PagedHistory(response);
-        this.loader.hide();
+        if (response !== null) {
+          this.loader.hide();
+        }
       }
     );
   }

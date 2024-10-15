@@ -31,7 +31,7 @@
             <button mat-icon-button (click)="onResetFilter()">
                 <mat-icon>clear</mat-icon>
             </button>
-            <button  mat-icon-button (click)="onClickDownloadHistory()" [disabled]="pagedHistory.totalResults === 0 || pagedHistory.totalResults > 10 ">
+            <button mat-icon-button (click)="onClickDownloadHistory()" [disabled]="pagedHistory && (pagedHistory.totalResults === 0 || pagedHistory.totalResults > 10 )">
                 <mat-icon *ngIf="!isDownloading">download</mat-icon>
                 <mat-spinner  *ngIf="isDownloading" diameter="24"></mat-spinner>
             </button>
@@ -41,7 +41,7 @@
 
 
 <!-- Request Info for each of requests Today -->
-<div class="info-response">
+<div class="info-response" *ngIf="pagedHistory">
     <!-- Pagination with buttons to go up and down-->
     <div class="info-response-pagination">
         <button mat-icon-button (click)="onClickPage('prev')" [disabled]="pagedHistory.currentPage === 1">

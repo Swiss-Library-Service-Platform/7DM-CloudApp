@@ -1,5 +1,5 @@
 <!-- Loading Spinner -->
-<div class="loading-shade" *ngIf="loader.isLoading | async">
+<div class="loading-shade" *ngIf="loader && loader.isLoading | async">
     <mat-spinner diameter="50"></mat-spinner>
     <p class="loading-info">{{ status.message | async }}</p>
 </div>
@@ -17,7 +17,11 @@
         <mat-tab label="{{ 'Main.Requests' | translate }}">
             <app-requests></app-requests>
         </mat-tab>
-        <mat-tab label="{{ 'Main.Today' | translate }}">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon *ngIf="isErrorInTodayRequests" class="tab-icon">warning</mat-icon>
+                {{ 'Main.Today' | translate }}
+            </ng-template>
             <app-today></app-today>
         </mat-tab>
         <mat-tab label="{{ 'Main.History' | translate }}">

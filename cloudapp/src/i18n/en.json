@@ -88,8 +88,8 @@
         "Status": {
             "Searching_Requests": "Searching..."
         },
-        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM today",
-        "NoRequests": "No requests sent to 7DM today",
+        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM:",
+        "NoRequests": "No requests sent to 7DM.",
         "NoRequestsSearch": "No requests found for the selected filter"
     }
 }

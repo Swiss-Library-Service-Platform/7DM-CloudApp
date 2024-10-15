@@ -17,6 +17,7 @@ export class TodayComponent implements OnInit {
   filteredRequests: RequestInfo[] = [];
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
+  isErrorExisting: boolean = false;
 
   constructor(
     private backendService: BackendService,
@@ -36,25 +37,6 @@ export class TodayComponent implements OnInit {
       }
     );
   }
-
-  /*
-  
-  --> Old Backend Search
-
-  onClickSearch(): void {
-    if (!this.inputSearch) {
-      this.searchPerformed = false;
-      return;
-    }
-    this.searchPerformed = true;
-    this.status.set(this.translateService.instant("Today.Status.Searching_Requests"));
-    this.loader.show();
-    this.backendService.getRequests(this.inputSearch).then(() => {
-        this.loader.hide();
-      }
-    );
-  }
-  */
 
   // new search in frontend
   onFilterRequests(): void {

@@ -32,6 +32,10 @@ export class RequestInfo {
         return this.state === 'FORCE_SENT';
     }
 
+    public isError(): boolean {
+        return this.state === 'ERROR';
+    }
+
     public checkForSearch(search: string): boolean {
         // Convert the search term to lowercase
         const lowerSearch = search.toLowerCase();
