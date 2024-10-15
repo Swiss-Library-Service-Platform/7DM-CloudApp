@@ -29,18 +29,18 @@ export class RequestInfoComponent implements OnInit {
   }
 
   onClickCancelRequest(): void {
-    var requestId = this.requestInfo.internal_id;
+    var requestId = this.requestInfo.request.internal_id;
     this.onCancelRequest(requestId);
   }
 
   async onClickPrintRequestPdf(): Promise<void> {
-    var requestId = this.requestInfo.internal_id;
+    var requestId = this.requestInfo.request.internal_id;
     const url = await this.backendService.getRequestSlipPdfUrl(requestId);
     window.open(url, '_blank');
   }
 
   async onClickPrintBoxIdPdf(): Promise<void> {
-    var boxId = this.requestInfo.box_id;
+    var boxId = this.requestInfo.request.box_id;
     const url = await this.backendService.getBoxLabelPdfUrl(boxId);
     window.open(url, '_blank');
   }

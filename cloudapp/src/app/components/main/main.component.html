@@ -19,7 +19,7 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
-                <mat-icon *ngIf="isErrorInTodayRequests" class="tab-icon">warning</mat-icon>
+                <mat-icon *ngIf="isWarningInToday" class="tab-icon">warning</mat-icon>
                 {{ 'Main.Today' | translate }}
             </ng-template>
             <app-today></app-today>

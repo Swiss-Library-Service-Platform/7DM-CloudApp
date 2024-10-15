@@ -17,6 +17,11 @@
     h1 {
         display: flex;
         font-size: 120%;
+        flex-direction: column;
+
+        .request-success-first {
+            display: flex;
+        }
 
         .mat-icon {
             margin-right: 4px;

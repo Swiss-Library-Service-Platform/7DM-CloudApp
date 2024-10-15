@@ -20,7 +20,7 @@ import { RequestInfo } from '../../models/RequestInfo.model';
 export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
     inputBoxId: string = '';
-    responseRequest: RequestInfo;
+    responseRequestInfo: RequestInfo;
     responseErrorMessage: string;
     responseErrorId: string;
     subscriptionTodaysRequests: Subscription;
@@ -57,7 +57,7 @@ export class RequestsComponent implements OnInit {
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {
                 // if today requests do not include the response request, clear response
-                if (this.responseRequest != null && !response.some(r => r.internal_id === this.responseRequest.internal_id)) {
+                if (this.responseRequestInfo != null && !response.some(r => r.request.internal_id === this.responseRequestInfo.request.internal_id)) {
                     this.resetResponse();
                 }
             }
@@ -70,7 +70,7 @@ export class RequestsComponent implements OnInit {
     }
 
     resetResponse(): void {
-        this.responseRequest = null;
+        this.responseRequestInfo = null;
         this.responseErrorMessage = null;
         this.responseErrorId = null;
     }
@@ -95,7 +95,7 @@ export class RequestsComponent implements OnInit {
         this.resetResponse();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            this.responseRequest = new RequestInfo(response);
+            this.responseRequestInfo = new RequestInfo(response);
             this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {

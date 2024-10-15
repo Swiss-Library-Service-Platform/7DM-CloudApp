@@ -1,39 +1,21 @@
+import { Request } from "./Request.model";
+
 export class RequestInfo {
-    internal_id: string;
-    external_id: string;
-    timestamp: Date;
-    sending_library: string;
+ 
+    request: Request;
     sending_library_alma_code: string;
     sending_library_name: string;
-    destination_library: string;
     destination_library_alma_code: string;
     destination_library_name: string;
-	barcode: string;
-    type: string;
-    box_id: string;
-    state: string;
-    message: string;
-
+	
     isDeleting: boolean;
 
     constructor(init?: Partial<RequestInfo>) {
         Object.assign(this, init);
-    }
-    
-    public isReady(): boolean {
-        return this.state === 'READY';
-    }
-
-    public isSent(): boolean {
-        return this.state === 'SENT';
-    }
-
-    public isForceSent(): boolean {
-        return this.state === 'FORCE_SENT';
-    }
-
-    public isError(): boolean {
-        return this.state === 'ERROR';
+        // ensure that request is an instance of Request
+        if (this.request) {
+            this.request = new Request(this.request);
+        }
     }
 
     public checkForSearch(search: string): boolean {
@@ -42,19 +24,19 @@ export class RequestInfo {
     
         // Array of fields to be checked
         const fieldsToSearch = [
-            this.internal_id,
-            this.external_id,
-            this.sending_library,
+            this.request.internal_id,
+            this.request.external_id,
+            this.request.sending_library,
             this.sending_library_alma_code,
             this.sending_library_name,
-            this.destination_library,
+            this.request.destination_library,
             this.destination_library_alma_code,
             this.destination_library_name,
-            this.barcode,
-            this.type,
-            this.box_id,
-            this.state,
-            this.message
+            this.request.barcode,
+            this.request.type,
+            this.request.box_id,
+            this.request.state,
+            this.request.message
         ];
     
         // Check if any of the fields include the search term (case-insensitive)

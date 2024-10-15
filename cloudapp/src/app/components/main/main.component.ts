@@ -16,7 +16,7 @@ import { RequestInfo } from '../../models/RequestInfo.model';
 export class MainComponent implements OnInit {
     isLibraryAllowed: boolean = false;
     isInitialized: boolean = false;
-    isErrorInTodayRequests: boolean = false;
+    isWarningInToday: boolean = false;
 
     constructor(
         private backendService: BackendService,
@@ -52,7 +52,7 @@ export class MainComponent implements OnInit {
                 this.backendService.getTodaysRequestsObject().subscribe(
                     (response: RequestInfo[]) => {
                         const requestInfos = response.map(obj => new RequestInfo(obj));
-                        this.isErrorInTodayRequests = requestInfos.some(r => !r.isSent() && !r.isReady());
+                        this.isWarningInToday = requestInfos.some(requestInfo => requestInfo.request.isSentTwice() && requestInfo.request.isOutdated() || requestInfo.request.isNotRapido());
                     }
                 );
             }).catch(error => {

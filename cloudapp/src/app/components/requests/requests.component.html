@@ -38,22 +38,16 @@
 </div>
 
 <!-- Request Info -->
-<div class="request-success" *ngIf="responseRequest && responseRequest.isReady()">
+<div class="request-success" *ngIf="responseRequestInfo && responseRequestInfo.request.isReady()">
     <h1>
-        <mat-icon color="success" inline=true>check_circle</mat-icon>
-        {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
+        <div class="request-success-first">
+            <mat-icon color="success" inline=true>check_circle</mat-icon>
+            {{ 'Requests.RequestSent' | translate: { barcode: responseRequestInfo.request.barcode } }}
+        </div>
     </h1>
-    <app-request-info [requestInfo]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+    <app-request-info [requestInfo]="responseRequestInfo" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>
 
-<!-- Force Sent twice Info -->
-<div class="request-warning" *ngIf="responseRequest && responseRequest.isForceSent()">
-    <h1>
-        <mat-icon inline=true>check_circle</mat-icon>
-        {{ 'Requests.RequestSent_ForceSent' | translate: { barcode: responseRequest.barcode } }}
-    </h1>
-    <app-request-info [requestInfo]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
-</div>
 
 <!-- Failed Request -->
 <div class="request-failed" *ngIf="responseErrorId">
