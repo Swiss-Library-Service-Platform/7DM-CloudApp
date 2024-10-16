@@ -6,6 +6,7 @@
         "To": "To",
         "RequestId": "Request ID",
         "Search": "Filter",
+        "Selected": "{selected}/{total} selected",
         "Status": {
             "Loading": "Loading..."
         },
@@ -72,6 +73,7 @@
                 "STANDARD": "Standard",
                 "RETURN": "Return"
             },
+            "NewRequest": "Request Information",
             "NotRapido": "Not a Rapido request",
             "Sender": "Sender",
             "SentTwice": "Request sent twice",

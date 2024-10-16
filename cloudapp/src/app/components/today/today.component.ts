@@ -17,7 +17,8 @@ export class TodayComponent implements OnInit {
   filteredRequests: Request[] = [];
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
-  isErrorExisting: boolean = false;
+
+  selectedRequests: string[] = [];
 
   constructor(
     private backendService: BackendService,
@@ -45,7 +46,7 @@ export class TodayComponent implements OnInit {
       this.filteredRequests = [...this.todayRequests];
     } else {
       // Filter requests based on search input
-      this.filteredRequests = this.todayRequests.filter(request  => {
+      this.filteredRequests = this.todayRequests.filter(request => {
         return request.checkForSearch(this.inputSearch);
       });
     }
@@ -55,7 +56,33 @@ export class TodayComponent implements OnInit {
     this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
     this.loader.show();
     this.backendService.cancelRequest(internalId).then((res) => {
-        this.loader.hide();
+      this.loader.hide();
     });
-}
+  }
+
+  onSelectRequest(requestId: string): void {
+    if (this.selectedRequests.includes(requestId)) {
+      this.selectedRequests = this.selectedRequests.filter(id => id !== requestId);
+    } else {
+      this.selectedRequests.push(requestId);
+    }
+  }
+
+  onSelectAll(): void {
+    if (this.selectedRequests.length === this.filteredRequests.length) {
+      this.selectedRequests = [];
+      this.filteredRequests.forEach(request => request.isSelected = false);
+    } else {
+      this.selectedRequests = this.filteredRequests.map(request => request.internal_id);
+      this.filteredRequests.forEach(request => request.isSelected = true);
+    }
+  }
+
+  onPrintSelectedRequests(): void {
+    this.selectedRequests.forEach(requestId => {
+      this.backendService.getRequestSlipPdfUrl(requestId).then(url => {
+        window.open(url, '_blank');
+      });
+    });
+  }
 }

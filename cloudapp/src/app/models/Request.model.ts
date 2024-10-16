@@ -20,6 +20,7 @@ export class Request {
     box_label: BoxLabel;
 
     isDeleting: boolean;
+    isSelected: boolean;
 
     constructor(init?: Partial<Request>) {
         Object.assign(this, init);

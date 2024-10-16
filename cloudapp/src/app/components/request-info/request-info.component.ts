@@ -4,6 +4,7 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Request } from '../../models/Request.model';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-request-info',
@@ -16,7 +17,13 @@ export class RequestInfoComponent implements OnInit {
   request: Request;
 
   @Input()
+  index: number = 0;
+
+  @Input()
   onCancelRequest: Function = undefined;
+
+  @Input()
+  onSelectRequest: Function = undefined;
 
   constructor(
     private backendService: BackendService,
@@ -44,4 +51,10 @@ export class RequestInfoComponent implements OnInit {
     const url = await this.backendService.getBoxLabelPdfUrl(boxId);
     window.open(url, '_blank');
   }
+
+  onClickSelectRequest(event: MatCheckboxChange): void {
+    this.request.isSelected = event.checked;
+    this.onSelectRequest(this.request.internal_id);
+  }
+
 }

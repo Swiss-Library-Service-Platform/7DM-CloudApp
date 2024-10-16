@@ -3,8 +3,8 @@
     <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Today.Search' | translate }}</mat-label>
-            <input matInput placeholder="{{ 'Today.SearchPlaceholder' | translate }}" 
-            type="text" [(ngModel)]="inputSearch" (keyup)="onFilterRequests()">
+            <input matInput placeholder="{{ 'Today.SearchPlaceholder' | translate }}" type="text"
+                [(ngModel)]="inputSearch" (keyup)="onFilterRequests()">
         </mat-form-field>
         <button mat-icon-button (click)="onFilterRequests()">
             <mat-icon>search</mat-icon>
@@ -14,14 +14,17 @@
 
 <!-- Request Info for each of requests Today -->
 <div class="info-response">
-    <h1 class="info-response-title">
-        <mat-icon inline=true>today</mat-icon>
-        {{ 'Today.TodayRequests' | translate: { number: filteredRequests.length } }}
-    </h1>
+    <!-- Selection -->
+    <app-request-selection [allSelected]="selectedRequests.length === filteredRequests.length"
+        [selectedRequests]="selectedRequests" [totalRequestNumber]="filteredRequests.length"
+        (onSelectAll)="onSelectAll()" (onPrintSelectedRequests)="onPrintSelectedRequests()">
+    </app-request-selection>
+
     <!-- If there are requests today -->
     <ng-container *ngIf="filteredRequests">
-        <app-request-info *ngFor="let request of filteredRequests" [request]="request"
-            [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+        <app-request-info *ngFor="let request of filteredRequests; let i = index" [request]="request" [index]="i +1"
+            [onCancelRequest]="cancelRequest.bind(this)" [onSelectRequest]="onSelectRequest.bind(this)">
+        </app-request-info>
     </ng-container>
 
     <!-- If there are no requests today -->

@@ -1,15 +1,25 @@
 <div class="request-info-table-wrapper">
     <table class="request-info-table" [class.deleted]="request.isDeleting">
         <tr>
-            <!-- Barcode -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
-            <td>
-                <div class="cell-with-action-icon">
-                    {{ request.barcode ? request.barcode : 'N/A' }}
-                    <mat-icon *ngIf="onCancelRequest !== undefined && !request.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
-                    <mat-spinner color="warn" *ngIf="request.isDeleting" diameter="22"></mat-spinner>
+            <!-- Header -->
+            <th class="checkbox-header">
+                <mat-checkbox *ngIf="index != 0" [(ngModel)]="request.isSelected" (change)="onClickSelectRequest($event)"></mat-checkbox>
+            </th>
+            <td class="request-info-header">
+                <div>
+                    {{ index ? '#' + index : 'Requests.RequestInfo.NewRequest' | translate }}
+                    <div>
+                        <mat-icon *ngIf="onCancelRequest !== undefined && !request.isDeleting" color="warn"
+                            (click)="onClickCancelRequest()">cancel</mat-icon>
+                        <mat-spinner color="warn" *ngIf="request.isDeleting" diameter="22"></mat-spinner>
+                    </div>
                 </div>
             </td>
+        </tr>
+        <tr>
+            <!-- Barcode -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
+            <td> {{ request.barcode ? request.barcode : 'N/A' }} </td>
         </tr>
         <tr>
             <!-- Type  -->
@@ -32,7 +42,7 @@
             <td>
                 <div class="cell-with-action-icon">
                     {{ request.internal_id }}
-                    <mat-icon  (click)="onClickPrintRequestPdf()">print</mat-icon>
+                    <mat-icon (click)="onClickPrintRequestPdf()">print</mat-icon>
                 </div>
             </td>
         </tr>

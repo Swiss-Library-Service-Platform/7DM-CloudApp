@@ -25,7 +25,7 @@ export class HistoryComponent implements OnInit {
   inputBoxId: string;
   inputRequestId: string;
   inputDestination: string;
-
+  
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,

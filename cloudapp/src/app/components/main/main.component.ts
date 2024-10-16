@@ -51,8 +51,8 @@ export class MainComponent implements OnInit {
                 this.isLibraryAllowed = allowed;
                 this.backendService.getTodaysRequestsObject().subscribe(
                     (response: Request[]) => {
-                        const request = response.map(obj => new Request(obj));
-                        this.isWarningInToday = request.some(request => request.isSentTwice() && request.isOutdated() || request.isNotRapido());
+                        const requests = response.map(obj => new Request(obj));
+                        this.isWarningInToday = requests.some(request => request.isSentTwice() || request.isOutdated() || request.isNotRapido());
                     }
                 );
             }).catch(error => {

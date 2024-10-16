@@ -16,6 +16,7 @@ import { RequestInfoComponent } from './components/request-info/request-info.com
 import { TranslateICUParser } from 'ngx-translate-parser-plural-select';
 import { TranslateLoader, TranslateModule, TranslateParser } from '@ngx-translate/core';
 import { HistoryComponent } from './components/history/history.component';
+import { RequestSelectionComponent } from './components/request-selection/request-selection.component';
 
 export function getTranslateModuleWithICU() {
   return TranslateModule.forRoot({
@@ -36,7 +37,8 @@ export function getTranslateModuleWithICU() {
     RequestsComponent,
     TodayComponent,
     RequestInfoComponent,
-    HistoryComponent
+    HistoryComponent,
+    RequestSelectionComponent
   ],
   imports: [
     MaterialModule,

@@ -1,0 +1,35 @@
+// Selection
+.info-response-selection {
+    background-color: var(--slsp-purple-light);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1rem;
+    padding: 0px 4px;
+    mat-checkbox {
+        margin-bottom: 5px;
+    }
+}
+.info-response-selection-select {
+    display: flex;
+    align-items: center;
+}
+.info-response-selection-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 1rem;
+    mat-icon {
+        width: 22px;
+        height: 22px;
+        font-size: 22px;
+        color: lightgray;
+        &.active {
+            cursor: pointer;
+            color: inherit;
+        }
+    }
+}
