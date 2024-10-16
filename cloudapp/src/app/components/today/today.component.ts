@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from '../../services/backend.service';
-import { RequestInfo } from '../../models/RequestInfo.model';
 import { Subscription } from 'rxjs';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Request } from '../../models/Request.model';
 
 @Component({
   selector: 'app-today',
@@ -13,8 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TodayComponent implements OnInit {
 
-  todayRequests: RequestInfo[] = [];
-  filteredRequests: RequestInfo[] = [];
+  todayRequests: Request[] = [];
+  filteredRequests: Request[] = [];
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
   isErrorExisting: boolean = false;
@@ -31,7 +31,7 @@ export class TodayComponent implements OnInit {
     this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
       response => {
         this.todayRequests = response.map(request => {
-          return new RequestInfo(request);
+          return new Request(request);
         });
         this.filteredRequests = [...this.todayRequests];
       }

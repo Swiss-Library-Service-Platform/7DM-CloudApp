@@ -38,12 +38,12 @@
 </div>
 
 <!-- Request Info -->
-<div class="request-success" *ngIf="responseRequestInfo && responseRequestInfo.request.isReady()">
+<div class="request-success" *ngIf="responseRequest && responseRequest.isReady()">
     <h1>
         <mat-icon [class]="getIconClass()" inline=true>check_circle</mat-icon>
-        {{ 'Requests.RequestSent' | translate: { barcode: responseRequestInfo.request.barcode } }}
+        {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
     </h1>
-    <app-request-info [requestInfo]="responseRequestInfo" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+    <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>
 
 

@@ -1,37 +1,37 @@
 <div class="request-info-table-wrapper">
-    <table class="request-info-table" [class.deleted]="requestInfo.isDeleting">
+    <table class="request-info-table" [class.deleted]="request.isDeleting">
         <tr>
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
             <td>
                 <div class="cell-with-action-icon">
-                    {{ requestInfo.request.barcode ? requestInfo.request.barcode : 'N/A' }}
-                    <mat-icon *ngIf="onCancelRequest !== undefined && !requestInfo.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
-                    <mat-spinner color="warn" *ngIf="requestInfo.isDeleting" diameter="22"></mat-spinner>
+                    {{ request.barcode ? request.barcode : 'N/A' }}
+                    <mat-icon *ngIf="onCancelRequest !== undefined && !request.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
+                    <mat-spinner color="warn" *ngIf="request.isDeleting" diameter="22"></mat-spinner>
                 </div>
             </td>
         </tr>
         <tr>
             <!-- Type  -->
             <th scope="row"> {{ 'Requests.RequestInfo.Type' | translate }}</th>
-            <td> {{ 'Requests.RequestInfo.TypeValue.' + requestInfo.request.type | translate }} </td>
+            <td> {{ 'Requests.RequestInfo.TypeValue.' + request.type | translate }} </td>
         </tr>
         <tr>
             <!-- Sender -->
             <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
-            <td> {{ requestInfo.sending_library_name }} ({{ requestInfo.sending_library_alma_code }})</td>
+            <td> {{ request.box_label.directories_name }} ({{ request.box_label.directories_code }})</td>
         </tr>
         <tr>
             <!-- Destination -->
             <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
-            <td> {{ requestInfo.destination_library_name }} ({{ requestInfo.destination_library_alma_code }})</td>
+            <td> {{ request.destination_directories_name }} ({{ request.destination_directories_code }})</td>
         </tr>
         <tr>
             <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
             <td>
                 <div class="cell-with-action-icon">
-                    {{ requestInfo.request.internal_id }}
+                    {{ request.internal_id }}
                     <mat-icon  (click)="onClickPrintRequestPdf()">print</mat-icon>
                 </div>
             </td>
@@ -39,29 +39,29 @@
         <tr>
             <!-- Request ID (External) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestIdExternal' | translate }}</th>
-            <td> {{ requestInfo.request.external_id }} </td>
+            <td> {{ request.external_id }} </td>
         </tr>
         <tr>
             <!-- Box ID -->
             <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
             <td>
                 <div class="cell-with-action-icon">
-                    {{ requestInfo.request.box_label.box_id }}
+                    {{ request.box_label.box_id }}
                     <mat-icon (click)="onClickPrintBoxIdPdf()">print</mat-icon>
                 </div>
             </td>
         </tr>
-        <tr *ngIf="requestInfo.request.isError()">
+        <tr *ngIf="request.isError()">
             <!-- 7DM Error -->
             <th scope="row"> {{ 'Requests.RequestInfo.Error' | translate }}</th>
             <td>
                 <div class="cell-with-status-icon" color="warn">
                     <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
-                    {{ requestInfo.request.message }}
+                    {{ request.message }}
                 </div>
             </td>
         </tr>
-        <tr *ngIf="requestInfo.request.isNotRapido()">
+        <tr *ngIf="request.isNotRapido()">
             <!-- IS not rapido request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -71,7 +71,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="requestInfo.request.isSentTwice()">
+        <tr *ngIf="request.isSentTwice()">
             <!-- Sent twice -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -81,7 +81,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="requestInfo.request.isOutdated()">
+        <tr *ngIf="request.isOutdated()">
             <!-- Outdated -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -92,15 +92,4 @@
             </td>
         </tr>
     </table>
-    <!-- 
-    <div class="request-info-table-actions">
-        <button mat-icon-button (click)="onClickPrintRequestPdf()">
-            <mat-icon>print</mat-icon>
-        </button>
-        <button [disabled]="requestInfo.isDeleting" mat-icon-button (click)="onClickCancelRequest()" color="warn">
-            <mat-icon *ngIf="!requestInfo.isDeleting">cancel</mat-icon>
-            <mat-spinner *ngIf="requestInfo.isDeleting" diameter="24"></mat-spinner>
-        </button>
-    </div>
-    -->
 </div>

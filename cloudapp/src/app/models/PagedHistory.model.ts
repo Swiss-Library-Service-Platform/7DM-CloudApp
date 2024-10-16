@@ -1,4 +1,4 @@
-import { RequestInfo } from "./RequestInfo.model";
+import { Request } from "./Request.model";
 
 export class PagedHistory {
     currentPage: number;
@@ -7,13 +7,13 @@ export class PagedHistory {
     from: number;
     to: number;
     totalResults: number;
-    results: RequestInfo[];
+    results: Request[];
 
     constructor(init?: Partial<PagedHistory>) {
         Object.assign(this, init);
-        // Ensure each result is an instance of RequestInfo
+        // Ensure each result is an instance of Request
         if (this.results) {
-            this.results = this.results.map(result => new RequestInfo(result));
+            this.results = this.results.map(result => new Request(result));
         }
     }
 }

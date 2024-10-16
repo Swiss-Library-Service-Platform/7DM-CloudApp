@@ -5,7 +5,7 @@ import { StatusIndicatorService } from '../../services/status-indicator.service'
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RequestInfo } from '../../models/RequestInfo.model';
+import { Request } from '../../models/Request.model';
 
 // Set the worker source for pdfjs
 // import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
@@ -20,7 +20,7 @@ import { RequestInfo } from '../../models/RequestInfo.model';
 export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
     inputBoxId: string = '';
-    responseRequestInfo: RequestInfo;
+    responseRequest: Request;
     responseErrorMessage: string;
     responseErrorId: string;
     subscriptionTodaysRequests: Subscription;
@@ -57,7 +57,7 @@ export class RequestsComponent implements OnInit {
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {
                 // if today requests do not include the response request, clear response
-                if (this.responseRequestInfo != null && !response.some(r => r.request.internal_id === this.responseRequestInfo.request.internal_id)) {
+                if (this.responseRequest != null && !response.some(r => r.internal_id === this.responseRequest.internal_id)) {
                     this.resetResponse();
                 }
             }
@@ -70,7 +70,7 @@ export class RequestsComponent implements OnInit {
     }
 
     resetResponse(): void {
-        this.responseRequestInfo = null;
+        this.responseRequest = null;
         this.responseErrorMessage = null;
         this.responseErrorId = null;
     }
@@ -95,7 +95,7 @@ export class RequestsComponent implements OnInit {
         this.resetResponse();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            this.responseRequestInfo = new RequestInfo(response);
+            this.responseRequest = new Request(response);
             this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
@@ -128,9 +128,9 @@ export class RequestsComponent implements OnInit {
     }
 
     getIconClass(): string {
-        if (this.responseRequestInfo && (this.responseRequestInfo.request.isSentTwice() 
-            || this.responseRequestInfo.request.isOutdated() 
-            || this.responseRequestInfo.request.isNotRapido())) {
+        if (this.responseRequest && (this.responseRequest.isSentTwice() 
+            || this.responseRequest.isOutdated() 
+            || this.responseRequest.isNotRapido())) {
           return 'warning';
         } 
         return 'successful'; 

@@ -5,7 +5,7 @@ import { BackendService } from '../../services/backend.service';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { RequestInfo } from '../../models/RequestInfo.model';
+import { Request } from '../../models/Request.model';
 
 @Component({
     selector: 'app-main',
@@ -50,9 +50,9 @@ export class MainComponent implements OnInit {
             this.backendService.checkIfLibaryAllowed().then(allowed => {
                 this.isLibraryAllowed = allowed;
                 this.backendService.getTodaysRequestsObject().subscribe(
-                    (response: RequestInfo[]) => {
-                        const requestInfos = response.map(obj => new RequestInfo(obj));
-                        this.isWarningInToday = requestInfos.some(requestInfo => requestInfo.request.isSentTwice() && requestInfo.request.isOutdated() || requestInfo.request.isNotRapido());
+                    (response: Request[]) => {
+                        const request = response.map(obj => new Request(obj));
+                        this.isWarningInToday = request.some(request => request.isSentTwice() && request.isOutdated() || request.isNotRapido());
                     }
                 );
             }).catch(error => {

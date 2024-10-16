@@ -20,7 +20,7 @@
     </h1>
     <!-- If there are requests today -->
     <ng-container *ngIf="filteredRequests">
-        <app-request-info *ngFor="let request of filteredRequests" [requestInfo]="request"
+        <app-request-info *ngFor="let request of filteredRequests" [request]="request"
             [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
     </ng-container>
 

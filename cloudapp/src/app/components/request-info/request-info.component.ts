@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RequestInfo } from '../../models/RequestInfo.model';
 import { BackendService } from '../../services/backend.service';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Request } from '../../models/Request.model';
 
 @Component({
   selector: 'app-request-info',
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class RequestInfoComponent implements OnInit {
 
   @Input()
-  requestInfo: RequestInfo
+  request: Request;
 
   @Input()
   onCancelRequest: Function = undefined;
@@ -29,18 +29,18 @@ export class RequestInfoComponent implements OnInit {
   }
 
   onClickCancelRequest(): void {
-    var requestId = this.requestInfo.request.internal_id;
+    var requestId = this.request.internal_id;
     this.onCancelRequest(requestId);
   }
 
   async onClickPrintRequestPdf(): Promise<void> {
-    var requestId = this.requestInfo.request.internal_id;
+    var requestId = this.request.internal_id;
     const url = await this.backendService.getRequestSlipPdfUrl(requestId);
     window.open(url, '_blank');
   }
 
   async onClickPrintBoxIdPdf(): Promise<void> {
-    var boxId = this.requestInfo.request.box_id;
+    var boxId = this.request.box_id;
     const url = await this.backendService.getBoxLabelPdfUrl(boxId);
     window.open(url, '_blank');
   }

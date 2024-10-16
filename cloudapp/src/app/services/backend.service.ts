@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CloudAppEventsService, AlertService } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { RequestInfo } from '../models/RequestInfo.model';
 import { BoxLabel } from '../models/BoxLabel.model';
 import { PagedHistory } from '../models/PagedHistory.model';
+import { Request } from '../models/Request.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -24,18 +24,17 @@ export class BackendService {
   private baseUrlLocal: string = 'http://localhost:4201/api/v1';
   private httpOptions: {};
 
-  public todaysRequests: Array<RequestInfo> = [];
-  private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestInfo>>(new Array<RequestInfo>());
+  public todaysRequests: Array<Request> = [];
+  private readonly _todaysRequestsObject = new BehaviorSubject<Array<Request>>(new Array<Request>());
 
   private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
 
   constructor(
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
-    private alert: AlertService,
   ) { }
 
-  getTodaysRequestsObject(): Observable<RequestInfo[]> {
+  getTodaysRequestsObject(): Observable<Request[]> {
     return this._todaysRequestsObject.asObservable();
   }
 
@@ -43,7 +42,7 @@ export class BackendService {
     return this._pagedHistoryObject.asObservable();
   }
 
-  private _setObservableTodaysRequestsObject(todaysRequests: Array<RequestInfo>): void {
+  private _setObservableTodaysRequestsObject(todaysRequests: Array<Request>): void {
     this._todaysRequestsObject.next(todaysRequests);
   }
 
@@ -106,14 +105,14 @@ export class BackendService {
    * Looks up a request in the API
    * 
    */
-  async sendRequestTo7DM(requestId: string, boxId: string): Promise<RequestInfo> {
+  async sendRequestTo7DM(requestId: string, boxId: string): Promise<Request> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedRequestId = encodeURIComponent(requestId);
     let escapedLibraryCode = encodeURIComponent(libraryCode);
     let escapedBoxId = encodeURIComponent(boxId);
 
     return new Promise((resolve, reject) => {
-      this.http.post<RequestInfo>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
+      this.http.post<Request>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
         request_id: escapedRequestId,
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
@@ -172,7 +171,7 @@ export class BackendService {
   /**
    * Get all requests for the current library
    * 
-   * @returns {Promise<RequestInfo[]>}
+   * @returns {Promise<Request[]>}
   */
   async getRequests(searchString: string = null): Promise<boolean> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
@@ -184,7 +183,7 @@ export class BackendService {
     }
 
     return new Promise((resolve, reject) => {
-      this.http.get<RequestInfo[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
+      this.http.get<Request[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
           this.todaysRequests = response;
           this._setObservableTodaysRequestsObject(response);
@@ -213,13 +212,13 @@ export class BackendService {
       this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
         response => {
           // Change request to deleted immediately
-          let request = this.todaysRequests.find(requestInfo => requestInfo.request.internal_id === internalId);
+          let request = this.todaysRequests.find(request => request.internal_id === internalId);
           request.isDeleting = true;
           this._setObservableTodaysRequestsObject(this.todaysRequests);
 
           // Wait 3 seconds before removing the request from the list
           setTimeout(() => {
-            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.request.internal_id !== internalId);
+            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.internal_id !== internalId);
             this._setObservableTodaysRequestsObject(this.todaysRequests);
           }, 3000);
           resolve(true);
