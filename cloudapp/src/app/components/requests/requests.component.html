@@ -40,10 +40,8 @@
 <!-- Request Info -->
 <div class="request-success" *ngIf="responseRequestInfo && responseRequestInfo.request.isReady()">
     <h1>
-        <div class="request-success-first">
-            <mat-icon color="success" inline=true>check_circle</mat-icon>
-            {{ 'Requests.RequestSent' | translate: { barcode: responseRequestInfo.request.barcode } }}
-        </div>
+        <mat-icon [class]="getIconClass()" inline=true>check_circle</mat-icon>
+        {{ 'Requests.RequestSent' | translate: { barcode: responseRequestInfo.request.barcode } }}
     </h1>
     <app-request-info [requestInfo]="responseRequestInfo" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>

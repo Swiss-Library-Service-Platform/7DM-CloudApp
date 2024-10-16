@@ -7,7 +7,7 @@
                 <div class="cell-with-action-icon">
                     {{ requestInfo.request.barcode ? requestInfo.request.barcode : 'N/A' }}
                     <mat-icon *ngIf="onCancelRequest !== undefined && !requestInfo.isDeleting" color="warn" (click)="onClickCancelRequest()">cancel</mat-icon>
-                    <mat-spinner color="warn" *ngIf="requestInfo.isDeleting" diameter="18"></mat-spinner>
+                    <mat-spinner color="warn" *ngIf="requestInfo.isDeleting" diameter="22"></mat-spinner>
                 </div>
             </td>
         </tr>
@@ -66,7 +66,7 @@
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
+                    <mat-icon color="warn">warning</mat-icon>
                     {{ 'Requests.RequestInfo.NotRapido' | translate }}
                 </div>
             </td>
@@ -76,7 +76,7 @@
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
+                    <mat-icon color="warn">warning</mat-icon>
                     {{ 'Requests.RequestInfo.SentTwice' | translate }}
                 </div>
             </td>
@@ -86,7 +86,7 @@
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
+                    <mat-icon color="warn">warning</mat-icon>
                     {{ 'Requests.RequestInfo.Outdated' | translate }}
                 </div>
             </td>

@@ -1,39 +1,5 @@
-.request-success {
-    margin-top: 1rem;
-    display: flex;
-    flex-direction: column;
 
-    .info-message {
-        background-color: #90ee90;
-        /* light green background */
-        padding: 10px;
-        width: 100%;
-        margin-bottom: 10px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        font-weight: bold;
-    }
-
-    h1 {
-        display: flex;
-        font-size: 120%;
-        flex-direction: column;
-
-        .request-success-first {
-            display: flex;
-        }
-
-        .mat-icon {
-            margin-right: 4px;
-        }
-    }
-
-    app-request-info {
-        width: 100%;
-    }
-
-}
-
+.request-success,
 .request-failed,
 .request-warning {
     padding-top: 1rem;
@@ -41,10 +7,24 @@
     h1 {
         display: flex;
         font-size: 120%;
+        flex-direction: row;
 
         .mat-icon {
             margin-right: 4px;
+            width: 22px;
+            height: 22px;
+            font-size: 22px;
         }
+        .mat-icon.successful {
+            color: rgb(0, 128, 0);
+        }
+        .mat-icon.warning {
+            color: rgb(224, 198, 0);
+        }
+    }
+
+    app-request-info {
+        width: 100%;
     }
 }
 

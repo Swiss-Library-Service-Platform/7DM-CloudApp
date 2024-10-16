@@ -127,6 +127,15 @@ export class RequestsComponent implements OnInit {
         });
     }
 
+    getIconClass(): string {
+        if (this.responseRequestInfo && (this.responseRequestInfo.request.isSentTwice() 
+            || this.responseRequestInfo.request.isOutdated() 
+            || this.responseRequestInfo.request.isNotRapido())) {
+          return 'warning';
+        } 
+        return 'successful'; 
+    }
+
     /*
     // The build failed with pdf js, because we need tsconfig.json, and somehow it is not working
     loadPdfWithPdfJs(): void {
