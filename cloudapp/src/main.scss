@@ -110,7 +110,8 @@ body[class*=cloudapp-theme] {
     background-color: var(--slsp-purple-light);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
     padding: 0px 8px;
-
+    border-radius: 5px;
+    
     .mat-form-field {
         width: 100%;
     }

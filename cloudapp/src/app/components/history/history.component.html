@@ -31,7 +31,7 @@
             <button mat-icon-button (click)="onResetFilter()">
                 <mat-icon>clear</mat-icon>
             </button>
-            <button mat-icon-button (click)="onClickDownloadHistory()" [disabled]="pagedHistory && (pagedHistory.totalResults === 0 || pagedHistory.totalResults > 10 )">
+            <button mat-icon-button (click)="onClickDownloadHistory()" [disabled]="pagedHistory && pagedHistory.totalResults === 0">
                 <mat-icon *ngIf="!isDownloading">download</mat-icon>
                 <mat-spinner  *ngIf="isDownloading" diameter="24"></mat-spinner>
             </button>
