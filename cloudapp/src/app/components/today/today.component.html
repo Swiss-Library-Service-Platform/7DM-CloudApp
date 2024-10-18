@@ -10,15 +10,16 @@
             <mat-icon>search</mat-icon>
         </button>
     </div>
-</div>
-
-<!-- Request Info for each of requests Today -->
-<div class="info-response">
-    <!-- Selection -->
+        <!-- Selection -->
     <app-request-selection [allSelected]="selectedRequests.length === filteredRequests.length"
         [selectedRequests]="selectedRequests" [totalRequestNumber]="filteredRequests.length"
         (onSelectAll)="onSelectAll()" (onPrintSelectedRequests)="onPrintSelectedRequests()">
     </app-request-selection>
+
+</div>
+
+<!-- Request Info for each of requests Today -->
+<div class="info-response">
 
     <!-- If there are requests today -->
     <ng-container *ngIf="filteredRequests">

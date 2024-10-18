@@ -8,7 +8,8 @@
         <button mat-icon-button (click)="onClickRefreshBoxId()">
             <mat-icon>add_circle</mat-icon>
         </button>
-        <button mat-icon-button (click)="onClickPrintBoxIdPdf()">
+        <button [disabled]="!inputBoxId"
+            mat-icon-button (click)="onClickPrintBoxIdPdf()">
             <mat-icon>print</mat-icon>
         </button>
     </div>
@@ -39,20 +40,28 @@
 
 <!-- Request Info -->
 <div class="request-success" *ngIf="responseRequest && responseRequest.isReady()">
-    <h1>
-        <mat-icon [class]="getIconClass()" inline=true>check_circle</mat-icon>
-        {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
-    </h1>
+    <div class="request-headers">
+        <h1>
+            <mat-icon color="success" inline=true>check_circle</mat-icon>
+            {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
+        </h1>
+        <h1 *ngIf="responseRequest.isSentTwice() || responseRequest.isOutdated() || responseRequest.isNotRapido()">
+            <mat-icon color="warn" inline=true>warning</mat-icon>
+            {{ 'Requests.HasWarning' | translate }}
+        </h1>
+    </div>
     <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>
 
 
 <!-- Failed Request -->
 <div class="request-failed" *ngIf="responseErrorId">
-    <h1>
-        <mat-icon color="warn" inline=true>error</mat-icon>
-        {{ responseErrorMessage }}
-    </h1>
+    <div class="request-headers">
+        <h1>
+            <mat-icon color="warn" inline=true>error</mat-icon>
+            {{ responseErrorMessage }}
+        </h1>
+    </div>
     <p>
         {{ 'Requests.ContactSupport1' | translate }}
         <a href="https://slsp.ch/en/contact">

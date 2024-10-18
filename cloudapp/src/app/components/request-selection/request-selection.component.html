@@ -1,11 +1,13 @@
 <!-- Selection / Mass Actions -->
 <div class="info-response-selection">
-    <div class="info-response-selection-select ">
-        <mat-checkbox [(ngModel)]="allSelected" (change)="onClickSelectAll()"></mat-checkbox>
-        <span>{{ 'History.Selected' | translate: { total: totalRequestNumber, selected: selectedRequests.length }
-            }}</span>
+    <div class="info-response-selection-select">
+        <mat-checkbox [(ngModel)]="allSelected" (change)="onClickSelectAll()">
+            {{ 'History.SelectAll' | translate }}
+        </mat-checkbox>
+        
     </div>
     <div class="info-response-selection-actions">
+        <span>{{ 'History.Selected' | translate: { total: totalRequestNumber, selected: selectedRequests.length } }} </span>
         <mat-icon (click)="onClickPrintSelectedRequests()"
             [class]="selectedRequests.length > 0 ? 'active' : ''">print</mat-icon>
     </div>

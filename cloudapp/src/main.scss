@@ -43,6 +43,10 @@ body[class*=cloudapp-theme] {
 
     .mat-checkbox-checked .mat-checkbox-background {
         background-color: var(--slsp-purple) !important;
+        padding-bottom: 5px;
+    }
+    .mat-checkbox-label {
+        margin-top: 2px;
     }
     
     .mat-focused .mat-form-field-label {
