@@ -32,6 +32,7 @@
         background-color: #e4e4e4;
 
         mat-checkbox {
+            padding-left: 4px;
             margin-bottom: 5px;
         }
     }
@@ -44,39 +45,28 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            font-weight: 500;
+            mat-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 24px;
+                cursor: pointer;
+            }
         }
-
-        .mat-icon {
-            cursor: pointer;
-        }
     }
 
-    /*
-    tr:nth-child(even) {
-        background-color: #ffffff;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #f2f2f2;
-    }
-    */
-
-
-    td {
-        width: 100%;
-    }
-
-    th,
-    td {
-        padding: 5px;
-        text-align: left;
-    }
-
+ 
     th,
     td {
         border: 1px solid #000;
-        padding: 2px 4px;
         text-align: left;
+        padding: 0px 4px;
+        text-align: left;
+        height: 30px;
+    }
+
+    td {
+        width: 100%;
     }
 
     .cell-with-status-icon {
@@ -97,16 +87,9 @@
         width: 100%;
     }
 
-    .cell-with-action-icon .mat-icon {
-        font-size: 22px;
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-    }
-
     .cell-with-status-icon .mat-icon {
-        font-size: 18px;
-        width: 18px;
-        height: 18px;
+        width: 24px;
+        height: 24px;
+        font-size: 24px;
     }
 }

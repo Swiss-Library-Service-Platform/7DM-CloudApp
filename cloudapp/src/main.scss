@@ -67,6 +67,11 @@ body[class*=cloudapp-theme] {
     .mat-tab-body {
         margin-top: 0 !important;
     }
+
+    .mat-tab-header {
+        box-shadow: 0 2px 6px 0 rgb(0 0 0 / 0.2), 0 2px 4px -1px rgb(0 0 0 / 0.2);
+        margin: 0 2px;
+    }
     
     .mat-tab-group {
         flex-grow: 1;
@@ -112,9 +117,11 @@ body[class*=cloudapp-theme] {
     flex-direction: column;
     justify-content: center;
     background-color: var(--slsp-purple-light);
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    box-shadow: 0 2px 6px 0 rgb(0 0 0 / 0.2), 0 2px 4px -1px rgb(0 0 0 / 0.2);
+    margin: 0 2px;
+    margin-bottom: 2rem;
     padding: 0px 8px;
-    border-radius: 5px;
+    border-radius: 0px 0px 5px 5px;
     
     .mat-form-field {
         width: 100%;
