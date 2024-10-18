@@ -210,17 +210,13 @@ export class BackendService {
 
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
-        response => {
-          // Change request to deleted immediately
-          let request = this.todaysRequests.find(request => request.internal_id === internalId);
-          request.isDeleting = true;
-          this._setObservableTodaysRequestsObject(this.todaysRequests);
-
+        response => {          
           // Wait 3 seconds before removing the request from the list
+          // To show the user that the request is being cancelled
           setTimeout(() => {
             this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.internal_id !== internalId);
             this._setObservableTodaysRequestsObject(this.todaysRequests);
-          }, 3000);
+          }, 2000);
           resolve(true);
         },
         error => {

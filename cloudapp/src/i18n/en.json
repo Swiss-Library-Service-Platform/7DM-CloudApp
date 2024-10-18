@@ -48,7 +48,7 @@
             "SENDER_NON_COURIER_LIBRARY": "Sender library is not SLSP courier valid library.",
             "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library.",
             "INVALID_REQUEST_ID": "Invalid request ID.",
-            "REQUEST_ALREADY_IN_DATABASE": "Request already sent.",
+            "REQUEST_ALREADY_IN_DATABASE": "Request already in Today tab.",
             "UNAUTHORIZED": "Unauthorized request.",
             "BOX_ID_NOT_FOUND": "Box ID not found, please check it.",
             "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same.",

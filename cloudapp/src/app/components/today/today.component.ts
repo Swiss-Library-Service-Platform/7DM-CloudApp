@@ -55,6 +55,9 @@ export class TodayComponent implements OnInit {
   cancelRequest(internalId: string): void {
     this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
     this.loader.show();
+    const request = this.todayRequests.find(request => request.internal_id === internalId);
+    request.isDeleting = true;
+    this.selectedRequests = this.selectedRequests.filter(id => id !== internalId);
     this.backendService.cancelRequest(internalId).then((res) => {
       this.loader.hide();
     });
