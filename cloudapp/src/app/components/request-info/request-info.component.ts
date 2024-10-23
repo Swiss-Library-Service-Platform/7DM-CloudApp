@@ -25,6 +25,9 @@ export class RequestInfoComponent implements OnInit {
   @Input()
   onSelectRequest: Function = undefined;
 
+  @Input()
+  showBoxDate: boolean = false;
+
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,

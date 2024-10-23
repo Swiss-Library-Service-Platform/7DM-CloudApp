@@ -9,10 +9,13 @@
             <td class="request-info-header">
                 <div>
                     {{ index ? '#' + index : 'Requests.RequestInfo.NewRequest' | translate }}
-                    <div>
-                        <mat-icon *ngIf="onCancelRequest !== undefined && !request.isDeleting" color="warn"
+                    <div *ngIf="onCancelRequest !== undefined">
+                        <mat-icon *ngIf="!request.isDeleting" color="warn"
                             (click)="onClickCancelRequest()">cancel</mat-icon>
                         <mat-spinner color="warn" *ngIf="request.isDeleting" diameter="22"></mat-spinner>
+                    </div>
+                    <div *ngIf="showBoxDate" class="box-date">
+                        {{ request.box_label.creation_time | date: 'dd/MM/yyyy' }}
                     </div>
                 </div>
             </td>

@@ -58,7 +58,7 @@
     <!-- If there are requests today -->
     <ng-container *ngIf="pagedHistory.results">
         <app-request-info *ngFor="let request of pagedHistory.results; let i = index"
-            [request]="request" [index]="i +1">
+            [request]="request" [index]="pagedHistory.from + i" [showBoxDate]="true">
         </app-request-info>
     </ng-container>
 </div>
