@@ -117,9 +117,9 @@ export class BackendService {
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
         response => {
-         // this.todaysRequests.push(response);
-         // this._setObservableTodaysRequestsObject(this.todaysRequests);
-         this.getRequests();
+          // this.todaysRequests.push(response);
+          // this._setObservableTodaysRequestsObject(this.todaysRequests);
+          this.getRequests();
           resolve(response);
         },
         error => {
@@ -210,7 +210,7 @@ export class BackendService {
 
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
-        response => {          
+        response => {
           // Wait 3 seconds before removing the request from the list
           // To show the user that the request is being cancelled
           setTimeout(() => {
@@ -253,6 +253,21 @@ export class BackendService {
     let escapedRequestId = encodeURIComponent(requestId);
 
     return `${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}/generatepdf`;
+  }
+
+  /*
+  * Get url of multi-request pdf
+  * @param {string} requestId
+  * @returns {Promise<string>}
+  */
+  async getMultiRequestSlipPdfUrl(requestIds: string[]): Promise<string> {
+
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let escapedRequestIds = requestIds.map(requestId => encodeURIComponent(requestId)).join(',');
+
+    // send request ids as parameter
+    return `${this.baseUrl}/requests/${escapedLibraryCode}/multi/generatepdf?requestIds=${escapedRequestIds}`;
   }
 
   /**

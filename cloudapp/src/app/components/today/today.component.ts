@@ -82,10 +82,8 @@ export class TodayComponent implements OnInit {
   }
 
   onPrintSelectedRequests(): void {
-    this.selectedRequests.forEach(requestId => {
-      this.backendService.getRequestSlipPdfUrl(requestId).then(url => {
-        window.open(url, '_blank');
-      });
+    this.backendService.getMultiRequestSlipPdfUrl(this.selectedRequests).then(pdfUrl => {
+      window.open(pdfUrl, '_blank');
     });
   }
 }
