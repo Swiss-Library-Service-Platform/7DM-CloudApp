@@ -8,6 +8,7 @@
         "Search": "Filter",
         "SelectAll": "Select all",
         "Selected": "{selected}/{total}",
+        "ShowErrors": "Show errors",
         "Status": {
             "Loading": "Loading..."
         },
@@ -58,6 +59,8 @@
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
         "ContactSupport3": "with the following error code if you have any questions.",
+        "Clear": "Clear filters",
+        "Download": "Download",
         "Status": {
             "Loading_Request": "Retrieving request...",
             "Cancelling_Request": "Cancelling request...",

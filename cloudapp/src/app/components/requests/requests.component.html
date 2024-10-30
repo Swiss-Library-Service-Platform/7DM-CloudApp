@@ -8,8 +8,7 @@
         <button mat-icon-button (click)="onClickRefreshBoxId()">
             <mat-icon>add_circle</mat-icon>
         </button>
-        <button [disabled]="!inputBoxId"
-            mat-icon-button (click)="onClickPrintBoxIdPdf()">
+        <button [disabled]="!inputBoxId" mat-icon-button (click)="onClickPrintBoxIdPdf()">
             <mat-icon>print</mat-icon>
         </button>
     </div>
@@ -19,7 +18,7 @@
             <input matInput type="text" [(ngModel)]="inputRequestId" (keyup.enter)="onClickSendRequest()"
                 placeholder="{{ 'Requests.RequestBarcode' | translate }}">
         </mat-form-field>
-        <button class="header-area-request-button" (click)="onClickSendRequest()"
+        <button class="header-area-main-button big" (click)="onClickSendRequest()"
             [disabled]="!inputRequestId || !inputBoxId || !isTimeValid">
             <mat-icon>send</mat-icon>
             {{ 'Requests.SendTo7DM' | translate }}

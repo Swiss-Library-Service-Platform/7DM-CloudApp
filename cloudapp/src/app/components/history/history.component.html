@@ -17,17 +17,32 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>{{ 'History.RequestId' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="inputRequestId"
-                (keyup)="onFilterHistoryRequests()">
+            <input matInput type="text" [(ngModel)]="inputRequestId" (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
     </div>
-    <div class="header-area-destination-buttons">
+    <div class="header-area-destination-error">
         <mat-form-field>
             <mat-label>{{ 'History.Destination' | translate }}</mat-label>
             <input matInput placeholder="ID" type="text" [(ngModel)]="inputDestination"
                 (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
-        <div class="header-area-destinations-buttons-container">
+        <div class="header-area-show-errors">
+            <mat-checkbox [(ngModel)]="showErrors" (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
+                | translate }}</mat-checkbox>
+        </div>
+    </div>
+    <div class="header-area-buttons">
+        <button class="header-area-main-button" (click)="onResetFilter()">
+            <mat-icon>clear</mat-icon>
+            {{ 'Requests.Clear' | translate }}
+        </button>
+        <button class="header-area-main-button dark" (click)="onClickDownloadHistory()"
+            [disabled]="pagedHistory && pagedHistory.totalResults === 0">
+            <mat-icon *ngIf="!isDownloading">download</mat-icon>
+            <mat-spinner color="white" *ngIf="isDownloading" diameter="18"></mat-spinner>
+            {{ 'Requests.Download' | translate }}
+        </button>
+        <!--
             <button mat-icon-button (click)="onResetFilter()">
                 <mat-icon>clear</mat-icon>
             </button>
@@ -35,7 +50,7 @@
                 <mat-icon *ngIf="!isDownloading">download</mat-icon>
                 <mat-spinner  *ngIf="isDownloading" diameter="24"></mat-spinner>
             </button>
-        </div>
+            -->
     </div>
 </div>
 
@@ -57,8 +72,8 @@
 
     <!-- If there are requests today -->
     <ng-container *ngIf="pagedHistory.results">
-        <app-request-info *ngFor="let request of pagedHistory.results; let i = index"
-            [request]="request" [index]="pagedHistory.from + i" [showBoxDate]="true">
+        <app-request-info *ngFor="let request of pagedHistory.results; let i = index" [request]="request"
+            [index]="pagedHistory.from + i" [showBoxDate]="true">
         </app-request-info>
     </ng-container>
 </div>

@@ -12,6 +12,7 @@
         --slsp-purple-light: #eeeef7;
         --slsp-purple-transparent: rgba(78, 74, 153, 0.1);
     }
+
     cloudapp-alert {
         font-weight: bold;
         position: absolute;
@@ -45,10 +46,11 @@ body[class*=cloudapp-theme] {
         background-color: var(--slsp-purple) !important;
         padding-bottom: 5px;
     }
+
     .mat-checkbox-label {
         margin-top: 2px;
     }
-    
+
     .mat-focused .mat-form-field-label {
         /*change color of label*/
         color: var(--slsp-purple) !important;
@@ -72,11 +74,11 @@ body[class*=cloudapp-theme] {
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 0px -1px rgba(0, 0, 0, 0.2);
         margin: 0 2px;
     }
-    
+
     .mat-tab-group {
         flex-grow: 1;
     }
-    
+
     .mat-tab-group.mat-primary .mat-ink-bar {
         border-radius: 5px;
         height: 5px;
@@ -106,6 +108,7 @@ body[class*=cloudapp-theme] {
     .mat-warn {
         color: #c94a41 !important;
     }
+
     .mat-success {
         color: #4CAF50;
     }
@@ -122,12 +125,13 @@ body[class*=cloudapp-theme] {
     margin-bottom: 2rem;
     padding: 0px 8px;
     border-radius: 0px 0px 5px 5px;
-    
+
     .mat-form-field {
         width: 100%;
     }
+
     .mat-form-field-infix {
-       width: 100%;
+        width: 100%;
     }
 
     .mat-flat-button {
@@ -155,18 +159,56 @@ body[class*=cloudapp-theme] {
         .header-area-request-id {
             width: 100%;
         }
-        .header-area-request-button {
-            display: flex;
-            height: fit-content;
-            align-items: center;
-            white-space: nowrap;
+
+    }
+
+    .header-area-main-button {
+        display: flex;
+        height: fit-content;
+        align-items: center;
+        white-space: nowrap;
+        background: white;
+        border-radius: 5px;
+        border-width: 1px;
+        cursor: pointer;
+        justify-content: center;
+        column-gap: 8px;
+
+        &:hover {
+            background: var(--slsp-purple-transparent);
+        }
+
+        mat-icon {
+            width: 18px;
+            height: 18px;
+            font-size: 18px;
+        }
+
+        &.big {
+            padding: 4px 8px;
+        }
+
+        &:disabled:hover {
             background: white;
-            border-radius: 5px;
-            border: 2px solid var(--slsp-purple);
-            cursor: pointer;
+            color: rgba(16, 16, 16, 0.3);
+            cursor: default;
+        }
+
+        &.dark {
+            background: var(--slsp-purple);
+            color: white;
 
             &:disabled {
-                border: 2px solid #ccc;
+                background: var(--slsp-purple-transparent);
+                color: white;
+            }
+
+            &:hover {
+                background: #7674a0;
+            }
+
+            circle {
+                stroke: white;
             }
         }
     }
@@ -189,24 +231,41 @@ body[class*=cloudapp-theme] {
 
     }
 
-    .header-area-destination-buttons {
+    .header-area-destination-error {
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
         column-gap: 16px;
+
         .mat-form-field {
             width: 50%;
         }
-        .header-area-destinations-buttons-container {
+
+        .header-area-show-errors {
             display: flex;
             flex-direction: row;
             align-items: center;
-            justify-content: space-between;
-            width: 50%;
-            .mat-spinner {
-                margin-left: 8px;
+            column-gap: 8px;
+
+            .mat-checkbox {
+                margin-top: 0;
             }
+        }
+    }
+
+
+    .header-area-buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 1rem 0;
+
+        button {
+            width: 100%;
+            margin: 0 10px;
         }
     }
 }
