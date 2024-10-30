@@ -46,16 +46,30 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 500;
+
+
+
+        }
+
+        .request-info-header-actions {
+            display: flex;
+            flex-direction: row;
+            column-gap: 25px;
+
             mat-icon {
                 width: 24px;
                 height: 24px;
                 font-size: 24px;
                 cursor: pointer;
             }
+
+            .cancel-button:hover {
+                color: rgb(183, 0, 0);
+            }
         }
     }
 
- 
+
     th,
     td {
         border: 1px solid #000;
@@ -78,6 +92,7 @@
 
     .cell-with-action-icon {
         justify-content: space-between;
+
         mat-icon {
             width: 24px;
             height: 24px;
