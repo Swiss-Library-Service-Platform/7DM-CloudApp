@@ -4,12 +4,19 @@
     margin: 15px 0;
 }
 
-.beta-warning {
+.header-warning {
     margin-bottom: 1rem;
     padding: 1rem;
     background-color: #f8d7da;
     border: 1px solid #f5c6cb;
     border-radius: 0.25rem;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    a {
+        cursor: pointer;
+    }
 }
 
 textarea {

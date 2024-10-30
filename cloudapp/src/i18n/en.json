@@ -14,7 +14,8 @@
         },
         "HistoryRequestsPaging": "Showing {from} - {to} of {total} requests",
         "NoRequests": "No requests sent to 7DM",
-        "NoRequestsSearch": "No requests found for the selected filter"
+        "NoRequestsSearch": "No requests found for the selected filter",
+        "MarkAllAsRead": "Remove all errors"
     },
     "Main": {
         "Requests": "Requests",
@@ -23,7 +24,10 @@
         "Search": "Search",
         "Status": {
             "Initializing": "Initializing..."
-        }
+        },
+        "UnreadErrors1": "There were errors during transmission to 7DM.",
+        "UnreadErrors2": "Click here",
+        "UnreadErrors3": "to inspect and remove them."
     },
     "Welcome": {
         "Welcome": "Welcome to SLSP to 7DM!",
@@ -71,6 +75,7 @@
         "RequestInfo": {
             "Barcode": "Barcode",
             "BoxId": "Box ID",
+            "Error": "Error",
             "Warning": "Warning",
             "Type": "Type",
             "TypeValue": {

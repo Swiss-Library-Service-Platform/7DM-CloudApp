@@ -1,5 +1,5 @@
 
-.info-response {
+.history-info-response {
     margin-top: 1rem;
     margin-bottom: 1rem;
     display: flex;
@@ -7,7 +7,7 @@
     row-gap: 1rem;
 }
 
-.info-response-pagination {
+.history-info-response-pagination {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -15,5 +15,23 @@
     column-gap: 1rem;
     p {
         margin: 0;
+    }
+}
+
+.history-mark-errors {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+
+    button {
+        width: auto;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 0.25rem;
+        cursor: pointer;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 }

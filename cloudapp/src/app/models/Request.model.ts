@@ -33,18 +33,6 @@ export class Request {
         return this.state === 'READY';
     }
 
-    public isSent(): boolean {
-        return this.state === 'SENT';
-    }
-
-    public isError(): boolean {
-        return this.state === 'ERROR';
-    }
-
-    public isWithoutWarning(): boolean {
-        return !this.is_not_rapido && !this.is_outdated && !this.is_sent_twice;
-    }
-
     public isNotRapido(): boolean {
         return this.is_not_rapido;
     }
@@ -57,6 +45,9 @@ export class Request {
         return this.is_sent_twice;
     }
 
+    public isFailedUnread(): boolean {
+        return this.state === 'FAILED_UNREAD';
+    }
 
     public checkForSearch(search: string): boolean {
         // Convert the search term to lowercase

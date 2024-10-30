@@ -29,6 +29,8 @@ export class BackendService {
 
   private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
 
+  private readonly _unreadErrorHistoryRequests = new BehaviorSubject<Array<Request>>(new Array<Request>());
+
   constructor(
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
@@ -42,12 +44,20 @@ export class BackendService {
     return this._pagedHistoryObject.asObservable();
   }
 
+  getUnreadErrorHistoryRequestsObject(): Observable<Request[]> {
+    return this._unreadErrorHistoryRequests.asObservable();
+  }
+
   private _setObservableTodaysRequestsObject(todaysRequests: Array<Request>): void {
     this._todaysRequestsObject.next(todaysRequests);
   }
 
   private _setObservablePagedHistoryObject(historyRequests: PagedHistory): void {
     this._pagedHistoryObject.next(historyRequests);
+  }
+
+  private _setObservableUnreadErrorRequestsObject(unreadErrorRequests: Array<Request>): void {
+    this._unreadErrorHistoryRequests.next(unreadErrorRequests);
   }
 
   private get baseUrl(): string {
@@ -284,6 +294,52 @@ export class BackendService {
       this.http.get<PagedHistory>(`${this.baseUrl}/history/${escapedLibraryCode}`, { params: filterObject, ...this.httpOptions }).subscribe(
         response => {
           this._setObservablePagedHistoryObject(response);
+          resolve(true);
+        },
+        error => {
+          console.error(error);
+          reject(false);
+        }
+      );
+    });
+  }
+
+  /*
+  * Get unread error requests
+  *
+  * @returns {Promise<boolean>}
+  */
+  async getUnreadErrorHistoryRequests(): Promise<boolean> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    return new Promise((resolve, reject) => {
+      this.http.get<Request[]>(`${this.baseUrl}/history/${escapedLibraryCode}/errors`, this.httpOptions).subscribe(
+        response => {
+          this._setObservableUnreadErrorRequestsObject(response);
+          resolve(true);
+        },
+        error => {
+          console.error(error);
+          reject(false);
+        }
+      );
+    });
+  }
+
+  /*
+  * Mark error requests as read
+  *
+  * @returns {Promise<boolean>}
+  */
+  async markErrorRequestsAsRead(): Promise<boolean> {
+    let libraryCode = this.initData['user']['currentlyAtLibCode'];
+    let escapedLibraryCode = encodeURIComponent(libraryCode);
+
+    return new Promise((resolve, reject) => {
+      this.http.post(`${this.baseUrl}/history/${escapedLibraryCode}/errors/read`, null, this.httpOptions).subscribe(
+        response => {
+          this._setObservableUnreadErrorRequestsObject([]);
           resolve(true);
         },
         error => {

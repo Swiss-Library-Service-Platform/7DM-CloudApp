@@ -27,7 +27,7 @@
                 (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
         <div class="header-area-show-errors">
-            <mat-checkbox [(ngModel)]="showErrors" (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
+            <mat-checkbox [(ngModel)]="inputShowErrors" (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
                 | translate }}</mat-checkbox>
         </div>
     </div>
@@ -54,11 +54,18 @@
     </div>
 </div>
 
+<!-- Mark all errors as read -->
+<div class="history-mark-errors" *ngIf="inputShowErrors && isUnreadErrors">
+    <button class="main-button" mat-icon-button (click)="onClickMarkAllErrors()">
+        <mat-icon>done_all</mat-icon>
+        {{ 'History.MarkAllAsRead' | translate }}
+    </button>
+</div>
 
 <!-- Request Info for each of requests Today -->
-<div class="info-response" *ngIf="pagedHistory">
+<div class="history-info-response" *ngIf="pagedHistory">
     <!-- Pagination with buttons to go up and down-->
-    <div class="info-response-pagination">
+    <div class="history-info-response-pagination">
         <button mat-icon-button (click)="onClickPage('prev')" [disabled]="pagedHistory.currentPage === 1">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </button>

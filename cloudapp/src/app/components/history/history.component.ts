@@ -5,6 +5,7 @@ import { PagedHistory } from '../../models/PagedHistory.model';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
+import { HistoryFilterService } from '../../services/history-filter.service';
 
 @Component({
   selector: 'app-history',
@@ -15,7 +16,9 @@ export class HistoryComponent implements OnInit {
 
   pagedHistory: PagedHistory;
   subscriptionHistoryRequests: Subscription;
+  subscriptionIsShowErrors: Subscription;
   isDownloading: boolean = false;
+  isUnreadErrors: boolean = false;
 
   // Filter
   inputPage: number;
@@ -25,24 +28,41 @@ export class HistoryComponent implements OnInit {
   inputBoxId: string;
   inputRequestId: string;
   inputDestination: string;
-  
+  inputShowErrors: boolean = false;
+
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
     private translateService: TranslateService,
+    private historyFilterService: HistoryFilterService
   ) { }
 
   ngOnInit(): void {
 
     this.status.set(this.translateService.instant("History.Status.Loading"));
     Promise.resolve().then(() => this.loader.show()); // Workardoun for ExpressionChangedAfterItHasBeenCheckedError, https://v17.angular.io/errors/NG0100
-    this.backendService.getHistory();
+
+    this.inputShowErrors = this.historyFilterService.getIShowErrors();
+    this.backendService.getHistory(this.buildFilterObject());
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
         this.pagedHistory = new PagedHistory(response);
         if (response !== null) {
           this.loader.hide();
+        }
+      }
+    );
+    this.subscriptionIsShowErrors = this.historyFilterService.getIsShowErrorsObservable().subscribe(
+      showErrors => {
+        this.inputShowErrors = showErrors;
+        this.onFilterHistoryRequests();
+      }
+    );
+    this.backendService.getUnreadErrorHistoryRequestsObject().subscribe(
+      (response: any) => {
+        if (response.length > 0) {
+          this.isUnreadErrors = true;
         }
       }
     );
@@ -82,6 +102,7 @@ export class HistoryComponent implements OnInit {
     this.inputBoxId = null;
     this.inputRequestId = null;
     this.inputDestination = null;
+    this.inputShowErrors = false;
     this.onFilterHistoryRequests();
   }
 
@@ -102,6 +123,7 @@ export class HistoryComponent implements OnInit {
       boxId: this.inputBoxId ?? null,
       requestId: this.inputRequestId ?? null,
       destinationLibraryCode: this.inputDestination ?? null,
+      showErrors: this.inputShowErrors ?? null
     };
 
     // Remove properties with null values
@@ -112,6 +134,15 @@ export class HistoryComponent implements OnInit {
       }
     }
     return filteredObject;
+  }
+
+
+  onClickMarkAllErrors(): void {
+    // Mark all errors as read
+    this.backendService.markErrorRequestsAsRead().then(() => {
+      this.isUnreadErrors = false;
+      this.onFilterHistoryRequests();
+    });
   }
 
   ngOnDestroy(): void {

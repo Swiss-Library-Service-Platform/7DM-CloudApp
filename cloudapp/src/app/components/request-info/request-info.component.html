@@ -6,9 +6,9 @@
                 <div class="request-info-checkbox-index ">
                     <div>
                         <mat-checkbox *ngIf="onSelectRequest != undefined" [(ngModel)]="request.isSelected"
-                        (change)="onClickSelectRequest($event)"></mat-checkbox>
+                            (change)="onClickSelectRequest($event)"></mat-checkbox>
                     </div>
-                    
+
                     <div>
                         {{ index }}
                     </div>
@@ -34,6 +34,16 @@
                         </div>
 
                     </div>
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="request.isFailedUnread()">
+            <!-- Failed -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Error' | translate }}</th>
+            <td>
+                <div class="cell-with-status-icon" color="warn">
+                    <mat-icon color="warn">error</mat-icon>
+                    {{ request.message }}
                 </div>
             </td>
         </tr>
@@ -88,16 +98,6 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isError()">
-            <!-- 7DM Error -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Error' | translate }}</th>
-            <td>
-                <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn" (click)="onClickCancelRequest()">info</mat-icon>
-                    {{ request.message }}
-                </div>
-            </td>
-        </tr>
         <tr *ngIf="request.isNotRapido()">
             <!-- IS not rapido request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
@@ -128,5 +128,6 @@
                 </div>
             </td>
         </tr>
+
     </table>
 </div>

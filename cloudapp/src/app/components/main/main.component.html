@@ -4,16 +4,31 @@
     <p class="loading-info">{{ status.message | async }}</p>
 </div>
 
-<!-- Beta Warning -->
+<!-- Beta Warning -a->
 <ng-container *ngIf="isInitialized">
-    <div class="beta-warning">
+    <div class="header-warning">
         This is a beta version of the SLSP - 7DM Cloudapp. <br>
         It's not connected to the production environment.
     </div>
 </ng-container>
+ -->
+
+<!-- Error Indicator -->
+<ng-container *ngIf="isInitialized && isUnreadErrors">
+    <div class="header-warning">
+        <mat-icon class="warning-icon">error</mat-icon>
+        <div>
+            {{ 'Main.UnreadErrors1' | translate }} <br>
+            <a (click)="onClickSeeErrors()">
+                {{ 'Main.UnreadErrors2' | translate }}
+            </a> {{ 'Main.UnreadErrors3' | translate }}
+        </div>
+    </div>
+</ng-container>
+
 <!-- Tab / Main View -->
 <ng-container *ngIf="isInitialized && isLibraryAllowed">
-    <mat-tab-group mat-stretch-tabs>
+    <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs>
         <mat-tab label="{{ 'Main.Requests' | translate }}">
             <app-requests></app-requests>
         </mat-tab>
