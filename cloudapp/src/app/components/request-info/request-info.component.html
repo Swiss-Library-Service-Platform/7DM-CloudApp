@@ -3,12 +3,23 @@
         <tr>
             <!-- Header -->
             <th class="checkbox-header">
-                <mat-checkbox *ngIf="onSelectRequest != undefined" [(ngModel)]="request.isSelected"
-                    (change)="onClickSelectRequest($event)"></mat-checkbox>
+                <div class="request-info-checkbox-index ">
+                    <div>
+                        <mat-checkbox *ngIf="onSelectRequest != undefined" [(ngModel)]="request.isSelected"
+                        (change)="onClickSelectRequest($event)"></mat-checkbox>
+                    </div>
+                    
+                    <div>
+                        {{ index }}
+                    </div>
+                </div>
+
             </th>
             <td class="request-info-header">
                 <div>
-                    {{ index ? '#' + index : 'Requests.RequestInfo.NewRequest' | translate }}
+                    <div>
+                        {{ index ? '' : 'Requests.RequestInfo.NewRequest' | translate }}
+                    </div>
                     <div class="request-info-header-actions">
                         <div *ngIf="showBoxDate" class="">
                             {{ request.box_label.creation_time | date: 'dd/MM/yyyy' }}

@@ -30,10 +30,19 @@
     th.checkbox-header {
         border-right: none;
         background-color: #e4e4e4;
+        padding-right: 10px;
+    }
+
+    .request-info-checkbox-index {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
 
         mat-checkbox {
             padding-left: 4px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
     }
 
@@ -46,9 +55,6 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 500;
-
-
-
         }
 
         .request-info-header-actions {

@@ -17,7 +17,7 @@ export class RequestInfoComponent implements OnInit {
   request: Request;
 
   @Input()
-  index: number = 0;
+  index: number = null;
 
   @Input()
   onCancelRequest: Function = undefined;
