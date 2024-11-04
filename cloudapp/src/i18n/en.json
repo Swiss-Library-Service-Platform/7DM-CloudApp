@@ -32,9 +32,18 @@
     "Welcome": {
         "Welcome": "Welcome to SLSP Courer to 7DM!",
         "AccessDenied": "Access denied",
-        "InstitutionDenied1": "Unfortunately your institution does not have the permission to use this app. Please ",
-        "InstitutionDenied2": "contact SLSP ",
-        "InstitutionDenied3": "if you have any questions."
+        "InstitutionDenied": "Unfortunately your institution does not have the permission to use this app.",
+        "NoRole": "Unfortunately you do not have the permission to use this app. In order to apply changes via this app, you need at least one of the following roles:",
+        "Roles": {
+            "CIRC_DESK_MANAGER": "Circulation Desk Manager",
+            "CIRC_DESK_OPERATOR": "Circulation Desk Operator",
+            "CIRC_DESK_OPERATOR_LIMITED": "Circulation Desk Operator - Limited"
+        },
+        "ContactSLSP": {
+            "ContactInfo1": "Please ",
+            "ContactInfo2": "contact SLSP",
+            "ContactInfo3": "if you have any questions."
+        }
     },
     "Partners": {
         "LibraryName": "Library Name",

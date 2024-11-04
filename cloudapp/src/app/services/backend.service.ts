@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CloudAppEventsService, AlertService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CloudAppEventsService, AlertService, InitData } from '@exlibris/exl-cloudapp-angular-lib';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BoxLabel } from '../models/BoxLabel.model';
 import { PagedHistory } from '../models/PagedHistory.model';
@@ -71,11 +71,11 @@ export class BackendService {
    * @return {*}  {Promise<void>}
    * @memberof LibraryManagementService
    */
-  async init(): Promise<void> {
+  async init(initData: InitData): Promise<void> {
     if (this.isServiceInitialized) {
       return;
     }
-    this.initData = await this.eventsService.getInitData().toPromise();
+    this.initData = initData;
     let regExp = new RegExp('^.*localhost.*'), // contains "localhost"
       currentUrl = this.initData["urls"]["alma"];
     this.isDevelopmentEnviroment = regExp.test(currentUrl);

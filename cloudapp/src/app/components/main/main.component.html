@@ -13,56 +13,91 @@
 </ng-container>
  -->
 
-<!-- Error Indicator -->
-<ng-container *ngIf="isInitialized && isUnreadErrors">
-    <div class="header-warning">
-        <mat-icon class="warning-icon">error</mat-icon>
-        <div>
-            {{ 'Main.UnreadErrors1' | translate }} <br>
-            <a (click)="onClickSeeErrors()">
-                {{ 'Main.UnreadErrors2' | translate }}
-            </a> {{ 'Main.UnreadErrors3' | translate }}
+<ng-container *ngIf="isInitialized">
+
+    <ng-container *ngIf="isUserHasRoles">
+
+        <!-- Library Allowed -->
+        <ng-container *ngIf="isLibraryAllowed">
+
+            <!-- Error Indicator -->
+            <ng-container *ngIf="isLibraryAllowed && isUnreadErrors">
+                <div class="header-warning">
+                    <mat-icon class="warning-icon">error</mat-icon>
+                    <div>
+                        {{ 'Main.UnreadErrors1' | translate }} <br>
+                        <a (click)="onClickSeeErrors()">
+                            {{ 'Main.UnreadErrors2' | translate }}
+                        </a> {{ 'Main.UnreadErrors3' | translate }}
+                    </div>
+                </div>
+            </ng-container>
+
+            <!-- Tab / Main View -->
+            <ng-container *ngIf="isLibraryAllowed">
+                <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs>
+                    <mat-tab label="{{ 'Main.Requests' | translate }}">
+                        <app-requests></app-requests>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            {{ 'Main.Today' | translate }}
+                        </ng-template>
+                        <app-today></app-today>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon *ngIf="isUnreadErrors" class="tab-icon">warning</mat-icon>
+                            {{ 'Main.History' | translate }}
+                        </ng-template>
+                        <ng-template matTabContent>
+                            <app-history></app-history>
+                        </ng-template>
+                    </mat-tab>
+                </mat-tab-group>
+            </ng-container>
+        </ng-container>
+
+        <!-- Library not allowed -->
+        <ng-container *ngIf="!isLibraryAllowed">
+            <div class="info-now-allowed">
+                <h1>
+                    <mat-icon inline=true>error</mat-icon>
+                    {{ 'Welcome.AccessDenied' | translate }}
+                </h1>
+                <p>
+                    {{ 'Welcome.InstitutionDenied' | translate }}
+                    {{ 'Welcome.ContactSLSP.ContactInfo1' | translate }}
+                    <a href="https://slsp.ch/en/contact" target="_blank">
+                        {{ 'Welcome.ContactSLSP.ContactInfo2' | translate }}
+                    </a>
+                    {{ 'Welcome.ContactSLSP.ContactInfo3' | translate }}
+                </p>
+            </div>
+        </ng-container>
+
+    </ng-container>
+
+    <!-- User has no roles -->
+    <ng-container *ngIf="!isUserHasRoles">
+        <div class="info-now-allowed">
+            <h1>
+                <mat-icon inline=true>error</mat-icon>
+                {{ 'Welcome.AccessDenied' | translate }}
+            </h1>
+            <p> {{ 'Welcome.NoRole' | translate }} </p>
+            <ul>
+                <li> {{ 'Welcome.Roles.CIRC_DESK_MANAGER' | translate }} </li>
+                <li> {{ 'Welcome.Roles.CIRC_DESK_OPERATOR' | translate }} </li>
+                <li> {{ 'Welcome.Roles.CIRC_DESK_OPERATOR_LIMITED' | translate }} </li>
+            </ul>
+            <p>
+                {{ 'Welcome.ContactSLSP.ContactInfo1' | translate }}
+                <a href="https://slsp.ch/en/contact" target="_blank">
+                    {{ 'Welcome.ContactSLSP.ContactInfo2' | translate }}
+                </a>
+                {{ 'Welcome.ContactSLSP.ContactInfo3' | translate }}
+            </p>
         </div>
-    </div>
-</ng-container>
-
-<!-- Tab / Main View -->
-<ng-container *ngIf="isInitialized && isLibraryAllowed">
-    <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs>
-        <mat-tab label="{{ 'Main.Requests' | translate }}">
-            <app-requests></app-requests>
-        </mat-tab>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                {{ 'Main.Today' | translate }}
-            </ng-template>
-            <app-today></app-today>
-        </mat-tab>
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon *ngIf="isUnreadErrors" class="tab-icon">warning</mat-icon>
-                {{ 'Main.History' | translate }}
-            </ng-template>
-            <ng-template matTabContent>
-                <app-history></app-history>
-            </ng-template>
-        </mat-tab>
-    </mat-tab-group>
-</ng-container>
-
-<!-- Access Denied -->
-<ng-container *ngIf="isInitialized && !isLibraryAllowed">
-    <div class="institution-now-allowed">
-        <h1>
-            <mat-icon inline=true>error</mat-icon>
-            {{ 'Welcome.AccessDenied' | translate }}
-        </h1>
-        <p>
-            {{ 'Welcome.InstitutionDenied1' | translate }}
-            <a href="https://slsp.ch/en/contact" target="_blank">
-                {{ 'Welcome.InstitutionDenied2' | translate }}
-            </a>
-            {{ 'Welcome.InstitutionDenied3' | translate }}
-        </p>
-    </div>
+    </ng-container>
 </ng-container>
