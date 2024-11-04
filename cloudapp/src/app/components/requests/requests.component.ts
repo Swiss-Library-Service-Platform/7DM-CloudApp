@@ -56,7 +56,7 @@ export class RequestsComponent implements OnInit {
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {
-                // if today requests do not include the response request, clear response
+                // If request was deleted on today tab
                 if (this.responseRequest != null && !response.some(r => r.internal_id === this.responseRequest.internal_id)) {
                     this.resetResponse();
                 }

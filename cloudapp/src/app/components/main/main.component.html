@@ -34,12 +34,15 @@
         </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
-                <mat-icon *ngIf="isWarningInToday" class="tab-icon">warning</mat-icon>
                 {{ 'Main.Today' | translate }}
             </ng-template>
             <app-today></app-today>
         </mat-tab>
-        <mat-tab label="{{ 'Main.History' | translate }}">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon *ngIf="isUnreadErrors" class="tab-icon">warning</mat-icon>
+                {{ 'Main.History' | translate }}
+            </ng-template>
             <ng-template matTabContent>
                 <app-history></app-history>
             </ng-template>

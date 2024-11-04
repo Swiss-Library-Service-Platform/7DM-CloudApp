@@ -18,7 +18,6 @@ import { HistoryFilterService } from '../../services/history-filter.service';
 export class MainComponent implements OnInit {
     isLibraryAllowed: boolean = false;
     isInitialized: boolean = false;
-    isWarningInToday: boolean = false;
     isUnreadErrors: boolean = false;
     selectedTab: number = 0;
 
@@ -54,13 +53,6 @@ export class MainComponent implements OnInit {
         this.backendService.init().then(() => {
             this.backendService.checkIfLibaryAllowed().then(allowed => {
                 this.isLibraryAllowed = allowed;
-                // Subscribe to the today requests (for the warning indicator)
-                this.backendService.getTodaysRequestsObject().subscribe(
-                    (response: Request[]) => {
-                        const requests = response.map(obj => new Request(obj));
-                        this.isWarningInToday = requests.some(request => request.isSentTwice() || request.isOutdated() || request.isNotRapido());
-                    }
-                );
                 // Subscribe to the unread errors (for the error indicator)
                 this.backendService.getUnreadErrorHistoryRequestsObject().subscribe(
                     (response: any) => {
