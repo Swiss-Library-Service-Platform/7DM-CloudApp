@@ -84,7 +84,7 @@
                 "RETURN": "Return"
             },
             "NewRequest": "Request Information",
-            "NotRapido": "Not a Rapido request.",
+            "NotResourceSharing": "Not a resource sharing request.",
             "Sender": "Sender",
             "Destination": "Destination",
             "RequestId": "Request ID",

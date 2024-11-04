@@ -52,9 +52,9 @@
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.Outdated' | translate }}
         </h1>
-        <h1 class="request-info-info" *ngIf="responseRequest.isNotRapido()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isNotRisNotResourceSharingapido()">
             <mat-icon inline=true>info</mat-icon>
-            {{ 'Requests.RequestInfo.NotRapido' | translate }}
+            {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
         </h1>
     </div>
     <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>

@@ -13,7 +13,7 @@ export class Request {
     box_id: string;
     state: string;
     message: string;
-    is_not_rapido: boolean;
+    is_not_rs: boolean;
     is_outdated: boolean;
     is_already_sent: boolean;
 
@@ -33,8 +33,8 @@ export class Request {
         return this.state === 'READY';
     }
 
-    public isNotRapido(): boolean {
-        return this.is_not_rapido;
+    public isNotResourceSharing(): boolean {
+        return this.is_not_rs;
     }
 
     public isOutdated(): boolean {

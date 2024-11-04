@@ -98,13 +98,13 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isNotRapido()">
-            <!-- IS not rapido request -->
+        <tr *ngIf="request.isNotResourceSharing()">
+            <!-- Is not resource sharing request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-info-icon" >
                     <mat-icon>info</mat-icon>
-                    {{ 'Requests.RequestInfo.NotRapido' | translate }}
+                    {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
                 </div>
             </td>
         </tr>
