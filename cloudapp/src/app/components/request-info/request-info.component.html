@@ -41,7 +41,7 @@
             <!-- Failed -->
             <th scope="row"> {{ 'Requests.RequestInfo.Error' | translate }}</th>
             <td>
-                <div class="cell-with-status-icon" color="warn">
+                <div class="cell-with-warning-icon" color="warn">
                     <mat-icon color="warn">error</mat-icon>
                     {{ request.message }}
                 </div>
@@ -102,19 +102,19 @@
             <!-- IS not rapido request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
-                <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn">warning</mat-icon>
+                <div class="cell-with-info-icon" >
+                    <mat-icon>info</mat-icon>
                     {{ 'Requests.RequestInfo.NotRapido' | translate }}
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isSentTwice()">
+        <tr *ngIf="request.isAlreadySent()">
             <!-- Sent twice -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
-                <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn">warning</mat-icon>
-                    {{ 'Requests.RequestInfo.SentTwice' | translate }}
+                <div class="cell-with-warning-icon">
+                    <mat-icon>warning</mat-icon>
+                    {{ 'Requests.RequestInfo.AlreadySent' | translate }}
                 </div>
             </td>
         </tr>
@@ -122,8 +122,8 @@
             <!-- Outdated -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
-                <div class="cell-with-status-icon" color="warn">
-                    <mat-icon color="warn">warning</mat-icon>
+                <div class="cell-with-info-icon" >
+                    <mat-icon>info</mat-icon>
                     {{ 'Requests.RequestInfo.Outdated' | translate }}
                 </div>
             </td>

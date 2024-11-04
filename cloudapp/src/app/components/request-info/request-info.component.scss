@@ -88,12 +88,25 @@
     td {
         width: 100%;
     }
+    
+    .cell-with-warning-icon {
+        color: rgb(183, 0, 0);
+    }
 
-    .cell-with-status-icon {
+    .cell-with-info-icon .mat-icon {
+        color: var(--slsp-purple);
+    }
+
+    .cell-with-warning-icon,
+    .cell-with-info-icon {
         font-weight: 400;
         gap: 5px;
         justify-content: start;
-        color: rgb(183, 0, 0)
+        .mat-icon {
+            width: 24px;
+            height: 24px;
+            font-size: 24px;
+        }
     }
 
     .cell-with-action-icon {
@@ -107,16 +120,11 @@
         }
     }
 
-    .cell-with-status-icon,
+    .cell-with-warning-icon,
+    .cell-with-info-icon,
     .cell-with-action-icon {
         display: flex;
         align-items: center;
         width: 100%;
-    }
-
-    .cell-with-status-icon .mat-icon {
-        width: 24px;
-        height: 24px;
-        font-size: 24px;
     }
 }

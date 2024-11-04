@@ -71,8 +71,9 @@
             "Loading_BoxId": "Retrieving box ID..."
         },
         "SendTo7DM": "Send to 7DM",
-        "RequestSent": "Item {barcode} transfer order sent to 7DM",
+        "RequestSent": "Item {barcode} transfer order sent to 7DM.",
         "RequestInfo": {
+            "AlreadySent": "Request already sent.",
             "Barcode": "Barcode",
             "BoxId": "Box ID",
             "Error": "Error",
@@ -83,16 +84,14 @@
                 "RETURN": "Return"
             },
             "NewRequest": "Request Information",
-            "NotRapido": "Not a Rapido request",
+            "NotRapido": "Not a Rapido request.",
             "Sender": "Sender",
-            "SentTwice": "Request sent twice",
             "Destination": "Destination",
             "RequestId": "Request ID",
             "RequestIdExternal": "External ID",
-            "7DMCode":"7DM code",
-            "Outdated": "Not updated on the same day in Alma"
+            "7DMCode": "7DM code",
+            "Outdated": "Not updated on the same day in Alma."
         },
-        "HasWarning": "Request has warning",
         "TimeNotValid": "Cloud App is currently disabled.",
         "TimeNotValidInfo": "The Cloud App is disabled between 19:00 and 00:00. \n Please try again tomorrow."
     },

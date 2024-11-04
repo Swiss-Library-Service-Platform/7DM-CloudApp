@@ -50,7 +50,7 @@ export class RequestsComponent implements OnInit {
             this.loader.hide();
             return;
         }
-           
+
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.box_id;
         });
@@ -128,12 +128,12 @@ export class RequestsComponent implements OnInit {
     }
 
     getIconClass(): string {
-        if (this.responseRequest && (this.responseRequest.isSentTwice() 
-            || this.responseRequest.isOutdated() 
+        if (this.responseRequest && (this.responseRequest.isAlreadySent()
+            || this.responseRequest.isOutdated()
             || this.responseRequest.isNotRapido())) {
-          return 'warning';
-        } 
-        return 'successful'; 
+            return 'warning';
+        }
+        return 'successful';
     }
 
     /*

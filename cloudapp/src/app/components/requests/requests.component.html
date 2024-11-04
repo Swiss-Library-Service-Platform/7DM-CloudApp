@@ -44,9 +44,17 @@
             <mat-icon color="success" inline=true>check_circle</mat-icon>
             {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
         </h1>
-        <h1 *ngIf="responseRequest.isSentTwice() || responseRequest.isOutdated() || responseRequest.isNotRapido()">
+        <h1 *ngIf="responseRequest.isAlreadySent()">
             <mat-icon color="warn" inline=true>warning</mat-icon>
-            {{ 'Requests.HasWarning' | translate }}
+            {{ 'Requests.RequestInfo.AlreadySent' | translate }}
+        </h1>
+        <h1 class="request-info-info" *ngIf="responseRequest.isOutdated()">
+            <mat-icon inline=true>info</mat-icon>
+            {{ 'Requests.RequestInfo.Outdated' | translate }}
+        </h1>
+        <h1 class="request-info-info" *ngIf="responseRequest.isNotRapido()">
+            <mat-icon inline=true>info</mat-icon>
+            {{ 'Requests.RequestInfo.NotRapido' | translate }}
         </h1>
     </div>
     <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
