@@ -45,6 +45,7 @@ export class RequestsComponent implements OnInit {
         // Check if current time is valid (between 00:00 and 18:59)
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
+        console.log("Current hour: " + currentHour);
         if (currentHour >= 19) {
             this.isTimeValid = false;
             this.loader.hide();
@@ -130,7 +131,7 @@ export class RequestsComponent implements OnInit {
     getIconClass(): string {
         if (this.responseRequest && (this.responseRequest.isAlreadySent()
             || this.responseRequest.isOutdated()
-            || this.responseRequest.isNotRapido())) {
+            || this.responseRequest.isNotResourceSharing())) {
             return 'warning';
         }
         return 'successful';
