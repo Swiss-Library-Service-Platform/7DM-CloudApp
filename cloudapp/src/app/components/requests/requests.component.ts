@@ -99,16 +99,12 @@ export class RequestsComponent implements OnInit {
             this.responseRequest = new Request(response);
             this.inputRequestId = '';
         }).catch(error => {
+            // boxOutdated
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DEFAULT");
-            } else if (error.error.type == "BAD_STATUS") {
-                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " " + error.error.additionalInformation.status;
-            } else if (error.error.type == "WRONG_LOCATION") {
-                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.location + ")";
-            } else if (error.error.type == "DESTINATION_NOT_FOUND") {
-                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type) + " (" + error.error.additionalInformation.libraryCode + ")";
+            } else if (error.error.type == "DESTINATION_NOT_FOUND" || error.error.type == "DESTINATION_NOT_FOUND_ITEM") {
+                this.responseErrorMessage = this.translateService.instant("Requests.Error.DESTINATION_NOT_FOUND_ITEM", { destination: error.error.additionalInformation.libraryCode });
             }
-
             // ALL OTHER ERROR TYPES
             else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
