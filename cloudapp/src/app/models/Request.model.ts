@@ -29,10 +29,6 @@ export class Request {
         }
     }
 
-    public isReady(): boolean {
-        return this.state === 'READY';
-    }
-
     public isNotResourceSharing(): boolean {
         return this.is_not_rs;
     }
