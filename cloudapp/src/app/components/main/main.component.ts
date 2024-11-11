@@ -112,14 +112,14 @@ export class MainComponent implements OnInit {
         // Role 32: CIRC_DESK_OPERATOR
         // Role 299: CIRC_DESK_OPERATOR_LIMITED
         const requiredRoles = ['221', '32', '299'];
+        const requiredScope = initData['user']['currentlyAtLibCode'];
+        // Check if the user has the required roles and scope
         let isAllowed = false;
-        for (let userrole of user.user_role) {
-            if (requiredRoles.indexOf(userrole.role_type.value) != -1 &&
-                userrole.status.value == 'ACTIVE') {
-                isAllowed = true;
-                break;
-            }
-        }
+        isAllowed = user.user_role.some(userrole =>
+            requiredRoles.includes(userrole.role_type.value) &&
+            userrole.status.value === 'ACTIVE' &&
+            userrole.scope.value === requiredScope
+        );
         return isAllowed;
     }
 
