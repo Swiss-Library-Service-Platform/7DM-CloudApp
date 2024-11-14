@@ -31,7 +31,7 @@ export class Request {
     }
 
     public getExternalIdWithPrefix(): string {
-        return this.externalIdPrefix + this.externalId;
+        return (this.externalIdPrefix ?? '') + this.externalId ;
     }
 
     public isNotResourceSharing(): boolean {
