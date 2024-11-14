@@ -33,6 +33,10 @@
         .mat-icon.warning {
             color: rgb(224, 198, 0);
         }
+        .request-already-sent {
+            display: flex;
+            flex-direction: column;
+        }
     }
 
     app-request-info {

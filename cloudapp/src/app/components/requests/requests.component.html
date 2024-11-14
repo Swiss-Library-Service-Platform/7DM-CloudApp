@@ -44,9 +44,9 @@
             <mat-icon color="success" inline=true>check_circle</mat-icon>
             {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
         </h1>
-        <h1 *ngIf="responseRequest.isAlreadySent()">
+        <h1 *ngIf="responseRequest.isRetried()">
             <mat-icon color="warn" inline=true>warning</mat-icon>
-            {{ 'Requests.RequestInfo.AlreadySent' | translate }}
+            {{ 'Requests.RequestInfo.Retried' | translate }}
         </h1>
         <h1 class="request-info-info" *ngIf="responseRequest.isOutdated()">
             <mat-icon inline=true>info</mat-icon>
@@ -56,8 +56,13 @@
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
         </h1>
+        <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled()">
+            <mat-icon color="warn" inline=true>warning</mat-icon>
+            {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
+        </h1>
     </div>
-    <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
+    <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"
+        [multipleFulfilledRequests]="responseMultipleFulfilled"></app-request-info>
 </div>
 
 
@@ -71,7 +76,7 @@
     </div>
     <p>
         {{ 'Requests.ContactSupport1' | translate }}
-        <a href="https://slsp.ch/en/contact">
+        <a href="https://slsp.ch/en/contact" target="_blank">
             {{ 'Requests.ContactSupport2' | translate }}
         </a>
         {{ 'Requests.ContactSupport3' | translate }}

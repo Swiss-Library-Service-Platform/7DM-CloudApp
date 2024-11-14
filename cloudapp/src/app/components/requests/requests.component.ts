@@ -6,6 +6,7 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Request } from '../../models/Request.model';
+import { RequestResponse } from '../../models/RequestResponse.model';
 
 // Set the worker source for pdfjs
 // import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
@@ -18,12 +19,20 @@ import { Request } from '../../models/Request.model';
     styleUrls: ['./requests.component.scss']
 })
 export class RequestsComponent implements OnInit {
+    // Input
     inputRequestId: string = '';
     inputBoxId: string = '';
+
+    // Response
     responseRequest: Request;
     responseErrorMessage: string;
     responseErrorId: string;
+    responseMultipleFulfilled: Array<Request>;
+
+    // Subscriptions
     subscriptionTodaysRequests: Subscription;
+
+    // Time
     isTimeValid: boolean = true;
 
     constructor(
@@ -47,18 +56,18 @@ export class RequestsComponent implements OnInit {
         const currentHour = currentDate.getHours();
         console.log("Current hour: " + currentHour);
         if (currentHour >= 19) {
-            this.isTimeValid = false;
+            this.isTimeValid = true; //FIXME: Change to false;
             this.loader.hide();
             return;
         }
 
         this.backendService.retrieveActiveBoxLabel().then(response => {
-            this.inputBoxId = response?.box_id;
+            this.inputBoxId = response?.boxId;
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             response => {
                 // If request was deleted on today tab
-                if (this.responseRequest != null && !response.some(r => r.internal_id === this.responseRequest.internal_id)) {
+                if (this.responseRequest != null && !response.some(r => r.request.internalId === this.responseRequest.internalId)) {
                     this.resetResponse();
                 }
             }
@@ -81,7 +90,7 @@ export class RequestsComponent implements OnInit {
         this.status.set(this.translateService.instant("Requests.Status.Loading_BoxId"));
 
         this.backendService.generateBoxLabel().then(response => {
-            this.inputBoxId = response.box_id;
+            this.inputBoxId = response.boxId;
         }).catch(error => {
             alert("Error: " + error);
         }).finally(() => {
@@ -95,8 +104,10 @@ export class RequestsComponent implements OnInit {
 
         this.resetResponse();
 
-        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            this.responseRequest = new Request(response);
+        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response  => {
+            const responseObj = new RequestResponse(response);
+            this.responseRequest = responseObj.getRequest();
+            this.responseMultipleFulfilled = responseObj.getMultipleFulfilledRequests();
             this.inputRequestId = '';
         }).catch(error => {
             // boxOutdated
@@ -125,9 +136,11 @@ export class RequestsComponent implements OnInit {
     }
 
     getIconClass(): string {
-        if (this.responseRequest && (this.responseRequest.isAlreadySent()
+        if (this.responseRequest && (this.responseRequest.isRetried()
             || this.responseRequest.isOutdated()
-            || this.responseRequest.isNotResourceSharing())) {
+            || this.responseRequest.isNotResourceSharing()
+            || this.responseRequest.isMultipleFulfilled())
+        ) {
             return 'warning';
         }
         return 'successful';

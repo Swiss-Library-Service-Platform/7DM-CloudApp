@@ -5,6 +5,7 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Request } from '../../models/Request.model';
+import { RequestResponse } from '../../models/RequestResponse.model';
 
 @Component({
   selector: 'app-today',
@@ -13,8 +14,8 @@ import { Request } from '../../models/Request.model';
 })
 export class TodayComponent implements OnInit {
 
-  todayRequests: Request[] = [];
-  filteredRequests: Request[] = [];
+  todayRequests: RequestResponse[] = [];
+  filteredRequests: RequestResponse[] = [];
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
 
@@ -32,7 +33,7 @@ export class TodayComponent implements OnInit {
     this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
       response => {
         this.todayRequests = response.map(request => {
-          return new Request(request);
+          return new RequestResponse(request);
         });
         this.filteredRequests = [...this.todayRequests];
       }
@@ -46,8 +47,8 @@ export class TodayComponent implements OnInit {
       this.filteredRequests = [...this.todayRequests];
     } else {
       // Filter requests based on search input
-      this.filteredRequests = this.todayRequests.filter(request => {
-        return request.checkForSearch(this.inputSearch);
+      this.filteredRequests = this.todayRequests.filter(requestResponse => {
+        return requestResponse.getRequest().checkForSearch(this.inputSearch);
       });
     }
   }
@@ -55,8 +56,8 @@ export class TodayComponent implements OnInit {
   cancelRequest(internalId: string): void {
     this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
     this.loader.show();
-    const request = this.todayRequests.find(request => request.internal_id === internalId);
-    request.isDeleting = true;
+    const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getRequest().internalId === internalId);
+    requestResponse.getRequest().isDeleting = true;
     this.selectedRequests = this.selectedRequests.filter(id => id !== internalId);
     this.backendService.cancelRequest(internalId).then((res) => {
       this.loader.hide();
@@ -74,10 +75,10 @@ export class TodayComponent implements OnInit {
   onSelectAll(): void {
     if (this.selectedRequests.length === this.filteredRequests.length) {
       this.selectedRequests = [];
-      this.filteredRequests.forEach(request => request.isSelected = false);
+      this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = false);
     } else {
-      this.selectedRequests = this.filteredRequests.map(request => request.internal_id);
-      this.filteredRequests.forEach(request => request.isSelected = true);
+      this.selectedRequests = this.filteredRequests.map(requestResponse => requestResponse.getRequest().internalId);
+      this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = true);
     }
   }
 

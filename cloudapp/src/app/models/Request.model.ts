@@ -1,48 +1,57 @@
 import { BoxLabel } from "./BoxLabel.model";
 
 export class Request {
-    internal_id: string;
-    external_id: string;
+    internalId: string;
+    externalIdPrefix: string;
+    externalId: string;
     timestamp: Date;
-    sending_library: string;
-    destination_library: string;
-    destination_directories_code: string;
-    destination_directories_name: string;
+    destinationLibrary: string;
+    destinationDirectoriesCode: string;
+    destinationDirectoriesName: string;
     barcode: string;
     type: string;
     box_id: string;
     state: string;
     message: string;
-    is_not_rs: boolean;
-    is_outdated: boolean;
-    is_already_sent: boolean;
+    notRs: boolean;
+    outdated: boolean;
+    multipleFulfilled: boolean;
+    retry: number;
 
-    box_label: BoxLabel;
+    boxLabel: BoxLabel;
 
     isDeleting: boolean;
     isSelected: boolean;
 
     constructor(init?: Partial<Request>) {
         Object.assign(this, init);
-        if (this.box_label) {
-            this.box_label = new BoxLabel(this.box_label);
+        if (this.boxLabel) {
+            this.boxLabel = new BoxLabel(this.boxLabel);
         }
     }
 
+    public getExternalIdWithPrefix(): string {
+        return this.externalIdPrefix + this.externalId;
+    }
+
     public isNotResourceSharing(): boolean {
-        return this.is_not_rs;
+        return this.notRs;
     }
 
     public isOutdated(): boolean {
-        return this.is_outdated;
+        return this.outdated;
     }
 
-    public isAlreadySent(): boolean {
-        return this.is_already_sent;
+    public isMultipleFulfilled(): boolean {
+        return this.multipleFulfilled;
     }
 
     public isFailedUnread(): boolean {
         return this.state === 'FAILED_UNREAD';
+    }
+
+    public isRetried() {
+        return this.retry > 0;
     }
 
     public checkForSearch(search: string): boolean {
@@ -51,12 +60,11 @@ export class Request {
 
         // Array of fields to be checked
         const fieldsToSearch = [
-            this.internal_id,
-            this.external_id,
-            this.sending_library,
-            this.destination_library,
-            this.destination_directories_code,
-            this.destination_directories_name,
+            this.internalId,
+            this.externalId,
+            this.destinationLibrary,
+            this.destinationDirectoriesCode,
+            this.destinationDirectoriesName,
             this.barcode,
             this.type,
             this.box_id,

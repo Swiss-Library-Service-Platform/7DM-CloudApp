@@ -22,7 +22,7 @@
                     </div>
                     <div class="request-info-header-actions">
                         <div *ngIf="showBoxDate" class="">
-                            {{ request.box_label.creation_time | date: 'dd/MM/yyyy' }}
+                            {{ request.boxLabel.creationTime | date: 'dd/MM/yyyy' }}
                         </div>
                         <div class="">
                             <mat-icon (click)="onClickPrintRequestPdf()">print</mat-icon>
@@ -60,18 +60,18 @@
         <tr>
             <!-- Sender -->
             <th scope="row"> {{ 'Requests.RequestInfo.Sender' | translate }}</th>
-            <td> {{ request.box_label.directories_name }} ({{ request.box_label.directories_code }})</td>
+            <td> {{ request.boxLabel.directoriesName }} ({{ request.boxLabel.directoriesCode }})</td>
         </tr>
         <tr>
             <!-- Destination -->
             <th scope="row"> {{ 'Requests.RequestInfo.Destination' | translate }}</th>
-            <td> {{ request.destination_directories_name }} ({{ request.destination_directories_code }})</td>
+            <td> {{ request.destinationDirectoriesName }} ({{ request.destinationDirectoriesCode }})</td>
         </tr>
         <tr>
             <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
             <td>
-                {{ request.internal_id }}
+                {{ request.internalId }}
                 <!--
                 <div class="cell-with-action-icon">
                     {{ request.internal_id }}
@@ -84,14 +84,14 @@
         <tr>
             <!-- Request ID (External) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestIdExternal' | translate }}</th>
-            <td> {{ request.external_id }} </td>
+            <td> {{ request.getExternalIdWithPrefix() }} </td>
         </tr>
         <tr>
             <!-- Box ID -->
             <th scope="row"> {{ 'Requests.RequestInfo.BoxId' | translate }}</th>
             <td>
                 <div class="cell-with-action-icon">
-                    {{ request.box_label.box_id }}
+                    {{ request.boxLabel.boxId }}
                     <!-- 
                         <mat-icon (click)="onClickPrintBoxIdPdf()">print</mat-icon>
                     -->
@@ -102,19 +102,19 @@
             <!-- Is not resource sharing request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
-                <div class="cell-with-info-icon" >
+                <div class="cell-with-info-icon">
                     <mat-icon>info</mat-icon>
                     {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isAlreadySent()">
+        <tr *ngIf="request.isRetried()">
             <!-- Sent twice -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-warning-icon">
                     <mat-icon>warning</mat-icon>
-                    {{ 'Requests.RequestInfo.AlreadySent' | translate }}
+                    {{ 'Requests.RequestInfo.Retried' | translate }}
                 </div>
             </td>
         </tr>
@@ -122,12 +122,25 @@
             <!-- Outdated -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
-                <div class="cell-with-info-icon" >
+                <div class="cell-with-info-icon">
                     <mat-icon>info</mat-icon>
                     {{ 'Requests.RequestInfo.Outdated' | translate }}
                 </div>
             </td>
         </tr>
-
+        <tr *ngIf="request.isMultipleFulfilled()">
+            <!-- Sent twice -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-warning-icon">
+                    <mat-icon>warning</mat-icon>
+                    {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
+                    
+                </div>
+                <div *ngFor="let fulfilledRequest of multipleFulfilledRequests">
+                    - {{ fulfilledRequest.boxLabel.directoriesCode }} - {{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}
+                </div>
+            </td>
+        </tr>
     </table>
 </div>

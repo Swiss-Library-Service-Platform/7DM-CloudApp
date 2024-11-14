@@ -1,12 +1,12 @@
 
 export class BoxLabel {
-	box_id: string;
-    creation_time: Date;
-    request_date: Date;
+	boxId: string;
+    creationTime: Date;
+    requestDate: Date;
     library: any;
-    is_active_box: boolean;
-    directories_name: string;
-    directories_code: string;
+    isActiveBox: boolean;
+    directoriesName: string;
+    directoriesCode: string;
 
     constructor(init?: Partial<BoxLabel>) {
         Object.assign(this, init);

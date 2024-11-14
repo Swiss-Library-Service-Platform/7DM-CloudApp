@@ -28,6 +28,9 @@ export class RequestInfoComponent implements OnInit {
   @Input()
   showBoxDate: boolean = false;
 
+  @Input()
+  multipleFulfilledRequests: Array<Request> = [];
+
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
@@ -39,12 +42,12 @@ export class RequestInfoComponent implements OnInit {
   }
 
   onClickCancelRequest(): void {
-    var requestId = this.request.internal_id;
+    var requestId = this.request.internalId;
     this.onCancelRequest(requestId);
   }
 
   async onClickPrintRequestPdf(): Promise<void> {
-    var requestId = this.request.internal_id;
+    var requestId = this.request.internalId;
     const url = await this.backendService.getRequestSlipPdfUrl(requestId);
     window.open(url, '_blank');
   }
@@ -57,7 +60,7 @@ export class RequestInfoComponent implements OnInit {
 
   onClickSelectRequest(event: MatCheckboxChange): void {
     this.request.isSelected = event.checked;
-    this.onSelectRequest(this.request.internal_id);
+    this.onSelectRequest(this.request.internalId);
   }
 
 }

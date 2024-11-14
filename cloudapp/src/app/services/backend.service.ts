@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BoxLabel } from '../models/BoxLabel.model';
 import { PagedHistory } from '../models/PagedHistory.model';
 import { Request } from '../models/Request.model';
+import { RequestResponse } from '../models/RequestResponse.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -24,8 +25,8 @@ export class BackendService {
   private baseUrlLocal: string = 'http://localhost:4201/api/v1';
   private httpOptions: {};
 
-  public todaysRequests: Array<Request> = [];
-  private readonly _todaysRequestsObject = new BehaviorSubject<Array<Request>>(new Array<Request>());
+  public todaysRequests: Array<RequestResponse> = [];
+  private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestResponse>>(new Array<RequestResponse>());
 
   private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
 
@@ -36,7 +37,7 @@ export class BackendService {
     private eventsService: CloudAppEventsService,
   ) { }
 
-  getTodaysRequestsObject(): Observable<Request[]> {
+  getTodaysRequestsObject(): Observable<RequestResponse[]> {
     return this._todaysRequestsObject.asObservable();
   }
 
@@ -48,7 +49,7 @@ export class BackendService {
     return this._unreadErrorHistoryRequests.asObservable();
   }
 
-  private _setObservableTodaysRequestsObject(todaysRequests: Array<Request>): void {
+  private _setObservableTodaysRequestsObject(todaysRequests: Array<RequestResponse>): void {
     this._todaysRequestsObject.next(todaysRequests);
   }
 
@@ -115,14 +116,14 @@ export class BackendService {
    * Looks up a request in the API
    * 
    */
-  async sendRequestTo7DM(requestId: string, boxId: string): Promise<Request> {
+  async sendRequestTo7DM(requestId: string, boxId: string): Promise<RequestResponse> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedRequestId = encodeURIComponent(requestId);
     let escapedLibraryCode = encodeURIComponent(libraryCode);
     let escapedBoxId = encodeURIComponent(boxId);
 
     return new Promise((resolve, reject) => {
-      this.http.post<Request>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
+      this.http.post<RequestResponse>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
         request_id: escapedRequestId,
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
@@ -193,7 +194,7 @@ export class BackendService {
     }
 
     return new Promise((resolve, reject) => {
-      this.http.get<Request[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
+      this.http.get<RequestResponse[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
           this.todaysRequests = response;
           this._setObservableTodaysRequestsObject(response);
@@ -224,7 +225,7 @@ export class BackendService {
           // Wait 3 seconds before removing the request from the list
           // To show the user that the request is being cancelled
           setTimeout(() => {
-            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.internal_id !== internalId);
+            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.request.internalId !== internalId);
             this._setObservableTodaysRequestsObject(this.todaysRequests);
           }, 2000);
           resolve(true);
