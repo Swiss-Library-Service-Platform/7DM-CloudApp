@@ -14,12 +14,12 @@ import { RequestResponse } from '../../models/RequestResponse.model';
 })
 export class TodayComponent implements OnInit {
 
-  todayRequests: RequestResponse[] = [];
-  filteredRequests: RequestResponse[] = [];
+  todayRequests: RequestResponse[] = new Array<RequestResponse>();
+  filteredRequests: RequestResponse[] = new Array<RequestResponse>();
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
 
-  selectedRequests: string[] = [];
+  selectedRequests: number[] = [];
 
   constructor(
     private backendService: BackendService,
@@ -31,10 +31,9 @@ export class TodayComponent implements OnInit {
   ngOnInit(): void {
     this.backendService.getRequests();
     this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
-      response => {
-        this.todayRequests = response.map(request => {
-          return new RequestResponse(request);
-        });
+      (response: RequestResponse[]) => {
+        response = response.map(requestResponse => new RequestResponse(requestResponse)); // Somehow this is necessary
+        this.todayRequests = response;
         this.filteredRequests = [...this.todayRequests];
       }
     );
@@ -53,18 +52,18 @@ export class TodayComponent implements OnInit {
     }
   }
 
-  cancelRequest(internalId: string): void {
+  cancelRequest(requestId: number): void {
     this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
     this.loader.show();
-    const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getRequest().internalId === internalId);
+    const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getRequest().getId() === requestId);
     requestResponse.getRequest().isDeleting = true;
-    this.selectedRequests = this.selectedRequests.filter(id => id !== internalId);
-    this.backendService.cancelRequest(internalId).then((res) => {
+    this.selectedRequests = this.selectedRequests.filter(id => id !== requestId);
+    this.backendService.cancelRequest(requestId).then((res) => {
       this.loader.hide();
     });
   }
 
-  onSelectRequest(requestId: string): void {
+  onSelectRequest(requestId: number): void {
     if (this.selectedRequests.includes(requestId)) {
       this.selectedRequests = this.selectedRequests.filter(id => id !== requestId);
     } else {
@@ -77,7 +76,7 @@ export class TodayComponent implements OnInit {
       this.selectedRequests = [];
       this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = false);
     } else {
-      this.selectedRequests = this.filteredRequests.map(requestResponse => requestResponse.getRequest().internalId);
+      this.selectedRequests = this.filteredRequests.map(requestResponse => requestResponse.getRequest().getId());
       this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = true);
     }
   }

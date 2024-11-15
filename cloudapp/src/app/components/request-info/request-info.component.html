@@ -71,14 +71,7 @@
             <!-- Request ID (Internal) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestId' | translate }}</th>
             <td>
-                {{ request.internalId }}
-                <!--
-                <div class="cell-with-action-icon">
-                    {{ request.internal_id }}
-                    <mat-icon (click)="onClickPrintRequestPdf()">print</mat-icon>
-                </div>
-                -->
-
+                {{ request.getInternalIdWithRetry() }}
             </td>
         </tr>
         <tr>
@@ -108,16 +101,6 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isRetried()">
-            <!-- Sent twice -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-warning-icon">
-                    <mat-icon>warning</mat-icon>
-                    {{ 'Requests.RequestInfo.Retried' | translate }}
-                </div>
-            </td>
-        </tr>
         <tr *ngIf="request.isOutdated()">
             <!-- Outdated -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
@@ -128,8 +111,18 @@
                 </div>
             </td>
         </tr>
+        <tr *ngIf="request.isRetried()">
+            <!-- Is retried -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-warning-icon">
+                    <mat-icon>warning</mat-icon>
+                    {{ 'Requests.RequestInfo.Retried' | translate }}
+                </div>
+            </td>
+        </tr>
         <tr *ngIf="request.isMultipleFulfilled()">
-            <!-- Sent twice -->
+            <!-- Multiple fulfilled -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
                 <div class="cell-with-warning-icon">
@@ -137,8 +130,8 @@
                     {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
                     
                 </div>
-                <div *ngFor="let fulfilledRequest of multipleFulfilledRequests">
-                    - {{ fulfilledRequest.boxLabel.directoriesCode }} - {{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}
+                <div class="multi-fulfilled" *ngFor="let fulfilledRequest of multipleFulfilledRequests">
+                    <span style="font-weight: bold;">{{ fulfilledRequest.boxLabel.directoriesCode }} </span> ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}) 
                 </div>
             </td>
         </tr>

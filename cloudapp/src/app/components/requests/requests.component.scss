@@ -10,8 +10,10 @@
         column-gap: 0.5rem;
         margin-bottom: 1rem;
 
-        .request-info-info .mat-icon {
-            color: var(--slsp-purple);
+        .request-info-info {
+            .mat-icon {
+                color: var(--slsp-purple);
+            } 
         }
     }
    

@@ -65,9 +65,9 @@ export class RequestsComponent implements OnInit {
             this.inputBoxId = response?.boxId;
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
-            response => {
-                // If request was deleted on today tab
-                if (this.responseRequest != null && !response.some(r => r.request.internalId === this.responseRequest.internalId)) {
+            (response: RequestResponse[]) => {
+                response = response.map(requestResponse => new RequestResponse(requestResponse)); // Somehow this is necessary
+                if (this.responseRequest != null && !response.some(r => r.request.getId() === this.responseRequest.getId())) {
                     this.resetResponse();
                 }
             }
@@ -104,7 +104,7 @@ export class RequestsComponent implements OnInit {
 
         this.resetResponse();
 
-        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response  => {
+        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             const responseObj = new RequestResponse(response);
             this.responseRequest = responseObj.getRequest();
             this.responseMultipleFulfilled = responseObj.getMultipleFulfilledRequests();
@@ -126,10 +126,10 @@ export class RequestsComponent implements OnInit {
         });
     }
 
-    cancelRequest(internalId: string): void {
+    cancelRequest(requestId: number): void {
         this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
         this.loader.show();
-        this.backendService.cancelRequest(internalId).then((res) => {
+        this.backendService.cancelRequest(requestId).then((res) => {
             this.resetResponse();
             this.loader.hide();
         });

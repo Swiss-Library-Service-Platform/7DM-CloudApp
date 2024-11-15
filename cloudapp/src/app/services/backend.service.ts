@@ -128,8 +128,6 @@ export class BackendService {
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
         response => {
-          // this.todaysRequests.push(response);
-          // this._setObservableTodaysRequestsObject(this.todaysRequests);
           this.getRequests();
           resolve(response);
         },
@@ -196,7 +194,9 @@ export class BackendService {
     return new Promise((resolve, reject) => {
       this.http.get<RequestResponse[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
-          this.todaysRequests = response;
+          this.todaysRequests = response.map(request => {
+            return new RequestResponse(request);
+          });
           this._setObservableTodaysRequestsObject(response);
           resolve(true);
         },
@@ -211,13 +211,13 @@ export class BackendService {
   /**
    * Cancel a request
    * 
-   * @param {string} internalId
+   * @param {number} requestId
    * @returns {Promise<boolean>}
    */
-  async cancelRequest(internalId: string): Promise<boolean> {
+  async cancelRequest(requestId: number): Promise<boolean> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);
-    let escapedRequestId = encodeURIComponent(internalId);
+    let escapedRequestId = encodeURIComponent(requestId);
 
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
@@ -225,9 +225,9 @@ export class BackendService {
           // Wait 3 seconds before removing the request from the list
           // To show the user that the request is being cancelled
           setTimeout(() => {
-            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.request.internalId !== internalId);
+            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.getRequest().getId() !== requestId);
             this._setObservableTodaysRequestsObject(this.todaysRequests);
-          }, 2000);
+          }, 1000);
           resolve(true);
         },
         error => {
@@ -257,7 +257,7 @@ export class BackendService {
   * @param {string} requestId
   * @returns {Promise<string>}
   */
-  async getRequestSlipPdfUrl(requestId: string): Promise<string> {
+  async getRequestSlipPdfUrl(requestId: number): Promise<string> {
 
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);
@@ -268,10 +268,10 @@ export class BackendService {
 
   /*
   * Get url of multi-request pdf
-  * @param {string} requestId
+  * @param {number[]} requestIds
   * @returns {Promise<string>}
   */
-  async getMultiRequestSlipPdfUrl(requestIds: string[]): Promise<string> {
+  async getMultiRequestSlipPdfUrl(requestIds: number[]): Promise<string> {
 
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);

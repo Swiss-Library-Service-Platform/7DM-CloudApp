@@ -42,12 +42,12 @@ export class RequestInfoComponent implements OnInit {
   }
 
   onClickCancelRequest(): void {
-    var requestId = this.request.internalId;
+    var requestId = this.request.getId();
     this.onCancelRequest(requestId);
   }
 
   async onClickPrintRequestPdf(): Promise<void> {
-    var requestId = this.request.internalId;
+    var requestId = this.request.getId();
     const url = await this.backendService.getRequestSlipPdfUrl(requestId);
     window.open(url, '_blank');
   }
@@ -60,7 +60,7 @@ export class RequestInfoComponent implements OnInit {
 
   onClickSelectRequest(event: MatCheckboxChange): void {
     this.request.isSelected = event.checked;
-    this.onSelectRequest(this.request.internalId);
+    this.onSelectRequest(this.request.getId());
   }
 
 }

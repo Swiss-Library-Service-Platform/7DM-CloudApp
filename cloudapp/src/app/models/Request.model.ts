@@ -1,6 +1,7 @@
 import { BoxLabel } from "./BoxLabel.model";
 
 export class Request {
+    id: number;
     internalId: string;
     externalIdPrefix: string;
     externalId: string;
@@ -28,6 +29,14 @@ export class Request {
         if (this.boxLabel) {
             this.boxLabel = new BoxLabel(this.boxLabel);
         }
+    }
+
+    public getId(): number {
+        return this.id;
+    }
+
+    public getInternalIdWithRetry(): string {
+        return this.internalId + (this.retry > 0 ? `R${this.retry}` : '');
     }
 
     public getExternalIdWithPrefix(): string {
