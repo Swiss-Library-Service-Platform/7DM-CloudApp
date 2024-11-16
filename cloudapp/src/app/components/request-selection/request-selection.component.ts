@@ -34,5 +34,4 @@ export class RequestSelectionComponent implements OnInit {
   onClickPrintSelectedRequests(): void {
     this.onPrintSelectedRequests.emit();
   }
-
 }

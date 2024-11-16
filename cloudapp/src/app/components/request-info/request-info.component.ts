@@ -35,7 +35,6 @@ export class RequestInfoComponent implements OnInit {
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
-    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -62,5 +61,4 @@ export class RequestInfoComponent implements OnInit {
     this.request.isSelected = event.checked;
     this.onSelectRequest(this.request.getId());
   }
-
 }

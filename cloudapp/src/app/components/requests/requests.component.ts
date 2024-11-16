@@ -8,11 +8,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Request } from '../../models/Request.model';
 import { RequestResponse } from '../../models/RequestResponse.model';
 
-// Set the worker source for pdfjs
-// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
-// pdfjsLib.GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.js';
-
-
 @Component({
     selector: 'app-requests',
     templateUrl: './requests.component.html',
@@ -43,14 +38,7 @@ export class RequestsComponent implements OnInit {
         protected sanitizer: DomSanitizer
     ) { }
 
-    /*
-    @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
-    ctx: CanvasRenderingContext2D;
-    */
-
     ngOnInit(): void {
-        //this.ctx = this.canvas.nativeElement.getContext('2d');
-
         // Check if current time is valid (between 00:00 and 18:59)
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
@@ -92,7 +80,7 @@ export class RequestsComponent implements OnInit {
         this.backendService.generateBoxLabel().then(response => {
             this.inputBoxId = response.boxId;
         }).catch(error => {
-            alert("Error: " + error);
+            console.error(error);
         }).finally(() => {
             this.loader.hide();
         });
@@ -110,14 +98,11 @@ export class RequestsComponent implements OnInit {
             this.responseMultipleFulfilled = responseObj.getMultipleFulfilledRequests();
             this.inputRequestId = '';
         }).catch(error => {
-            // boxOutdated
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DEFAULT");
             } else if (error.error.type == "DESTINATION_NOT_FOUND" || error.error.type == "DESTINATION_NOT_FOUND_ITEM") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DESTINATION_NOT_FOUND_ITEM", { destination: error.error.additionalInformation.libraryCode });
-            }
-            // ALL OTHER ERROR TYPES
-            else {
+            } else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }
             this.responseErrorId = error.error.error_id;
@@ -145,5 +130,4 @@ export class RequestsComponent implements OnInit {
         }
         return 'successful';
     }
-
 }

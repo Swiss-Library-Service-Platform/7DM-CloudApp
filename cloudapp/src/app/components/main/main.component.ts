@@ -66,13 +66,7 @@ export class MainComponent implements OnInit {
         this.backendService.init(initData).then(() => {
             this.backendService.checkIfLibaryAllowed().then(allowed => {
                 this.isLibraryAllowed = allowed;
-                // Subscribe to the unread errors (for the error indicator)
-                this.backendService.getUnreadErrorHistoryRequestsObject().subscribe(
-                    (response: any) => {
-                        this.isUnreadErrors = response.length > 0;
-                    }
-                );
-                this.backendService.getUnreadErrorHistoryRequests();
+                this.subscribeToUnreadErrors();
             }).catch(error => {
                 this.isLibraryAllowed = false;
             }).finally(() => {
@@ -80,6 +74,19 @@ export class MainComponent implements OnInit {
                 this.loader.hide();
             });
         });
+    }
+
+    /**
+     * Subscribe to the unread errors (for the error indicator)
+     * 
+     */
+    subscribeToUnreadErrors() {
+        this.backendService.getUnreadErrorHistoryRequestsObject().subscribe(
+            (response: any) => {
+                this.isUnreadErrors = response.length > 0;
+            }
+        );
+        this.backendService.getUnreadErrorHistoryRequests();
     }
 
     /**

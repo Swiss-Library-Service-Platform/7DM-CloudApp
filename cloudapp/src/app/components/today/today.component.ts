@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Request } from '../../models/Request.model';
 import { RequestResponse } from '../../models/RequestResponse.model';
 
 @Component({
@@ -39,13 +38,10 @@ export class TodayComponent implements OnInit {
     );
   }
 
-  // new search in frontend
   onFilterRequests(): void {
     if (this.inputSearch.trim() === '') {
-      // If search input is empty, show all requests
       this.filteredRequests = [...this.todayRequests];
     } else {
-      // Filter requests based on search input
       this.filteredRequests = this.todayRequests.filter(requestResponse => {
         return requestResponse.getRequest().checkForSearch(this.inputSearch);
       });

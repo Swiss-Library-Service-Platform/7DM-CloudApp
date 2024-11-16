@@ -21,13 +21,13 @@ export class HistoryComponent implements OnInit {
   isUnreadErrors: boolean = false;
 
   // Filter
-  inputPage: number;
-  inputDateFrom: string;
-  inputDateTo: string;
-  inputStatus: string;
-  inputBoxId: string;
-  inputRequestId: string;
-  inputDestination: string;
+  inputPage: number = null;
+  inputDateFrom: string = null;
+  inputDateTo: string = null;
+  inputStatus: string = null;
+  inputBoxId: string = null;
+  inputRequestId: string = null;
+  inputDestination: string = null;
   inputShowErrors: boolean = false;
 
   constructor(
@@ -39,12 +39,8 @@ export class HistoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.onFilterHistoryRequests();
 
-    this.status.set(this.translateService.instant("History.Status.Loading"));
-    Promise.resolve().then(() => this.loader.show()); // Workardoun for ExpressionChangedAfterItHasBeenCheckedError, https://v17.angular.io/errors/NG0100
-
-    this.inputShowErrors = this.historyFilterService.getIShowErrors();
-    this.backendService.getHistory(this.buildFilterObject());
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
         this.pagedHistory = new PagedHistory(response);
@@ -53,16 +49,17 @@ export class HistoryComponent implements OnInit {
         }
       }
     );
-    this.subscriptionIsShowErrors = this.historyFilterService.getIsShowErrorsObservable().subscribe(
-      showErrors => {
-        this.inputShowErrors = showErrors;
-        this.onFilterHistoryRequests();
-      }
-    );
     this.backendService.getUnreadErrorHistoryRequestsObject().subscribe(
       (response: any) => {
-        if (response.length > 0) {
-          this.isUnreadErrors = true;
+        this.isUnreadErrors = response.length > 0;
+      }
+    );
+    // When user was redirected here from request tab
+    this.subscriptionIsShowErrors = this.historyFilterService.getIsShowErrorsObservable().subscribe(
+      showErrors => {
+        if (this.inputShowErrors !== showErrors) {
+          this.inputShowErrors = showErrors;
+          this.onFilterHistoryRequests();
         }
       }
     );
@@ -72,7 +69,7 @@ export class HistoryComponent implements OnInit {
     if (resetPage) {
       this.resetPage();
     }
-    this.loader.show();
+    Promise.resolve().then(() => this.loader.show()); // Workaround for ExpressionChangedAfterItHasBeenCheckedError, https://v17.angular.io/errors/NG0100
     this.status.set(this.translateService.instant("History.Status.Loading"));
     this.backendService.getHistory(this.buildFilterObject());
   }
@@ -116,29 +113,20 @@ export class HistoryComponent implements OnInit {
   }
 
   buildFilterObject(): any {
-    const filterObject = {
-      page: this.inputPage ?? null,
-      dateFrom: this.inputDateFrom ?? null,
-      dateTo: this.inputDateTo ?? null,
-      boxId: this.inputBoxId ?? null,
-      requestId: this.inputRequestId ?? null,
-      destinationLibraryCode: this.inputDestination ?? null,
-      showErrors: this.inputShowErrors ?? null
-    };
+    const filterObject: any = {};
 
-    // Remove properties with null values
-    const filteredObject = {};
-    for (const key in filterObject) {
-      if (filterObject[key] !== null) {
-        filteredObject[key] = filterObject[key];
-      }
-    }
-    return filteredObject;
+    if (this.inputPage !== null) filterObject.page = this.inputPage;
+    if (this.inputDateFrom !== null) filterObject.dateFrom = this.inputDateFrom;
+    if (this.inputDateTo !== null) filterObject.dateTo = this.inputDateTo;
+    if (this.inputBoxId !== null) filterObject.boxId = this.inputBoxId;
+    if (this.inputRequestId !== null) filterObject.requestId = this.inputRequestId;
+    if (this.inputDestination !== null) filterObject.destinationLibraryCode = this.inputDestination;
+    if (this.inputShowErrors !== null) filterObject.showErrors = this.inputShowErrors;
+
+    return filterObject;
   }
 
-
   onClickMarkAllErrors(): void {
-    // Mark all errors as read
     this.backendService.markErrorRequestsAsRead().then(() => {
       this.isUnreadErrors = false;
       this.onFilterHistoryRequests();
@@ -148,5 +136,4 @@ export class HistoryComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscriptionHistoryRequests.unsubscribe();
   }
-
 }
