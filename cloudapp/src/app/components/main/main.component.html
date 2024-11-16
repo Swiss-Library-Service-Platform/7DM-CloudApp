@@ -4,17 +4,10 @@
     <p class="loading-info">{{ status.message | async }}</p>
 </div>
 
-<!-- Beta Warning -a->
-<ng-container *ngIf="isInitialized">
-    <div class="header-warning">
-        This is a beta version of the SLSP - 7DM Cloudapp. <br>
-        It's not connected to the production environment.
-    </div>
-</ng-container>
- -->
-
+<!-- Main View -->
 <ng-container *ngIf="isInitialized">
 
+    <!-- User has roles -->
     <ng-container *ngIf="isUserHasRoles">
 
         <!-- Library Allowed -->
@@ -34,7 +27,7 @@
             </ng-container>
 
             <!-- Tab / Main View -->
-            <ng-container *ngIf="isLibraryAllowed">
+            <div class="main-area" *ngIf="isLibraryAllowed">
                 <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs>
                     <mat-tab label="{{ 'Main.Requests' | translate }}">
                         <app-requests></app-requests>
@@ -55,7 +48,7 @@
                         </ng-template>
                     </mat-tab>
                 </mat-tab-group>
-            </ng-container>
+            </div>
         </ng-container>
 
         <!-- Library not allowed -->
