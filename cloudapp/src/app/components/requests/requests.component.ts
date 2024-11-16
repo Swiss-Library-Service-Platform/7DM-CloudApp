@@ -39,16 +39,8 @@ export class RequestsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // Check if current time is valid (between 00:00 and 18:59)
-        const currentDate = new Date();
-        const currentHour = currentDate.getHours();
-        console.log("Current hour: " + currentHour);
-        if (currentHour >= 19) {
-            this.isTimeValid = true; //FIXME: Change to false;
-            this.loader.hide();
-            return;
-        }
-
+        // FIXME: Reenable this
+        //this.checkCurrentTimeValid();
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.boxId;
         });
@@ -56,10 +48,23 @@ export class RequestsComponent implements OnInit {
             (response: RequestResponse[]) => {
                 response = response.map(requestResponse => new RequestResponse(requestResponse)); // Somehow this is necessary
                 if (this.responseRequest != null && !response.some(r => r.request.getId() === this.responseRequest.getId())) {
+                    // Current visible request was deleted from today tab
                     this.resetResponse();
                 }
             }
         );
+    }
+
+    checkCurrentTimeValid(): void {
+        const currentDate = new Date();
+        const currentHour = currentDate.getHours();
+        console.log("Current hour: " + currentHour);
+
+        if (currentHour >= 19) {
+            this.isTimeValid = false;
+            this.loader.hide();
+            return;
+        }
     }
 
     async onClickPrintBoxIdPdf(): Promise<void> {

@@ -25,7 +25,7 @@ export class BackendService {
   private baseUrlLocal: string = 'http://localhost:4201/api/v1';
   private httpOptions: {};
 
-  public todaysRequests: Array<RequestResponse> = [];
+  //public todaysRequests: Array<RequestResponse> = [];
   private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestResponse>>(new Array<RequestResponse>());
 
   private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
@@ -194,9 +194,11 @@ export class BackendService {
     return new Promise((resolve, reject) => {
       this.http.get<RequestResponse[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
+          /*
           this.todaysRequests = response.map(request => {
             return new RequestResponse(request);
           });
+          */
           this._setObservableTodaysRequestsObject(response);
           resolve(true);
         },
@@ -219,15 +221,12 @@ export class BackendService {
     let escapedLibraryCode = encodeURIComponent(libraryCode);
     let escapedRequestId = encodeURIComponent(requestId);
 
+    // wait for one second before removing the request from the list
+
     return new Promise((resolve, reject) => {
       this.http.delete(`${this.baseUrl}/requests/${escapedLibraryCode}/${escapedRequestId}`, this.httpOptions).subscribe(
         response => {
-          // Wait 3 seconds before removing the request from the list
-          // To show the user that the request is being cancelled
-          setTimeout(() => {
-            this.todaysRequests = this.todaysRequests.filter(requestInfo => requestInfo.getRequest().getId() !== requestId);
-            this._setObservableTodaysRequestsObject(this.todaysRequests);
-          }, 1000);
+          this.getRequests();
           resolve(true);
         },
         error => {

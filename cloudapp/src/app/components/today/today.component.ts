@@ -49,14 +49,19 @@ export class TodayComponent implements OnInit {
   }
 
   cancelRequest(requestId: number): void {
-    this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
-    this.loader.show();
     const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getRequest().getId() === requestId);
     requestResponse.getRequest().isDeleting = true;
-    this.selectedRequests = this.selectedRequests.filter(id => id !== requestId);
-    this.backendService.cancelRequest(requestId).then((res) => {
-      this.loader.hide();
-    });
+
+    // Simulate delay
+    setTimeout(() => {
+      this.status.set(this.translateService.instant("Requests.Status.Cancelling_Request"));
+      this.loader.show();
+      this.selectedRequests = this.selectedRequests.filter(id => id !== requestId);
+      this.backendService.cancelRequest(requestId).then((res) => {
+        this.loader.hide();
+      });
+    }, 1000);
+
   }
 
   onSelectRequest(requestId: number): void {
