@@ -47,6 +47,50 @@
                 </div>
             </td>
         </tr>
+        <tr *ngIf="request.isRetried()">
+            <!-- Is retried -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-warning-icon">
+                    <mat-icon>warning</mat-icon>
+                    {{ 'Requests.RequestInfo.Retried' | translate }}
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="request.isMultipleFulfilled()">
+            <!-- Multiple fulfilled -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-warning-icon">
+                    <mat-icon>warning</mat-icon>
+                    {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
+                    
+                </div>
+                <div class="multi-fulfilled" *ngFor="let fulfilledRequest of multipleFulfilledRequests">
+                    <span style="font-weight: bold;">{{ fulfilledRequest.boxLabel.directoriesCode }} </span> ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}) 
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="request.isNotResourceSharing()">
+            <!-- Is not resource sharing request -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-info-icon">
+                    <mat-icon>info</mat-icon>
+                    {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
+                </div>
+            </td>
+        </tr>
+        <tr *ngIf="request.isOutdated()">
+            <!-- Outdated -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-info-icon">
+                    <mat-icon>info</mat-icon>
+                    {{ 'Requests.RequestInfo.Outdated' | translate }}
+                </div>
+            </td>
+        </tr>
         <tr>
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>
@@ -85,53 +129,6 @@
             <td>
                 <div class="cell-with-action-icon">
                     {{ request.boxLabel.boxId }}
-                    <!-- 
-                        <mat-icon (click)="onClickPrintBoxIdPdf()">print</mat-icon>
-                    -->
-                </div>
-            </td>
-        </tr>
-        <tr *ngIf="request.isNotResourceSharing()">
-            <!-- Is not resource sharing request -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-info-icon">
-                    <mat-icon>info</mat-icon>
-                    {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
-                </div>
-            </td>
-        </tr>
-        <tr *ngIf="request.isOutdated()">
-            <!-- Outdated -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-info-icon">
-                    <mat-icon>info</mat-icon>
-                    {{ 'Requests.RequestInfo.Outdated' | translate }}
-                </div>
-            </td>
-        </tr>
-        <tr *ngIf="request.isRetried()">
-            <!-- Is retried -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-warning-icon">
-                    <mat-icon>warning</mat-icon>
-                    {{ 'Requests.RequestInfo.Retried' | translate }}
-                </div>
-            </td>
-        </tr>
-        <tr *ngIf="request.isMultipleFulfilled()">
-            <!-- Multiple fulfilled -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-warning-icon">
-                    <mat-icon>warning</mat-icon>
-                    {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
-                    
-                </div>
-                <div class="multi-fulfilled" *ngFor="let fulfilledRequest of multipleFulfilledRequests">
-                    <span style="font-weight: bold;">{{ fulfilledRequest.boxLabel.directoriesCode }} </span> ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}) 
                 </div>
             </td>
         </tr>

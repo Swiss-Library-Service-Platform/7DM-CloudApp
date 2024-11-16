@@ -40,21 +40,25 @@
 <!-- Request Info -->
 <div class="request-success" *ngIf="responseRequest">
     <div class="request-headers">
-        <!-- Warnings (Critical)-->
-        <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled()">
-            <mat-icon color="warn" inline=true>warning</mat-icon>
-            {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
-        </h1>
-        <h1 class="request-info-info" *ngIf="responseRequest.isRetried()">
-            <mat-icon color="warn" inline=true>warning</mat-icon>
-            {{ 'Requests.RequestInfo.Retried' | translate }}
-        </h1>
         <!-- Success -->
         <h1>
             <mat-icon color="success" inline=true>check_circle</mat-icon>
             {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
         </h1>
+        <!-- Warnings (Critical)-->
+        <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled()">
+            <mat-icon color="warn" inline=true>warning</mat-icon>
+            <!-- {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }} -->
+            {{ 'Requests.RequestInfo.CheckWarning' | translate }}
+
+        </h1>
+        <h1 class="request-info-info" *ngIf="responseRequest.isRetried()">
+            <mat-icon color="warn" inline=true>warning</mat-icon>
+            <!-- {{ 'Requests.RequestInfo.Retried' | translate }}-->
+            {{ 'Requests.RequestInfo.CheckWarning' | translate }}
+        </h1>
         <!-- Warning (Info) -->
+        <!-- 
         <h1 class="request-info-info" *ngIf="responseRequest.isOutdated()">
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.Outdated' | translate }}
@@ -63,7 +67,7 @@
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
         </h1>
-        
+        -->
     </div>
     <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"
         [multipleFulfilledRequests]="responseMultipleFulfilled"></app-request-info>

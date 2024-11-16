@@ -86,6 +86,7 @@
         "RequestInfo": {
             "Barcode": "Barcode",
             "BoxId": "Box ID",
+            "CheckWarning": "Please check the warning message.",
             "Error": "Error",
             "Warning": "Warning",
             "Type": "Type",
