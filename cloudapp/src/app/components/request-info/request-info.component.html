@@ -57,7 +57,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isMultipleFulfilled()">
+        <tr *ngIf="request.isMultipleFulfilled">
             <!-- Multiple fulfilled -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -66,12 +66,12 @@
                     {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
                     
                 </div>
-                <div class="multi-fulfilled" *ngFor="let fulfilledRequest of multipleFulfilledRequests">
+                <div class="multi-fulfilled" *ngFor="let fulfilledRequest of request.getMultipleFulfilledRequests()">
                     <span style="font-weight: bold;">{{ fulfilledRequest.boxLabel.directoriesCode }} </span> ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}) 
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isNotResourceSharing()">
+        <tr *ngIf="request.isNotRs">
             <!-- Is not resource sharing request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -81,7 +81,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isOutdated()">
+        <tr *ngIf="request.isOutdated">
             <!-- Outdated -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>

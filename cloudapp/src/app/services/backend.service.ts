@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BoxLabel } from '../models/BoxLabel.model';
 import { PagedHistory } from '../models/PagedHistory.model';
 import { Request } from '../models/Request.model';
-import { RequestResponse } from '../models/RequestResponse.model';
 
 /**
  * Service which is responsible for all outgoing API calls in this cloud app
@@ -26,7 +25,7 @@ export class BackendService {
   private httpOptions: {};
 
   //public todaysRequests: Array<RequestResponse> = [];
-  private readonly _todaysRequestsObject = new BehaviorSubject<Array<RequestResponse>>(new Array<RequestResponse>());
+  private readonly _todaysRequestsObject = new BehaviorSubject<Array<Request>>(new Array<Request>());
 
   private readonly _pagedHistoryObject = new BehaviorSubject<PagedHistory>(null);
 
@@ -37,7 +36,7 @@ export class BackendService {
     private eventsService: CloudAppEventsService,
   ) { }
 
-  getTodaysRequestsObject(): Observable<RequestResponse[]> {
+  getTodaysRequestsObject(): Observable<Request[]> {
     return this._todaysRequestsObject.asObservable();
   }
 
@@ -49,7 +48,7 @@ export class BackendService {
     return this._unreadErrorHistoryRequests.asObservable();
   }
 
-  private _setObservableTodaysRequestsObject(todaysRequests: Array<RequestResponse>): void {
+  private _setObservableTodaysRequestsObject(todaysRequests: Array<Request>): void {
     this._todaysRequestsObject.next(todaysRequests);
   }
 
@@ -116,14 +115,14 @@ export class BackendService {
    * Looks up a request in the API
    * 
    */
-  async sendRequestTo7DM(requestId: string, boxId: string): Promise<RequestResponse> {
+  async sendRequestTo7DM(requestId: string, boxId: string): Promise<Request> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedRequestId = encodeURIComponent(requestId);
     let escapedLibraryCode = encodeURIComponent(libraryCode);
     let escapedBoxId = encodeURIComponent(boxId);
 
     return new Promise((resolve, reject) => {
-      this.http.post<RequestResponse>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
+      this.http.post<Request>(`${this.baseUrl}/requests/${escapedLibraryCode}`, {
         request_id: escapedRequestId,
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
@@ -192,7 +191,7 @@ export class BackendService {
     }
 
     return new Promise((resolve, reject) => {
-      this.http.get<RequestResponse[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
+      this.http.get<Request[]>(`${this.baseUrl}/requests/${escapedLibraryCode}`, { params, ...this.httpOptions }).subscribe(
         response => {
           /*
           this.todaysRequests = response.map(request => {

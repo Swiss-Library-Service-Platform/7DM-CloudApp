@@ -6,7 +6,6 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Request } from '../../models/Request.model';
-import { RequestResponse } from '../../models/RequestResponse.model';
 
 @Component({
     selector: 'app-requests',
@@ -45,9 +44,9 @@ export class RequestsComponent implements OnInit {
             this.inputBoxId = response?.boxId;
         });
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
-            (response: RequestResponse[]) => {
-                response = response.map(requestResponse => new RequestResponse(requestResponse)); // Somehow this is necessary
-                if (this.responseRequest != null && !response.some(r => r.request.getId() === this.responseRequest.getId())) {
+            (response: Request[]) => {
+                response = response.map(requestResponse => new Request(requestResponse)); // Somehow this is necessary
+                if (this.responseRequest != null && !response.some(r => r.getId() === this.responseRequest.getId())) {
                     // Current visible request was deleted from today tab
                     this.resetResponse();
                 }
@@ -98,9 +97,8 @@ export class RequestsComponent implements OnInit {
         this.resetResponse();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
-            const responseObj = new RequestResponse(response);
-            this.responseRequest = responseObj.getRequest();
-            this.responseMultipleFulfilled = responseObj.getMultipleFulfilledRequests();
+            const responseObj = new Request(response);
+            this.responseRequest = responseObj;
             this.inputRequestId = '';
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
@@ -127,9 +125,9 @@ export class RequestsComponent implements OnInit {
 
     getIconClass(): string {
         if (this.responseRequest && (this.responseRequest.isRetried()
-            || this.responseRequest.isOutdated()
-            || this.responseRequest.isNotResourceSharing()
-            || this.responseRequest.isMultipleFulfilled())
+            || this.responseRequest.isOutdated
+            || this.responseRequest.isNotRs
+            || this.responseRequest.isMultipleFulfilled)
         ) {
             return 'warning';
         }

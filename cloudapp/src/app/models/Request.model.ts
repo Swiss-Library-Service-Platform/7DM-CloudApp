@@ -14,12 +14,14 @@ export class Request {
     box_id: string;
     state: string;
     message: string;
-    notRs: boolean;
-    outdated: boolean;
-    multipleFulfilled: boolean;
+    isNotRs: boolean;
+    isOutdated: boolean;
+    isMultipleFulfilled: boolean;
     retry: number;
 
     boxLabel: BoxLabel;
+
+    multi_fulfilled_requests: Array<Request>;
 
     isDeleting: boolean;
     isSelected: boolean;
@@ -28,6 +30,9 @@ export class Request {
         Object.assign(this, init);
         if (this.boxLabel) {
             this.boxLabel = new BoxLabel(this.boxLabel);
+        }
+        if (this.multi_fulfilled_requests) {
+            this.multi_fulfilled_requests = this.multi_fulfilled_requests.map(request => new Request(request));
         }
     }
 
@@ -43,16 +48,8 @@ export class Request {
         return (this.externalIdPrefix ?? '') + this.externalId ;
     }
 
-    public isNotResourceSharing(): boolean {
-        return this.notRs;
-    }
-
-    public isOutdated(): boolean {
-        return this.outdated;
-    }
-
-    public isMultipleFulfilled(): boolean {
-        return this.multipleFulfilled;
+    public getMultipleFulfilledRequests(): Array<Request> {
+        return this.multi_fulfilled_requests;
     }
 
     public isFailedUnread(): boolean {

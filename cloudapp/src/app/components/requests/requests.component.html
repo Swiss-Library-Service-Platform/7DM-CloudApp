@@ -46,7 +46,7 @@
             {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
         </h1>
         <!-- Warnings (Critical)-->
-        <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled">
             <mat-icon color="warn" inline=true>warning</mat-icon>
             <!-- {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }} -->
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
@@ -59,18 +59,17 @@
         </h1>
         <!-- Warning (Info) -->
         <!-- 
-        <h1 class="request-info-info" *ngIf="responseRequest.isOutdated()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isOutdated">
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.Outdated' | translate }}
         </h1>
-        <h1 class="request-info-info" *ngIf="responseRequest.isNotResourceSharing()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isNotRs">
             <mat-icon inline=true>info</mat-icon>
             {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
         </h1>
         -->
     </div>
-    <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"
-        [multipleFulfilledRequests]="responseMultipleFulfilled"></app-request-info>
+    <app-request-info [request]="responseRequest" [onCancelRequest]="cancelRequest.bind(this)"></app-request-info>
 </div>
 
 

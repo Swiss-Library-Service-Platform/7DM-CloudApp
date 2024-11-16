@@ -4,8 +4,7 @@ import { Subscription } from 'rxjs';
 import { LoadingIndicatorService } from '../../services/loading-indicator.service';
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
-import { RequestResponse } from '../../models/RequestResponse.model';
-
+import { Request } from '../../models/Request.model';
 @Component({
   selector: 'app-today',
   templateUrl: './today.component.html',
@@ -13,8 +12,8 @@ import { RequestResponse } from '../../models/RequestResponse.model';
 })
 export class TodayComponent implements OnInit {
 
-  todayRequests: RequestResponse[] = new Array<RequestResponse>();
-  filteredRequests: RequestResponse[] = new Array<RequestResponse>();
+  todayRequests: Request[] = new Array<Request>();
+  filteredRequests: Request[] = new Array<Request>();
   subscriptionTodaysRequests: Subscription;
   inputSearch: string;
 
@@ -30,8 +29,8 @@ export class TodayComponent implements OnInit {
   ngOnInit(): void {
     this.backendService.getRequests();
     this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
-      (response: RequestResponse[]) => {
-        response = response.map(requestResponse => new RequestResponse(requestResponse)); // Somehow this is necessary
+      (response: Request[]) => {
+        response = response.map(r => new Request(r)); // Somehow this is necessary
         this.todayRequests = response;
         this.filteredRequests = [...this.todayRequests];
       }
@@ -43,14 +42,14 @@ export class TodayComponent implements OnInit {
       this.filteredRequests = [...this.todayRequests];
     } else {
       this.filteredRequests = this.todayRequests.filter(requestResponse => {
-        return requestResponse.getRequest().checkForSearch(this.inputSearch);
+        return requestResponse.checkForSearch(this.inputSearch);
       });
     }
   }
 
   cancelRequest(requestId: number): void {
-    const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getRequest().getId() === requestId);
-    requestResponse.getRequest().isDeleting = true;
+    const requestResponse = this.todayRequests.find(requestResponse => requestResponse.getId() === requestId);
+    requestResponse.isDeleting = true;
 
     // Simulate delay
     setTimeout(() => {
@@ -75,10 +74,10 @@ export class TodayComponent implements OnInit {
   onSelectAll(): void {
     if (this.selectedRequests.length === this.filteredRequests.length) {
       this.selectedRequests = [];
-      this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = false);
+      this.filteredRequests.forEach(requestResponse => requestResponse.isSelected = false);
     } else {
-      this.selectedRequests = this.filteredRequests.map(requestResponse => requestResponse.getRequest().getId());
-      this.filteredRequests.forEach(requestResponse => requestResponse.getRequest().isSelected = true);
+      this.selectedRequests = this.filteredRequests.map(requestResponse => requestResponse.getId());
+      this.filteredRequests.forEach(requestResponse => requestResponse.isSelected = true);
     }
   }
 

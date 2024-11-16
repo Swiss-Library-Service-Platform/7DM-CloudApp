@@ -28,9 +28,6 @@ export class RequestInfoComponent implements OnInit {
   @Input()
   showBoxDate: boolean = false;
 
-  @Input()
-  multipleFulfilledRequests: Array<Request> = [];
-
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,

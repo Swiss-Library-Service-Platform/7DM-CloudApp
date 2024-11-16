@@ -23,8 +23,7 @@
 
     <!-- If there are requests today -->
     <ng-container *ngIf="filteredRequests">
-        <app-request-info *ngFor="let requestResponse of filteredRequests; let i = index" [request]="requestResponse.getRequest()" [index]="i +1"
-            [multipleFulfilledRequests]="requestResponse.getMultipleFulfilledRequests()" 
+        <app-request-info *ngFor="let requestResponse of filteredRequests; let i = index" [request]="requestResponse" [index]="i +1"
             [onCancelRequest]="cancelRequest.bind(this)" [onSelectRequest]="onSelectRequest.bind(this)">
         </app-request-info>
     </ng-container>
