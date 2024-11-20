@@ -20,7 +20,7 @@ export class Request {
 
     boxLabel: BoxLabel;
 
-    multi_fulfilled_requests: Array<Request>;
+    multiFulfilledRequests: Array<Request>;
 
     isDeleting: boolean;
     isSelected: boolean;
@@ -30,8 +30,8 @@ export class Request {
         if (this.boxLabel) {
             this.boxLabel = new BoxLabel(this.boxLabel);
         }
-        if (this.multi_fulfilled_requests) {
-            this.multi_fulfilled_requests = this.multi_fulfilled_requests.map(request => new Request(request));
+        if (this.multiFulfilledRequests) {
+            this.multiFulfilledRequests = this.multiFulfilledRequests.map(request => new Request(request));
         }
     }
 
@@ -48,7 +48,7 @@ export class Request {
     }
 
     public getMultipleFulfilledRequests(): Array<Request> {
-        return this.multi_fulfilled_requests;
+        return this.multiFulfilledRequests;
     }
 
     public isFailedUnread(): boolean {
