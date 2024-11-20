@@ -11,7 +11,6 @@ export class Request {
     destinationDirectoriesName: string;
     barcode: string;
     type: string;
-    box_id: string;
     state: string;
     message: string;
     isNotRs: boolean;
@@ -73,7 +72,7 @@ export class Request {
             this.destinationDirectoriesName,
             this.barcode,
             this.type,
-            this.box_id,
+            this.boxLabel?.boxId,
             this.state,
             this.message
         ];

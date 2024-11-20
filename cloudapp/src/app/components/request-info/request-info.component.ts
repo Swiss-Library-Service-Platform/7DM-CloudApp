@@ -49,7 +49,7 @@ export class RequestInfoComponent implements OnInit {
   }
 
   async onClickPrintBoxIdPdf(): Promise<void> {
-    var boxId = this.request.box_id;
+    var boxId = this.request.boxLabel.boxId;
     const url = await this.backendService.getBoxLabelPdfUrl(boxId);
     window.open(url, '_blank');
   }
