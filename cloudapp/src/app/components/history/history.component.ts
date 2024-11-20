@@ -6,6 +6,8 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { StatusIndicatorService } from '../../services/status-indicator.service';
 import { TranslateService } from '@ngx-translate/core';
 import { HistoryFilterService } from '../../services/history-filter.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-history',
@@ -30,6 +32,9 @@ export class HistoryComponent implements OnInit {
   inputDestination: string = null;
   inputShowErrors: boolean = false;
 
+  // Filter subject for debouncing
+  private filterSubject: Subject<boolean> = new Subject();
+
   constructor(
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
@@ -39,7 +44,6 @@ export class HistoryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.onFilterHistoryRequests();
 
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {
@@ -63,9 +67,19 @@ export class HistoryComponent implements OnInit {
         }
       }
     );
+    this.filterSubject.pipe(
+      debounceTime(300) // Debounce time to prevent multiple requests
+    ).subscribe(resetPage => {
+      this.executeFilterHistoryRequests(resetPage);
+    });
+    this.onFilterHistoryRequests();
   }
 
   onFilterHistoryRequests(resetPage: boolean = true): void {
+    this.filterSubject.next(resetPage);
+  }
+
+  private executeFilterHistoryRequests(resetPage: boolean): void {
     if (resetPage) {
       this.resetPage();
     }
@@ -135,5 +149,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionHistoryRequests.unsubscribe();
+    this.subscriptionIsShowErrors.unsubscribe();
+    this.filterSubject.unsubscribe();
   }
 }
