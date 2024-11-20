@@ -32,7 +32,7 @@
     "Welcome": {
         "Welcome": "Welcome to SLSP Courer to 7DM!",
         "AccessDenied": "Access denied",
-        "InstitutionDenied": "Unfortunately your institution does not have the permission to use this app.",
+        "InstitutionDenied": "Access to the Cloud App is currently deactivated for your institution.",
         "NoRole": "Unfortunately you do not have the permission to use this app. In order to apply changes via this app, you need at least one of the following roles:",
         "Roles": {
             "CIRC_DESK_MANAGER": "Circulation Desk Manager",
