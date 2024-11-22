@@ -58,7 +58,7 @@
         "Error": {
             "DEFAULT": "An error occurred while processing your request.",
             "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
-            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not SLSP courier valid library.",
+            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library.",
             "INVALID_REQUEST_ID": "Invalid request ID.",
             "INTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
             "EXTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
