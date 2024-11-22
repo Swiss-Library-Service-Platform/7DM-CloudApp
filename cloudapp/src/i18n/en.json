@@ -97,6 +97,8 @@
             "NewRequest": "Request Information",
             "NotResourceSharing": "Not a resource sharing request.",
             "MultipleFulfilled": "This request has been fulfilled multiple times.",
+            "MultipleFulfilledToday": "Please check with the other library to avoid sending the item multiple times today.",
+            "MultipleFulfilledTodayClick": "Click to see information about ",
             "Sender": "Sender",
             "Destination": "Destination",
             "Retried": "This request has already been sent to 7DM from your library on a previous day.",

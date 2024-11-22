@@ -11,7 +11,8 @@
       "connectSrc": [
          "https://7dmproxy.swisscovery.network/",
          "http://localhost:4201/",
-         "https://pudosvc.7days-group.com"
+         "https://pudosvc.7days-group.com",
+         "https://libraries.swisscovery.help"
       ],
       "sandbox": {
          "popups": true,

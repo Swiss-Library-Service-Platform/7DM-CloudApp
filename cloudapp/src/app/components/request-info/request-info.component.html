@@ -64,10 +64,24 @@
                 <div class="cell-with-warning-icon">
                     <mat-icon>warning</mat-icon>
                     {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }}
-                    
                 </div>
                 <div class="multi-fulfilled" *ngFor="let fulfilledRequest of request.getMultipleFulfilledRequests()">
-                    <span style="font-weight: bold;">{{ fulfilledRequest.boxLabel.directoriesCode }} </span> ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }}) 
+                    <span style="font-weight: bold;">
+                        {{ fulfilledRequest.boxLabel.directoriesCode }}
+                    </span>
+                    ({{ fulfilledRequest.timestamp | date: 'dd/MM/yyyy HH:mm' }})
+                    <!-- check if other request is also from today -->
+                    <span
+                        *ngIf="(fulfilledRequest.timestamp | date: 'dd/MM/yyyy') == (request.timestamp | date: 'dd/MM/yyyy')">
+                        <br>
+                        {{ 'Requests.RequestInfo.MultipleFulfilledToday' | translate }}
+                        <br>
+                        <a href="https://libraries.swisscovery.help/?library={{fulfilledRequest.boxLabel.directoriesCode}}"
+                            target="_blank">
+                            {{ 'Requests.RequestInfo.MultipleFulfilledTodayClick' | translate }}
+                            {{ fulfilledRequest.boxLabel.directoriesCode}}.
+                        </a>
+                    </span>
                 </div>
             </td>
         </tr>
