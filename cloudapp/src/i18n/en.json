@@ -99,7 +99,7 @@
             "MultipleFulfilled": "This request has been fulfilled multiple times.",
             "Sender": "Sender",
             "Destination": "Destination",
-            "Retried": "This request was already sent from your library before.",
+            "Retried": "This request has already been sent to 7DM from your library on a previous day.",
             "RequestId": "Request ID",
             "RequestIdExternal": "External ID",
             "7DMCode": "7DM code",
