@@ -44,7 +44,7 @@ export class Request {
     }
 
     public getExternalIdWithPrefix(): string {
-        return (this.externalIdPrefix ?? '') + this.externalId ;
+        return (this.externalIdPrefix ?? '') + this.externalId;
     }
 
     public getMultipleFulfilledRequests(): Array<Request> {
@@ -63,6 +63,16 @@ export class Request {
         // Convert the search term to lowercase
         const lowerSearch = search.toLowerCase();
 
+        // Find the last occurrence of the closing bracket ')'
+        const lastClosingBracketIndex = lowerSearch.lastIndexOf(')');
+        const openingBracketIndex = lowerSearch.lastIndexOf('(', lastClosingBracketIndex);
+
+        // Check if the search term is inside brackets (when a user copies the destination library <name> (<code>) into the search bar)
+        let searchInBrackets: string | null = null;
+        if (lastClosingBracketIndex !== -1 && openingBracketIndex !== -1 && lastClosingBracketIndex > openingBracketIndex) {
+            searchInBrackets = lowerSearch.substring(openingBracketIndex + 1, lastClosingBracketIndex).trim();
+        }
+
         // Array of fields to be checked
         const fieldsToSearch = [
             this.internalId,
@@ -78,7 +88,13 @@ export class Request {
         ];
 
         // Check if any of the fields include the search term (case-insensitive)
-        return fieldsToSearch.some(field => field?.toLowerCase().includes(lowerSearch));
+        return fieldsToSearch.some(field => {
+            if (field) {
+                const lowerField = field.toLowerCase();
+                return lowerField.includes(lowerSearch) || (searchInBrackets && lowerField.includes(searchInBrackets));
+            }
+            return false;
+        });
     }
 
 
