@@ -38,8 +38,7 @@ export class RequestsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        // FIXME: Reenable this
-        //this.checkCurrentTimeValid();
+        this.checkCurrentTimeValid();
         this.backendService.retrieveActiveBoxLabel().then(response => {
             this.inputBoxId = response?.boxId;
         });
