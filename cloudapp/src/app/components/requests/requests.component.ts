@@ -58,7 +58,7 @@ export class RequestsComponent implements OnInit {
         const currentHour = currentDate.getHours();
         console.log("Current hour: " + currentHour);
 
-        if (currentHour >= 19) {
+        if (currentHour >= 15) {
             this.isTimeValid = false;
             this.loader.hide();
             return;
