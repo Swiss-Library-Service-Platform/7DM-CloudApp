@@ -1,6 +1,4 @@
 # SLSP Courier to 7DM - Alma Cloud App
-<a href="https://developers.exlibrisgroup.com/appcenter/slsp-to-7dm/">![CloudApp Activations](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapps01.ext.exlibrisgroup.com%2Fappstats.json&query=%24%5B%3F(%40.cloud_app_id%3D%3D'swiss-library-service-platform%2F7dm-cloudapp')%5D.user_count&style=flat&label=Cloud%20App%20Activations)</a>
-<a href="https://developers.exlibrisgroup.com/appcenter/slsp-to-7dm/">![CloudApp Activations](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapps01.ext.exlibrisgroup.com%2Fappstats.json&query=%24%5B%3F(%40.cloud_app_id%3D%3D'swiss-library-service-platform%2F7dm-cloudapp')%5D.institution_count&style=flat&label=Cloud%20App%20Institutions)</a>
 
 ## Overview
 
