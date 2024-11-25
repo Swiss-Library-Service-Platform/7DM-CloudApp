@@ -1,9 +1,9 @@
 {
    "id": "7-dm",
-   "title": "SLSP Courier to 7DM (Beta)",
+   "title": "SLSP Courier to 7DM",
    "subtitle": "7DM Interface Automatization",
    "author": "SLSP",
-   "description": "Retrieve requests and view 7-DM library codes. This Alma Cloud App is a product for SLSP libraries (BETA).",
+   "description": "Retrieve requests and view 7-DM library codes. This Alma Cloud App is a product for SLSP libraries.",
    "pages": {
       "help": "https://github.com/Swiss-Library-Service-Platform/7DM-CloudApp"
    },
