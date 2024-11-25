@@ -17,6 +17,9 @@ export class RequestsComponent implements OnInit {
     inputRequestId: string = '';
     inputBoxId: string = '';
 
+    // Request status
+    isSendingRequest: boolean = false;
+
     // Response
     responseRequest: Request;
     responseErrorMessage: string;
@@ -94,6 +97,7 @@ export class RequestsComponent implements OnInit {
         this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
 
         this.resetResponse();
+        this.isSendingRequest = true;
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             const responseObj = new Request(response);
@@ -109,6 +113,7 @@ export class RequestsComponent implements OnInit {
             }
             this.responseErrorId = error.error.error_id;
         }).finally(() => {
+            this.isSendingRequest = false;
             this.loader.hide();
         });
     }
