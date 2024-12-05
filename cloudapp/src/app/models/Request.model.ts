@@ -5,6 +5,7 @@ export class Request {
     internalId: string;
     externalIdPrefix: string;
     externalId: string;
+    externalIdWithPrefix: string;
     timestamp: Date;
     destinationLibrary: string;
     destinationDirectoriesCode: string;
@@ -16,6 +17,7 @@ export class Request {
     isNotRs: boolean;
     isOutdated: boolean;
     isMultipleFulfilled: boolean;
+    isReturnedToOwner: boolean;
     retry: number;
 
     boxLabel: BoxLabel;
@@ -41,10 +43,6 @@ export class Request {
 
     public getInternalIdWithRetry(): string {
         return this.internalId + (this.retry > 0 ? `R${this.retry}` : '');
-    }
-
-    public getExternalIdWithPrefix(): string {
-        return (this.externalIdPrefix ?? '') + this.externalId;
     }
 
     public getMultipleFulfilledRequests(): Array<Request> {

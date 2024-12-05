@@ -85,6 +85,16 @@
                 </div>
             </td>
         </tr>
+        <tr *ngIf="request.isReturnedToOwner">
+            <!-- Is retried -->
+            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
+            <td>
+                <div class="cell-with-info-icon">
+                    <mat-icon>info</mat-icon>
+                    {{ 'Requests.RequestInfo.ReturnedToOwner' | translate }}
+                </div>
+            </td>
+        </tr>
         <tr *ngIf="request.isNotRs">
             <!-- Is not resource sharing request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
@@ -135,7 +145,7 @@
         <tr>
             <!-- Request ID (External) -->
             <th scope="row"> {{ 'Requests.RequestInfo.RequestIdExternal' | translate }}</th>
-            <td> {{ request.getExternalIdWithPrefix() }} </td>
+            <td> {{ request.externalIdWithPrefix }} </td>
         </tr>
         <tr>
             <!-- Box ID -->

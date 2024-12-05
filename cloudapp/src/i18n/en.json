@@ -96,6 +96,7 @@
             },
             "NewRequest": "Request Information",
             "NotResourceSharing": "Not a resource sharing request.",
+            "ReturnedToOwner": "Item returned to owner library.",
             "MultipleFulfilled": "This request has been fulfilled multiple times.",
             "MultipleFulfilledToday": "Please check with the other library to avoid sending the item multiple times today.",
             "MultipleFulfilledTodayClick": "Click to see information about ",
