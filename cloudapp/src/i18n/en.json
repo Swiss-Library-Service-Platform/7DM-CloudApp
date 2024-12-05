@@ -58,7 +58,7 @@
         "Error": {
             "DEFAULT": "An error occurred while processing your request.",
             "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
-            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library.",
+            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library. Consider sending the document by post.",
             "INVALID_REQUEST_ID": "Invalid request ID.",
             "INTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
             "EXTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
@@ -96,7 +96,7 @@
             },
             "NewRequest": "Request Information",
             "NotResourceSharing": "Not a resource sharing request.",
-            "ReturnedToOwner": "Item returned to owner library.",
+            "ReturnedToOwner": "Item returned to the owner \n (final destination not a courier library).",
             "MultipleFulfilled": "This request has been fulfilled multiple times.",
             "MultipleFulfilledToday": "Please check with the other library to avoid sending the item multiple times today.",
             "MultipleFulfilledTodayClick": "Click to see information about ",

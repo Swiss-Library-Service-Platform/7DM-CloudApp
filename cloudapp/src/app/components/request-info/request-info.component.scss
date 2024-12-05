@@ -100,6 +100,7 @@
     .cell-with-info-icon {
         font-weight: 400;
         gap: 5px;
+        white-space: pre-line;
         justify-content: start;
         .mat-icon {
             width: 24px;
