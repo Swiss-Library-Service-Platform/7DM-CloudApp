@@ -108,6 +108,8 @@ export class RequestsComponent implements OnInit {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DEFAULT");
             } else if (error.error.type == "DESTINATION_NOT_FOUND" || error.error.type == "DESTINATION_NOT_FOUND_ITEM") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DESTINATION_NOT_FOUND_ITEM", { destination: error.error.additionalInformation.libraryCode });
+            } else if (error.error.type == "SEVEN_DM_CODE_NOT_FOUND") {
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type,  { destination: error.error.additionalInformation.libraryCode });
             } else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }

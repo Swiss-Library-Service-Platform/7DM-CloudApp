@@ -69,7 +69,8 @@
             "DESTINATION_NOT_FOUND_ITEM": "Destination library not found in item info ({destination}).",
             "TIME_NOT_VALID": "Backend is currently disabled.",
             "BOX_ID_BAD_LIBRARY": "Box ID does not belong to your library.",
-            "BOX_OUTDATED": "Box is already sent."
+            "BOX_OUTDATED": "Box is already sent.",
+            "SEVEN_DM_CODE_NOT_FOUND": "Library {destination} is not an SLSP courier library. Please consider to send the item post or contact SLSP if you think there is an error."
         },
         "ContactSupport1": "Please ",
         "ContactSupport2": "contact support",
