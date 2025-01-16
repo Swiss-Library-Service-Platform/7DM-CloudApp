@@ -100,6 +100,7 @@ export class RequestsComponent implements OnInit {
         this.isSendingRequest = true;
 
         this.inputRequestId = this.inputRequestId.trim();
+        this.inputBoxId = this.inputBoxId.trim();
 
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             const responseObj = new Request(response);
