@@ -105,16 +105,6 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isOutdated">
-            <!-- Outdated -->
-            <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
-            <td>
-                <div class="cell-with-info-icon">
-                    <mat-icon>info</mat-icon>
-                    {{ 'Requests.RequestInfo.Outdated' | translate }}
-                </div>
-            </td>
-        </tr>
         <tr>
             <!-- Barcode -->
             <th scope="row"> {{ 'Requests.RequestInfo.Barcode' | translate }}</th>

@@ -133,7 +133,6 @@ export class RequestsComponent implements OnInit {
 
     getIconClass(): string {
         if (this.responseRequest && (this.responseRequest.isRetried()
-            || this.responseRequest.isOutdated
             || this.responseRequest.isNotRs
             || this.responseRequest.isMultipleFulfilled)
         ) {

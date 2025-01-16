@@ -15,7 +15,6 @@ export class Request {
     state: string;
     message: string;
     isNotRs: boolean;
-    isOutdated: boolean;
     isMultipleFulfilled: boolean;
     isReturnedToOwner: boolean;
     retry: number;
