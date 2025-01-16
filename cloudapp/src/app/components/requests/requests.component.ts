@@ -99,6 +99,8 @@ export class RequestsComponent implements OnInit {
         this.resetResponse();
         this.isSendingRequest = true;
 
+        this.inputRequestId = this.inputRequestId.trim();
+
         this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
             const responseObj = new Request(response);
             this.responseRequest = responseObj;
@@ -131,7 +133,6 @@ export class RequestsComponent implements OnInit {
 
     getIconClass(): string {
         if (this.responseRequest && (this.responseRequest.isRetried()
-            || this.responseRequest.isOutdated
             || this.responseRequest.isNotRs
             || this.responseRequest.isMultipleFulfilled)
         ) {
