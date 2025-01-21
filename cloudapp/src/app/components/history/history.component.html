@@ -1,5 +1,13 @@
 <!-- Input Box ID + Request ID -->
 <div class="header-area">
+    <div class="header-area-current-as-destination">
+        <mat-checkbox [(ngModel)]="inputCurrentAsDestination" (change)="onChangeCurrentAsDestination()">
+            {{ 'History.CurrentAsDestination'
+            | translate }}</mat-checkbox>
+        <mat-checkbox [disabled]="inputCurrentAsDestination" [(ngModel)]="inputShowErrors"
+            (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
+            | translate }}</mat-checkbox>
+    </div>
     <div class="header-area-from-to">
         <mat-form-field>
             <mat-label>{{ 'History.From' | translate }}</mat-label>
@@ -22,14 +30,11 @@
     </div>
     <div class="header-area-destination-error">
         <mat-form-field>
-            <mat-label>{{ 'History.Destination' | translate }}</mat-label>
-            <input matInput placeholder="Name / Code" type="text" [(ngModel)]="inputDestination"
+            <mat-label *ngIf="!inputCurrentAsDestination">{{ 'History.Destination' | translate }}</mat-label>
+            <mat-label *ngIf="inputCurrentAsDestination">{{ 'History.Sender' | translate }}</mat-label>
+            <input matInput placeholder="Name / Code" type="text" [(ngModel)]="inputLibrary"
                 (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
-        <div class="header-area-show-errors">
-            <mat-checkbox [(ngModel)]="inputShowErrors" (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
-                | translate }}</mat-checkbox>
-        </div>
     </div>
     <div class="header-area-buttons">
         <button class="header-area-main-button" (click)="onResetFilter()">

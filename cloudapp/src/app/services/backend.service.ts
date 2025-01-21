@@ -283,14 +283,15 @@ export class BackendService {
    * Get history requests
    *
    * @param {any} filterObject
+   * @param {boolean} inputCurrentAsDestination
    * @returns {Promise<boolean>}
   */
-  async getHistory(filterObject = null): Promise<boolean> {
+  async getHistory(filterObject = null, inputCurrentAsDestination = false): Promise<boolean> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);
-
+    let endpointUrl = inputCurrentAsDestination ? `${this.baseUrl}/history/${escapedLibraryCode}/as-destination` : `${this.baseUrl}/history/${escapedLibraryCode}`;
     return new Promise((resolve, reject) => {
-      this.http.get<PagedHistory>(`${this.baseUrl}/history/${escapedLibraryCode}`, { params: filterObject, ...this.httpOptions }).subscribe(
+      this.http.get<PagedHistory>(endpointUrl, { params: filterObject, ...this.httpOptions }).subscribe(
         response => {
           this._setObservablePagedHistoryObject(response);
           resolve(true);
