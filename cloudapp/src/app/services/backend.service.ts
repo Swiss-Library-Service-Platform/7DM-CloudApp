@@ -354,11 +354,13 @@ export class BackendService {
   * Download history
   *
   * @param {any} filterObject
+  * @param {boolean} inputCurrentAsDestination
   * @returns {Promise<any>}
   */
-  async downloadHistory(filterObject = null): Promise<Blob> {
+  async downloadHistory(filterObject = null, inputCurrentAsDestination = false): Promise<any> {
     let libraryCode = this.initData['user']['currentlyAtLibCode'];
     let escapedLibraryCode = encodeURIComponent(libraryCode);
+    let endpointUrl = inputCurrentAsDestination ? `${this.baseUrl}/history/${escapedLibraryCode}/download/as-destination` : `${this.baseUrl}/history/${escapedLibraryCode}/download`;
 
     // Clone the httpOptions object
     let localHttpOptions = {
@@ -368,7 +370,7 @@ export class BackendService {
     };
 
     return new Promise((resolve, reject) => {
-      this.http.get<Blob>(`${this.baseUrl}/history/${escapedLibraryCode}/download`, { params: filterObject, ...localHttpOptions, responseType: 'blob' as 'json' }).subscribe(
+      this.http.get<Blob>(endpointUrl, { params: filterObject, ...localHttpOptions, responseType: 'blob' as 'json' }).subscribe(
         response => {
           resolve(response);
         },

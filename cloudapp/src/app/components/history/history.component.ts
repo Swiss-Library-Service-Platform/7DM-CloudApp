@@ -99,7 +99,7 @@ export class HistoryComponent implements OnInit {
 
   async onClickDownloadHistory(): Promise<void> {
     this.isDownloading = true;
-    const responseBlob = await this.backendService.downloadHistory(this.buildFilterObject());
+    const responseBlob = await this.backendService.downloadHistory(this.buildFilterObject(), this.inputCurrentAsDestination);
     this.isDownloading = false;
     const blob = new Blob([responseBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const url = window.URL.createObjectURL(blob);
