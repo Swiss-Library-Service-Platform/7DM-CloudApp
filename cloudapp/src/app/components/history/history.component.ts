@@ -9,6 +9,7 @@ import { HistoryFilterService } from '../../services/history-filter.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CurrentIzService } from '../../services/currenz-iz.service';
 
 @Component({
   selector: 'app-history',
@@ -33,7 +34,6 @@ export class HistoryComponent implements OnInit {
   inputLibrary: string = null;
   inputShowErrors: boolean = false;
   inputCurrentAsDestination: boolean = false;
-  isShowInputCurrentAsDestination: boolean = true;
 
   // Filter subject for debouncing
   private filterSubject: Subject<boolean> = new Subject();
@@ -44,14 +44,11 @@ export class HistoryComponent implements OnInit {
     private status: StatusIndicatorService,
     private translateService: TranslateService,
     private historyFilterService: HistoryFilterService,
-    private eventsService: CloudAppEventsService
+    private eventsService: CloudAppEventsService,
+    private currentIzService: CurrentIzService
   ) { }
 
   ngOnInit(): void {
-    this.eventsService.getInitData().subscribe(
-      initData => {
-        this.isShowInputCurrentAsDestination = initData.instCode !== '41SLSP_NETWORK';
-      });
 
     this.subscriptionHistoryRequests = this.backendService.getPagedHistoryObject().subscribe(
       response => {

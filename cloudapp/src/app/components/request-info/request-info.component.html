@@ -24,10 +24,10 @@
                         <div *ngIf="showBoxDate" class="">
                             {{ request.boxLabel.creationTime | date: 'dd/MM/yyyy' }}
                         </div>
-                        <div class="">
+                        <div *ngIf="!currentIzService.isCurrentIzNetworkZone" class="">
                             <mat-icon (click)="onClickPrintRequestPdf()">print</mat-icon>
                         </div>
-                        <div *ngIf="onCancelRequest !== undefined">
+                        <div *ngIf="onCancelRequest !== undefined && !currentIzService.isCurrentIzNetworkZone">
                             <mat-icon class="cancel-button" *ngIf="!request.isDeleting"
                                 (click)="onClickCancelRequest()">cancel</mat-icon>
                             <mat-spinner color="warn" *ngIf="request.isDeleting" diameter="22"></mat-spinner>

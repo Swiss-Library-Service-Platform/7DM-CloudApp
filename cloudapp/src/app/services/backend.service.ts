@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { BoxLabel } from '../models/BoxLabel.model';
 import { PagedHistory } from '../models/PagedHistory.model';
 import { Request } from '../models/Request.model';
+import { CurrentIzService } from './currenz-iz.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class BackendService {
   constructor(
     private http: HttpClient,
     private eventsService: CloudAppEventsService,
+    private currentIzService: CurrentIzService
   ) { }
 
   getTodaysRequestsObject(): Observable<Request[]> {
@@ -56,7 +58,7 @@ export class BackendService {
   }
 
   public getLibraryCode(): string {
-    return this.initData.instCode === '41SLSP_NETWORK' ? 'ALL' : this.initData.user.currentlyAtLibCode;
+    return this.currentIzService.isCurrentIzNetworkZone ? 'ALL' : this.initData.user.currentlyAtLibCode;
   }
 
   async init(initData: InitData): Promise<void> {

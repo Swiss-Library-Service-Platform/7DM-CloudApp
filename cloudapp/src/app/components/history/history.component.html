@@ -1,11 +1,11 @@
 <!-- Input Box ID + Request ID -->
 <div class="header-area">
     <div class="header-area-current-as-destination">
-        <mat-checkbox *ngIf="isShowInputCurrentAsDestination" [(ngModel)]="inputCurrentAsDestination"
+        <mat-checkbox *ngIf="!currentIzService.isCurrentIzNetworkZone" [(ngModel)]="inputCurrentAsDestination"
             (change)="onChangeCurrentAsDestination()">
             {{ 'History.CurrentAsDestination'
             | translate }}</mat-checkbox>
-        <span *ngIf="!isShowInputCurrentAsDestination"></span>
+        <span *ngIf="currentIzService.isCurrentIzNetworkZone"></span>
         <mat-checkbox [disabled]="inputCurrentAsDestination" [(ngModel)]="inputShowErrors"
             (change)="onFilterHistoryRequests()">{{ 'History.ShowErrors'
             | translate }}</mat-checkbox>
