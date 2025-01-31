@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
         private historyFilterService: HistoryFilterService,
         private eventsService: CloudAppEventsService,
         private restService: CloudAppRestService,
-        private currentIzService: CurrentIzService
+        public currentIzService: CurrentIzService
     ) { }
 
     /**
