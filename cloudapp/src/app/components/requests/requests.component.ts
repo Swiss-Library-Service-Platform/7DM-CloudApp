@@ -67,7 +67,7 @@ export class RequestsComponent implements OnInit {
 
         if (currentHour >= 19) {
             // FIXME: reactivate
-            //this.isTimeValid = false;
+            this.isTimeValid = false;
             this.loader.hide();
             return;
         }
