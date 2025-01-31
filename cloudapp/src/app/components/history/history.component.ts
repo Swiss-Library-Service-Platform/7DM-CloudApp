@@ -45,7 +45,7 @@ export class HistoryComponent implements OnInit {
     private translateService: TranslateService,
     private historyFilterService: HistoryFilterService,
     private eventsService: CloudAppEventsService,
-    private currentIzService: CurrentIzService
+    public currentIzService: CurrentIzService
   ) { }
 
   ngOnInit(): void {

@@ -34,7 +34,7 @@ export class RequestInfoComponent implements OnInit {
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
-    private currentIzService: CurrentIzService,
+    public currentIzService: CurrentIzService,
   ) { }
 
   ngOnInit(): void {

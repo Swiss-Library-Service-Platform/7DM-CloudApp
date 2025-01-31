@@ -39,7 +39,7 @@ export class RequestsComponent implements OnInit {
         private loader: LoadingIndicatorService,
         private status: StatusIndicatorService,
         protected sanitizer: DomSanitizer,
-        private currentIzService: CurrentIzService,
+        public currentIzService: CurrentIzService,
     ) { }
 
     ngOnInit(): void {
@@ -66,8 +66,7 @@ export class RequestsComponent implements OnInit {
         console.log("Current hour: " + currentHour);
 
         if (currentHour >= 19) {
-            // TODO: reactivate later
-            // this.isTimeValid = false;
+            this.isTimeValid = false;
             this.loader.hide();
             return;
         }
@@ -117,7 +116,7 @@ export class RequestsComponent implements OnInit {
             } else if (error.error.type == "DESTINATION_NOT_FOUND" || error.error.type == "DESTINATION_NOT_FOUND_ITEM") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DESTINATION_NOT_FOUND_ITEM", { destination: error.error.additionalInformation.libraryCode });
             } else if (error.error.type == "SEVEN_DM_CODE_NOT_FOUND") {
-                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type, { destination: error.error.additionalInformation.libraryCode });
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type,  { destination: error.error.additionalInformation.libraryCode });
             } else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }
