@@ -5,6 +5,8 @@ import { StatusIndicatorService } from '../../services/status-indicator.service'
 import { TranslateService } from '@ngx-translate/core';
 import { Request } from '../../models/Request.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CurrentIzService } from '../../services/currenz-iz.service';
 
 @Component({
   selector: 'app-request-info',
@@ -32,6 +34,7 @@ export class RequestInfoComponent implements OnInit {
     private backendService: BackendService,
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
+    private currentIzService: CurrentIzService,
   ) { }
 
   ngOnInit(): void {

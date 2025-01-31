@@ -6,6 +6,7 @@ import { LoadingIndicatorService } from '../../services/loading-indicator.servic
 import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Request } from '../../models/Request.model';
+import { CurrentIzService } from '../../services/currenz-iz.service';
 
 @Component({
     selector: 'app-requests',
@@ -37,14 +38,17 @@ export class RequestsComponent implements OnInit {
         private translateService: TranslateService,
         private loader: LoadingIndicatorService,
         private status: StatusIndicatorService,
-        protected sanitizer: DomSanitizer
+        protected sanitizer: DomSanitizer,
+        private currentIzService: CurrentIzService,
     ) { }
 
     ngOnInit(): void {
         this.checkCurrentTimeValid();
-        this.backendService.retrieveActiveBoxLabel().then(response => {
-            this.inputBoxId = response?.boxId;
-        });
+        if (!this.currentIzService.isCurrentIzNetworkZone) {
+            this.backendService.retrieveActiveBoxLabel().then(response => {
+                this.inputBoxId = response?.boxId;
+            });
+        }
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             (response: Request[]) => {
                 response = response.map(requestResponse => new Request(requestResponse)); // Somehow this is necessary

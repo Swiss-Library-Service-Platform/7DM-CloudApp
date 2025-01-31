@@ -8,6 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { HistoryFilterService } from '../../services/history-filter.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { CloudAppEventsService } from '@exlibris/exl-cloudapp-angular-lib';
+import { CurrentIzService } from '../../services/currenz-iz.service';
 
 @Component({
   selector: 'app-history',
@@ -29,8 +31,9 @@ export class HistoryComponent implements OnInit {
   inputStatus: string = null;
   inputBoxId: string = null;
   inputRequestId: string = null;
-  inputDestination: string = null;
+  inputLibrary: string = null;
   inputShowErrors: boolean = false;
+  inputCurrentAsDestination: boolean = false;
 
   // Filter subject for debouncing
   private filterSubject: Subject<boolean> = new Subject();
@@ -40,7 +43,9 @@ export class HistoryComponent implements OnInit {
     private loader: LoadingIndicatorService,
     private status: StatusIndicatorService,
     private translateService: TranslateService,
-    private historyFilterService: HistoryFilterService
+    private historyFilterService: HistoryFilterService,
+    private eventsService: CloudAppEventsService,
+    private currentIzService: CurrentIzService
   ) { }
 
   ngOnInit(): void {
@@ -79,18 +84,26 @@ export class HistoryComponent implements OnInit {
     this.filterSubject.next(resetPage);
   }
 
+  onChangeCurrentAsDestination(): void {
+    this.inputLibrary = null;
+    if (this.inputCurrentAsDestination) {
+      this.inputShowErrors = false;
+    }
+    this.onFilterHistoryRequests();
+  }
+
   private executeFilterHistoryRequests(resetPage: boolean): void {
     if (resetPage) {
       this.resetPage();
     }
     Promise.resolve().then(() => this.loader.show()); // Workaround for ExpressionChangedAfterItHasBeenCheckedError, https://v17.angular.io/errors/NG0100
     this.status.set(this.translateService.instant("History.Status.Loading"));
-    this.backendService.getHistory(this.buildFilterObject());
+    this.backendService.getHistory(this.buildFilterObject(), this.inputCurrentAsDestination);
   }
 
   async onClickDownloadHistory(): Promise<void> {
     this.isDownloading = true;
-    const responseBlob = await this.backendService.downloadHistory(this.buildFilterObject());
+    const responseBlob = await this.backendService.downloadHistory(this.buildFilterObject(), this.inputCurrentAsDestination);
     this.isDownloading = false;
     const blob = new Blob([responseBlob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     const url = window.URL.createObjectURL(blob);
@@ -112,8 +125,9 @@ export class HistoryComponent implements OnInit {
     this.inputDateTo = null;
     this.inputBoxId = null;
     this.inputRequestId = null;
-    this.inputDestination = null;
+    this.inputLibrary = null;
     this.inputShowErrors = false;
+    this.inputCurrentAsDestination = false;
     this.onFilterHistoryRequests();
   }
 
@@ -134,7 +148,7 @@ export class HistoryComponent implements OnInit {
     if (this.inputDateTo !== null) filterObject.dateTo = this.inputDateTo;
     if (this.inputBoxId !== null) filterObject.boxId = this.inputBoxId;
     if (this.inputRequestId !== null) filterObject.requestId = this.inputRequestId;
-    if (this.inputDestination !== null) filterObject.destinationLibraryCode = this.inputDestination;
+    if (this.inputLibrary !== null) filterObject.libraryCode = this.inputLibrary;
     if (this.inputShowErrors !== null) filterObject.showErrors = this.inputShowErrors;
 
     return filterObject;

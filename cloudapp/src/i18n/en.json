@@ -8,7 +8,9 @@
         "Search": "Filter",
         "SelectAll": "Select all",
         "Selected": "{selected}/{total}",
+        "Sender": "Sender Library",
         "ShowErrors": "Show errors",
+        "CurrentAsDestination": "Current Library as Destination",
         "Status": {
             "Loading": "Loading..."
         },
