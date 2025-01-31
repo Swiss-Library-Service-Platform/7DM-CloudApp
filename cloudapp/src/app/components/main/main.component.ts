@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Request } from '../../models/Request.model';
 import { MatTabGroup } from '@angular/material/tabs';
 import { HistoryFilterService } from '../../services/history-filter.service';
+import { CurrentIzService } from '../../services/currenz-iz.service';
 
 @Component({
     selector: 'app-main',
@@ -30,6 +31,7 @@ export class MainComponent implements OnInit {
         private historyFilterService: HistoryFilterService,
         private eventsService: CloudAppEventsService,
         private restService: CloudAppRestService,
+        private currentIzService: CurrentIzService
     ) { }
 
     /**
@@ -110,6 +112,11 @@ export class MainComponent implements OnInit {
     async getIsCurrentUserAllowed(initData: InitData): Promise<boolean> {
         let primaryId = initData['user']['primaryId'];
         let user;
+
+        if (this.currentIzService.isCurrentIzNetworkZone) {
+            return true;
+        }
+        
         try {
             user = await this.restService.call<any>('/users/' + primaryId).toPromise();
         } catch (error) {
