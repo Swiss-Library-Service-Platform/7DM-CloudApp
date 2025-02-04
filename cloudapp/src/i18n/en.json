@@ -1,39 +1,121 @@
 {
     "History": {
+        "Barcode": "Barcode",
         "BoxId": "Box ID",
+        "CurrentAsDestination": "Current Library as Destination",
         "Destination": "Destination Library",
         "From": "From",
-        "To": "To",
+        "HistoryRequestsPaging": "Showing {from} - {to} of {total} requests",
+        "MarkAllAsRead": "Remove all errors",
+        "NoRequests": "No requests sent to 7DM",
+        "NoRequestsSearch": "No requests found for the selected filter",
         "RequestId": "Request ID",
         "Search": "Filter",
         "SelectAll": "Select all",
         "Selected": "{selected}/{total}",
         "Sender": "Sender Library",
         "ShowErrors": "Show errors",
-        "CurrentAsDestination": "Current Library as Destination",
         "Status": {
             "Loading": "Loading..."
         },
-        "HistoryRequestsPaging": "Showing {from} - {to} of {total} requests",
-        "NoRequests": "No requests sent to 7DM",
-        "NoRequestsSearch": "No requests found for the selected filter",
-        "MarkAllAsRead": "Remove all errors"
+        "To": "To"
     },
     "Main": {
-        "Requests": "Requests",
-        "Today": "Today",
         "History": "History",
+        "Requests": "Requests",
         "Search": "Search",
         "Status": {
             "Initializing": "Initializing..."
         },
+        "Today": "Today",
         "UnreadErrors1": "There were errors during transmission to 7DM.",
         "UnreadErrors2": "Click here",
         "UnreadErrors3": "to inspect and remove them."
     },
+    "Partners": {
+        "7DMCode": "7DM code",
+        "AlmaCode": "Alma code",
+        "LibraryName": "Library Name"
+    },
+    "Requests": {
+        "7DMCode": "7DM code",
+        "BoxId": "Box ID",
+        "Clear": "Clear filters",
+        "ContactSupport1": "Please ",
+        "ContactSupport2": "contact support",
+        "ContactSupport3": "with the following error code if you have any questions.",
+        "Destination": "Destination",
+        "Download": "Download",
+        "Error": {
+            "BOX_ID_BAD_LIBRARY": "Box ID does not belong to your library.",
+            "BOX_ID_NOT_FOUND": "Box ID not found, please check it.",
+            "BOX_OUTDATED": "Box is already sent.",
+            "DEFAULT": "An error occurred while processing your request.",
+            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library. Consider sending the document by post.",
+            "DESTINATION_NOT_FOUND": "Destination library not found ({destination}).",
+            "DESTINATION_NOT_FOUND_ITEM": "Destination library not found in item info ({destination}).",
+            "EXTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
+            "INTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
+            "INVALID_REQUEST_ID": "Invalid request ID.",
+            "PAEBA_ALREADY_IN_DATABASE": "7DM label barcode is already existing: {paeba}.",
+            "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
+            "SEVEN_DM_CODE_NOT_FOUND": "Library {destination} is not an SLSP courier library. Please consider to send the item post or contact SLSP if you think there is an error.",
+            "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same.",
+            "TIME_NOT_VALID": "Backend is currently disabled.",
+            "UNAUTHORIZED": "Unauthorized request."
+        },
+        "RequestBarcode": "Request Barcode",
+        "RequestInfo": {
+            "7DMCode": "7DM code",
+            "Barcode": "Barcode",
+            "BoxId": "Box ID",
+            "CheckWarning": "Please check the warning message.",
+            "Destination": "Destination",
+            "Error": "Error",
+            "MultipleFulfilled": "This request has been fulfilled multiple times.",
+            "MultipleFulfilledToday": "Please check with the other library to avoid sending the item multiple times today.",
+            "MultipleFulfilledTodayClick": "Click to see information about ",
+            "NewRequest": "Request Information",
+            "NotResourceSharing": "Not a resource sharing request.",
+            "RequestId": "Request ID",
+            "RequestIdExternal": "External ID",
+            "Retried": "This request has already been sent to 7DM from your library on a previous day.",
+            "ReturnedToOwner": "Item returned to the owner \n (final destination not a courier library).",
+            "Sender": "Sender",
+            "Type": "Type",
+            "TypeValue": {
+                "RETURN": "Return",
+                "STANDARD": "Standard"
+            },
+            "Warning": "Warning"
+        },
+        "RequestSent": "Item {barcode} transfer order sent to 7DM.",
+        "SendTo7DM": "Send to 7DM",
+        "Status": {
+            "Cancelling_Request": "Cancelling request...",
+            "Loading_BoxId": "Retrieving box ID...",
+            "Loading_Request": "Retrieving request..."
+        },
+        "TimeNotValid": "Cloud App is currently disabled.",
+        "TimeNotValidInfo": "The Cloud App is disabled between 19:00 and 00:00. \n Please try again tomorrow."
+    },
+    "Today": {
+        "NoRequests": "No requests sent to 7DM.",
+        "NoRequestsSearch": "No requests found for the selected filter",
+        "Search": "Filter",
+        "SearchPlaceholder": "barcode, box ID, request ID, destination library code",
+        "Status": {
+            "Searching_Requests": "Searching..."
+        },
+        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM:"
+    },
     "Welcome": {
-        "Welcome": "Welcome to SLSP Courer to 7DM!",
         "AccessDenied": "Access denied",
+        "ContactSLSP": {
+            "ContactInfo1": "Please ",
+            "ContactInfo2": "contact SLSP",
+            "ContactInfo3": "if you have any questions."
+        },
         "InstitutionDenied": "Access to the Cloud App is currently deactivated for your institution.",
         "NoRole": "Unfortunately you do not have the permission to use this app. In order to apply changes via this app, you need at least one of the following roles:",
         "Roles": {
@@ -41,86 +123,6 @@
             "CIRC_DESK_OPERATOR": "Circulation Desk Operator",
             "CIRC_DESK_OPERATOR_LIMITED": "Circulation Desk Operator - Limited"
         },
-        "ContactSLSP": {
-            "ContactInfo1": "Please ",
-            "ContactInfo2": "contact SLSP",
-            "ContactInfo3": "if you have any questions."
-        }
-    },
-    "Partners": {
-        "LibraryName": "Library Name",
-        "AlmaCode": "Alma code",
-        "7DMCode": "7DM code"
-    },
-    "Requests": {
-        "RequestBarcode": "Request Barcode",
-        "Destination": "Destination",
-        "7DMCode": "7DM code",
-        "BoxId": "Box ID",
-        "Error": {
-            "DEFAULT": "An error occurred while processing your request.",
-            "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
-            "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library. Consider sending the document by post.",
-            "INVALID_REQUEST_ID": "Invalid request ID.",
-            "INTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
-            "EXTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
-            "UNAUTHORIZED": "Unauthorized request.",
-            "BOX_ID_NOT_FOUND": "Box ID not found, please check it.",
-            "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same.",
-            "DESTINATION_NOT_FOUND": "Destination library not found ({destination}).",
-            "DESTINATION_NOT_FOUND_ITEM": "Destination library not found in item info ({destination}).",
-            "TIME_NOT_VALID": "Backend is currently disabled.",
-            "BOX_ID_BAD_LIBRARY": "Box ID does not belong to your library.",
-            "BOX_OUTDATED": "Box is already sent.",
-            "SEVEN_DM_CODE_NOT_FOUND": "Library {destination} is not an SLSP courier library. Please consider to send the item post or contact SLSP if you think there is an error."
-        },
-        "ContactSupport1": "Please ",
-        "ContactSupport2": "contact support",
-        "ContactSupport3": "with the following error code if you have any questions.",
-        "Clear": "Clear filters",
-        "Download": "Download",
-        "Status": {
-            "Loading_Request": "Retrieving request...",
-            "Cancelling_Request": "Cancelling request...",
-            "Loading_BoxId": "Retrieving box ID..."
-        },
-        "SendTo7DM": "Send to 7DM",
-        "RequestSent": "Item {barcode} transfer order sent to 7DM.",
-        "RequestInfo": {
-            "Barcode": "Barcode",
-            "BoxId": "Box ID",
-            "CheckWarning": "Please check the warning message.",
-            "Error": "Error",
-            "Warning": "Warning",
-            "Type": "Type",
-            "TypeValue": {
-                "STANDARD": "Standard",
-                "RETURN": "Return"
-            },
-            "NewRequest": "Request Information",
-            "NotResourceSharing": "Not a resource sharing request.",
-            "ReturnedToOwner": "Item returned to the owner \n (final destination not a courier library).",
-            "MultipleFulfilled": "This request has been fulfilled multiple times.",
-            "MultipleFulfilledToday": "Please check with the other library to avoid sending the item multiple times today.",
-            "MultipleFulfilledTodayClick": "Click to see information about ",
-            "Sender": "Sender",
-            "Destination": "Destination",
-            "Retried": "This request has already been sent to 7DM from your library on a previous day.",
-            "RequestId": "Request ID",
-            "RequestIdExternal": "External ID",
-            "7DMCode": "7DM code"
-        },
-        "TimeNotValid": "Cloud App is currently disabled.",
-        "TimeNotValidInfo": "The Cloud App is disabled between 19:00 and 00:00. \n Please try again tomorrow."
-    },
-    "Today": {
-        "Search": "Filter",
-        "SearchPlaceholder": "barcode, box ID, request ID, destination library code",
-        "Status": {
-            "Searching_Requests": "Searching..."
-        },
-        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM:",
-        "NoRequests": "No requests sent to 7DM.",
-        "NoRequestsSearch": "No requests found for the selected filter"
+        "Welcome": "Welcome to SLSP Courer to 7DM!"
     }
 }
