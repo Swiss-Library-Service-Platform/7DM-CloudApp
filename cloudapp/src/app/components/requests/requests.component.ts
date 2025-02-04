@@ -66,7 +66,6 @@ export class RequestsComponent implements OnInit {
         console.log("Current hour: " + currentHour);
 
         if (currentHour >= 19) {
-            // FIXME: reactivate
             this.isTimeValid = false;
             this.loader.hide();
             return;
@@ -117,7 +116,9 @@ export class RequestsComponent implements OnInit {
             } else if (error.error.type == "DESTINATION_NOT_FOUND" || error.error.type == "DESTINATION_NOT_FOUND_ITEM") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DESTINATION_NOT_FOUND_ITEM", { destination: error.error.additionalInformation.libraryCode });
             } else if (error.error.type == "SEVEN_DM_CODE_NOT_FOUND") {
-                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type,  { destination: error.error.additionalInformation.libraryCode });
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type, { destination: error.error.additionalInformation.libraryCode });
+            } else if (error.error.type == "PAEBA_ALREADY_IN_DATABASE") {
+                this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type, { paeba: error.error.additionalInformation.paeba });
             } else {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error." + error.error.type);
             }

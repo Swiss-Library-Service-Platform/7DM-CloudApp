@@ -32,6 +32,7 @@ export class HistoryComponent implements OnInit {
   inputBoxId: string = null;
   inputRequestId: string = null;
   inputLibrary: string = null;
+  inputBarcode: string = null;
   inputShowErrors: boolean = false;
   inputCurrentAsDestination: boolean = false;
 
@@ -126,6 +127,7 @@ export class HistoryComponent implements OnInit {
     this.inputBoxId = null;
     this.inputRequestId = null;
     this.inputLibrary = null;
+    this.inputBarcode = null;
     this.inputShowErrors = false;
     this.inputCurrentAsDestination = false;
     this.onFilterHistoryRequests();
@@ -149,6 +151,7 @@ export class HistoryComponent implements OnInit {
     if (this.inputBoxId !== null) filterObject.boxId = this.inputBoxId;
     if (this.inputRequestId !== null) filterObject.requestId = this.inputRequestId;
     if (this.inputLibrary !== null) filterObject.libraryCode = this.inputLibrary;
+    if (this.inputBarcode !== null) filterObject.barcode = this.inputBarcode;
     if (this.inputShowErrors !== null) filterObject.showErrors = this.inputShowErrors;
 
     return filterObject;
