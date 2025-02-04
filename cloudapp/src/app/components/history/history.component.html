@@ -30,12 +30,16 @@
             <input matInput type="text" [(ngModel)]="inputRequestId" (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
     </div>
-    <div class="header-area-destination-error">
+    <div class="header-area-box-request">
         <mat-form-field>
             <mat-label *ngIf="!inputCurrentAsDestination">{{ 'History.Destination' | translate }}</mat-label>
             <mat-label *ngIf="inputCurrentAsDestination">{{ 'History.Sender' | translate }}</mat-label>
             <input matInput placeholder="Name / Code" type="text" [(ngModel)]="inputLibrary"
                 (keyup)="onFilterHistoryRequests()">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>{{ 'History.Barcode' | translate }}</mat-label>
+            <input matInput type="text" [(ngModel)]="inputBarcode" (keyup)="onFilterHistoryRequests()">
         </mat-form-field>
     </div>
     <div class="header-area-buttons">

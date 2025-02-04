@@ -248,30 +248,6 @@ body[class*=cloudapp-theme] {
 
     }
 
-    .header-area-destination-error {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        column-gap: 16px;
-
-        .mat-form-field {
-            width: 50%;
-        }
-
-        .header-area-show-errors {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            column-gap: 8px;
-
-            .mat-checkbox {
-                margin-top: 0;
-            }
-        }
-    }
-
-
     .header-area-buttons {
         display: flex;
         flex-direction: row;
