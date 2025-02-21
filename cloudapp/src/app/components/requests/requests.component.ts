@@ -91,6 +91,12 @@ export class RequestsComponent implements OnInit {
 
         this.backendService.generateBoxLabel().then(response => {
             this.inputBoxId = response.boxId;
+            // Cache box label
+            if (this.currentIzService.isCurrentIzUZB) {
+                this.storeService.set(this.BOX_LABEL_CACHE_KEY, this.inputBoxId)
+                    .toPromise()
+                    .catch(error => console.error('Failed to cache box label:', error));
+            }
         }).catch(error => {
             console.error(error);
         }).finally(() => {
@@ -147,7 +153,11 @@ export class RequestsComponent implements OnInit {
             this.inputRequestId = '';
             // Cache box label
             if (this.currentIzService.isCurrentIzUZB) {
-                await this.storeService.set(this.BOX_LABEL_CACHE_KEY, this.inputBoxId).toPromise();
+                if (this.currentIzService.isCurrentIzUZB) {
+                    this.storeService.set(this.BOX_LABEL_CACHE_KEY, this.inputBoxId)
+                        .toPromise()
+                        .catch(error => console.error('Failed to cache box label:', error));
+                }
             }
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
