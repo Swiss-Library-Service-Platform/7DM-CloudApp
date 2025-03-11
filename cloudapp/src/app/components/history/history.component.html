@@ -48,7 +48,7 @@
             {{ 'Requests.Clear' | translate }}
         </button>
         <button class="header-area-main-button dark" (click)="onClickDownloadHistory()"
-            [disabled]="pagedHistory && pagedHistory.totalResults === 0">
+            [disabled]="(pagedHistory && pagedHistory.totalResults === 0) || isDownloading">
             <mat-icon *ngIf="!isDownloading">download</mat-icon>
             <mat-spinner color="white" *ngIf="isDownloading" diameter="18"></mat-spinner>
             {{ 'Requests.Download' | translate }}
