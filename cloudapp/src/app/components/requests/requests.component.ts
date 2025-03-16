@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Request } from '../../models/Request.model';
 import { CurrentIzService } from '../../services/currenz-iz.service';
+import { CloudAppStoreService } from '@exlibris/exl-cloudapp-angular-lib';
 
 @Component({
     selector: 'app-requests',
@@ -14,6 +15,9 @@ import { CurrentIzService } from '../../services/currenz-iz.service';
     styleUrls: ['./requests.component.scss']
 })
 export class RequestsComponent implements OnInit {
+
+    private readonly BOX_LABEL_CACHE_KEY = 'boxLabelCache';
+
     // Input
     inputRequestId: string = '';
     inputBoxId: string = '';
@@ -40,14 +44,13 @@ export class RequestsComponent implements OnInit {
         private status: StatusIndicatorService,
         protected sanitizer: DomSanitizer,
         public currentIzService: CurrentIzService,
+        private storeService: CloudAppStoreService
     ) { }
 
     ngOnInit(): void {
         this.checkCurrentTimeValid();
         if (!this.currentIzService.isCurrentIzNetworkZone) {
-            this.backendService.retrieveActiveBoxLabel().then(response => {
-                this.inputBoxId = response?.boxId;
-            });
+            this.getStoredBoxLabel();
         }
         this.subscriptionTodaysRequests = this.backendService.getTodaysRequestsObject().subscribe(
             (response: Request[]) => {
@@ -63,7 +66,6 @@ export class RequestsComponent implements OnInit {
     checkCurrentTimeValid(): void {
         const currentDate = new Date();
         const currentHour = currentDate.getHours();
-        console.log("Current hour: " + currentHour);
 
         if (currentHour >= 19) {
             this.isTimeValid = false;
@@ -89,11 +91,50 @@ export class RequestsComponent implements OnInit {
 
         this.backendService.generateBoxLabel().then(response => {
             this.inputBoxId = response.boxId;
+            // Cache box label
+            if (this.currentIzService.isCurrentIzUZB) {
+                this.storeService.set(this.BOX_LABEL_CACHE_KEY, this.inputBoxId)
+                    .toPromise()
+                    .catch(error => console.error('Failed to cache box label:', error));
+            }
         }).catch(error => {
             console.error(error);
         }).finally(() => {
             this.loader.hide();
         });
+    }
+
+    private async getStoredBoxLabel(): Promise<void> {
+        try {
+            // Try cache first
+            const cachedLabel = await this.storeService.get(this.BOX_LABEL_CACHE_KEY).toPromise();
+
+            if (cachedLabel && typeof cachedLabel === 'string' && cachedLabel.trim().length > 0) {
+                this.inputBoxId = cachedLabel;
+                return;
+            }
+
+            // Cache miss or invalid - fetch from backend
+            await this.fetchAndCacheBoxLabel();
+
+        } catch (error) {
+            console.error('Error retrieving box label from cache:', error);
+            // Attempt backend fetch on cache error
+            await this.fetchAndCacheBoxLabel();
+        }
+    }
+
+    private async fetchAndCacheBoxLabel(): Promise<void> {
+        try {
+            const response = await this.backendService.retrieveActiveBoxLabel();
+            if (response?.boxId) {
+                this.inputBoxId = response.boxId;
+            } else {
+                throw new Error('No valid box ID received from backend');
+            }
+        } catch (error) {
+            console.error('Error retrieving/caching box label from backend:', error);
+        }
     }
 
     onClickSendRequest(): void {
@@ -106,10 +147,18 @@ export class RequestsComponent implements OnInit {
         this.inputRequestId = this.inputRequestId.trim();
         this.inputBoxId = this.inputBoxId.trim();
 
-        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(response => {
+        this.backendService.sendRequestTo7DM(this.inputRequestId, this.inputBoxId).then(async response => {
             const responseObj = new Request(response);
             this.responseRequest = responseObj;
             this.inputRequestId = '';
+            // Cache box label
+            if (this.currentIzService.isCurrentIzUZB) {
+                if (this.currentIzService.isCurrentIzUZB) {
+                    this.storeService.set(this.BOX_LABEL_CACHE_KEY, this.inputBoxId)
+                        .toPromise()
+                        .catch(error => console.error('Failed to cache box label:', error));
+                }
+            }
         }).catch(error => {
             if (error.error == null || error.error.type == "DEFAULT") {
                 this.responseErrorMessage = this.translateService.instant("Requests.Error.DEFAULT");
