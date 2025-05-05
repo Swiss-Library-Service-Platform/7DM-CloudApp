@@ -18,6 +18,7 @@ export class Request {
     isMultipleFulfilled: boolean;
     isReturnedToOwner: boolean;
     retry: number;
+    retryReason: string;
 
     boxLabel: BoxLabel;
 
@@ -52,8 +53,8 @@ export class Request {
         return this.state === 'FAILED_UNREAD';
     }
 
-    public isRetried() {
-        return this.retry > 0;
+    public isRetryWithSameInternalId() {
+        return this.retry > 0 && this.retryReason === 'DUPLICATE_INTERNAL_ID';
     }
 
     public checkForSearch(search: string): boolean {

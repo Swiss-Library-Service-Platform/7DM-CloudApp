@@ -53,7 +53,7 @@
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
 
         </h1>
-        <h1 class="request-info-info" *ngIf="responseRequest.isRetried()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isRetryWithSameInternalId">
             <mat-icon color="warn" inline=true>warning</mat-icon>
             <!-- {{ 'Requests.RequestInfo.Retried' | translate }}-->
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}

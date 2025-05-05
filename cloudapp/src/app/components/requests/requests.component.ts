@@ -188,7 +188,7 @@ export class RequestsComponent implements OnInit {
     }
 
     getIconClass(): string {
-        if (this.responseRequest && (this.responseRequest.isRetried()
+        if (this.responseRequest && (this.responseRequest.isRetryWithSameInternalId()
             || this.responseRequest.isNotRs
             || this.responseRequest.isMultipleFulfilled)
         ) {
