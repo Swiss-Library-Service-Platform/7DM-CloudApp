@@ -86,6 +86,10 @@ export class RequestsComponent implements OnInit {
     }
 
     onClickSendRequest(): void {
+        if (this.isSendingRequest || !this.isTimeValid) {
+            return;
+        }
+
         this.loader.show();
         this.status.set(this.translateService.instant("Requests.Status.Loading_Request"));
 
