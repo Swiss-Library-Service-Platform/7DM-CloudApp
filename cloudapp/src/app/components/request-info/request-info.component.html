@@ -47,7 +47,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isRetried()">
+        <tr *ngIf="request.isRetryWithSameInternalId()">
             <!-- Is retried -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>

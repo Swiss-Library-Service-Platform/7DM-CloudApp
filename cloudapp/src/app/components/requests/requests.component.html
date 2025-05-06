@@ -3,7 +3,7 @@
     <div class="header-area-box-id">
         <mat-form-field>
             <mat-label>{{ 'Requests.BoxId' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="inputBoxId" placeholder="{{ 'Requests.BoxId' | translate }}">
+            <input #boxIdInput matInput type="text" [(ngModel)]="inputBoxId" placeholder="{{ 'Requests.BoxId' | translate }}">
         </mat-form-field>
         <button mat-icon-button [disabled]="currentIzService.isCurrentIzNetworkZone" (click)="onClickRefreshBoxId()">
             <mat-icon>add_circle</mat-icon>
@@ -15,7 +15,7 @@
     <div class="header-area-request-area">
         <mat-form-field class="header-area-request-id">
             <mat-label>{{ 'Requests.RequestBarcode' | translate }}</mat-label>
-            <input matInput type="text" [(ngModel)]="inputRequestId" (keyup.enter)="onClickSendRequest()"
+            <input #requestIdInput matInput type="text" [(ngModel)]="inputRequestId" (keyup.enter)="onClickSendRequest()"
                 [disabled]="isSendingRequest"
                 placeholder="{{ 'Requests.RequestBarcode' | translate }}">
         </mat-form-field>
@@ -53,7 +53,7 @@
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
 
         </h1>
-        <h1 class="request-info-info" *ngIf="responseRequest.isRetried()">
+        <h1 class="request-info-info" *ngIf="responseRequest.isRetryWithSameInternalId()">
             <mat-icon color="warn" inline=true>warning</mat-icon>
             <!-- {{ 'Requests.RequestInfo.Retried' | translate }}-->
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
