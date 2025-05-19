@@ -124,8 +124,8 @@ export class RequestsComponent implements OnInit {
 
     getIconClass(): string {
         if (this.responseRequest && (this.responseRequest.isRetryWithSameInternalId()
-            || this.responseRequest.isNotRs
-            || this.responseRequest.isMultipleFulfilled)
+            || this.responseRequest.isNotRs()
+            || this.responseRequest.isMultipleFulfilled())
         ) {
             return 'warning';
         }
@@ -250,6 +250,6 @@ export class RequestsComponent implements OnInit {
             default:
                 this.responseErrorMessage = this.translateService.instant(`Requests.Error.${errorType}`);
         }
-        this.responseErrorId = error.error?.error_id;
+        this.responseErrorId = error.error?.errorId;
     }
 }

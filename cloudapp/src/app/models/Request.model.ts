@@ -14,9 +14,9 @@ export class Request {
     type: string;
     state: string;
     message: string;
-    isNotRs: boolean;
-    isMultipleFulfilled: boolean;
-    isReturnedToOwner: boolean;
+    notRs: boolean;
+    multipleFulfilled: boolean;
+    returnedToOwner: boolean;
     retry: number;
     retryReason: string;
 
@@ -28,6 +28,7 @@ export class Request {
     isSelected: boolean;
 
     constructor(init?: Partial<Request>) {
+        console.log('Request constructor', init);
         Object.assign(this, init);
         if (this.boxLabel) {
             this.boxLabel = new BoxLabel(this.boxLabel);
@@ -55,6 +56,18 @@ export class Request {
 
     public isRetryWithSameInternalId() {
         return this.retry > 0 && this.retryReason === 'DUPLICATE_INTERNAL_ID';
+    }
+
+    public isReturnedToOwner(): boolean {
+        return this.returnedToOwner;
+    }
+
+    public isNotRs(): boolean {
+        return this.notRs;
+    }
+
+    public isMultipleFulfilled(): boolean {
+        return this.multipleFulfilled;
     }
 
     public checkForSearch(search: string): boolean {

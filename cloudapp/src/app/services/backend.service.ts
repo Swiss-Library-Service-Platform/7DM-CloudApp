@@ -106,6 +106,7 @@ export class BackendService {
         box_id: escapedBoxId
       }, this.httpOptions).subscribe(
         response => {
+          console.log('Request sent to 7DM:', response);
           this.getRequests();
           resolve(response);
         },

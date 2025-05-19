@@ -57,7 +57,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isMultipleFulfilled">
+        <tr *ngIf="request.isMultipleFulfilled()">
             <!-- Multiple fulfilled -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -85,7 +85,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isReturnedToOwner">
+        <tr *ngIf="request.isReturnedToOwner()">
             <!-- Is retried -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
@@ -95,7 +95,7 @@
                 </div>
             </td>
         </tr>
-        <tr *ngIf="request.isNotRs">
+        <tr *ngIf="request.isNotRs()">
             <!-- Is not resource sharing request -->
             <th scope="row"> {{ 'Requests.RequestInfo.Warning' | translate }}</th>
             <td>
