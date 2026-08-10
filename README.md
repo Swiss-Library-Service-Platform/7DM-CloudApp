@@ -20,7 +20,7 @@ In order to use this app
 Please [contact SLSP](https://slsp.ch/en/contact) if you have any questions.
 
 ## Issues and defects
-Please use the GitHub "Issues" of this repository to report any defects. We will have a look into it as soon as possible.
+For questions or to report an issue, please contact [SLSP Support](https://slsp.atlassian.net/servicedesk/customer/portal/1).
 
 ## Licence 
 
