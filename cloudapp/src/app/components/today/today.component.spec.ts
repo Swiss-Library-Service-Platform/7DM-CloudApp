@@ -1,3 +1,4 @@
+import { configureComponentTest } from '../../testing/component-test-setup';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TodayComponent } from './today.component';
@@ -7,10 +8,7 @@ describe('TodayComponent', () => {
   let fixture: ComponentFixture<TodayComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ TodayComponent ]
-    })
-    .compileComponents();
+    await configureComponentTest();
   });
 
   beforeEach(() => {

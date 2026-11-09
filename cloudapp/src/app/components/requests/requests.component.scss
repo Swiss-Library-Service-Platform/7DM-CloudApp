@@ -21,6 +21,7 @@
         display: flex;
         font-size: 120%;
         flex-direction: row;
+        align-items: center;
         margin-bottom: 0;
 
         .mat-icon {
@@ -28,6 +29,8 @@
             width: 22px;
             height: 22px;
             font-size: 22px;
+            line-height: 22px;
+            flex-shrink: 0;
         }
         .mat-icon.successful {
             color: rgb(0, 128, 0);

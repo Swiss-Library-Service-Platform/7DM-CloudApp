@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @import './app/components/main/main.component.theme';
 
 @mixin themed-styles($theme, $typography) {
@@ -13,12 +15,20 @@
         --slsp-purple-transparent: rgba(78, 74, 153, 0.1);
     }
 
-    cloudapp-alert {
+    app-root cloudapp-alert {
         font-weight: bold;
         position: absolute;
         top: 1rem;
+        // SDK 2 positions alerts from the bottom. Do not stretch the empty host
+        // between top and bottom across the interactive application.
+        bottom: auto;
         width: 100%;
         z-index: 99;
+        pointer-events: none;
+
+        .alert {
+            pointer-events: auto;
+        }
     }
 }
 
@@ -35,78 +45,90 @@
             border-radius: 3px;
             font-size: 1.2em;
             color: #ffffff;
-            background: mat-color(map-get($theme, primary));
+            background: mat.get-theme-color($theme, primary);
         }
     }
 }
 
 body[class*=cloudapp-theme] {
 
-    .mat-checkbox-checked .mat-checkbox-background {
-        background-color: var(--slsp-purple) !important;
-        padding-bottom: 5px;
+    .mat-mdc-checkbox {
+        --mdc-checkbox-selected-focus-icon-color: var(--slsp-purple);
+        --mdc-checkbox-selected-hover-icon-color: var(--slsp-purple);
+        --mdc-checkbox-selected-icon-color: var(--slsp-purple);
+        --mdc-checkbox-selected-pressed-icon-color: var(--slsp-purple);
     }
 
-    .mat-checkbox-label {
-        margin-top: 2px;
+    .mat-mdc-form-field {
+        --mdc-filled-text-field-focus-label-text-color: var(--slsp-purple);
+        --mdc-filled-text-field-active-indicator-color: var(--slsp-purple);
+        --mdc-filled-text-field-focus-active-indicator-color: var(--slsp-purple);
     }
 
-    .mat-focused .mat-form-field-label {
-        /*change color of label*/
-        color: var(--slsp-purple) !important;
-    }
-
-    .mat-form-field-underline {
-        /*change color of underline*/
-        background-color: var(--slsp-purple) !important;
-    }
-
-    .mat-form-field-ripple {
-        /*change color of underline when focused*/
-        background-color: var(--slsp-purple) !important;
-    }
-
-    .mat-tab-body {
+    .mat-mdc-tab-body {
+        padding-top: 0;
         margin-top: 0 !important;
     }
 
-    .mat-tab-header {
+    .mat-mdc-tab-header {
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 1px 0px -1px rgba(0, 0, 0, 0.2);
         margin: 0 2px;
     }
 
-    .mat-tab-group {
+    .mat-mdc-tab-group {
         flex-grow: 1;
+        --mdc-tab-indicator-active-indicator-color: white;
+        --mdc-tab-indicator-active-indicator-height: 5px;
+        --mdc-tab-indicator-active-indicator-shape: 5px;
+        --mat-tab-header-label-text-weight: 500;
+        --mat-tab-header-active-label-text-color: white;
+        --mat-tab-header-active-focus-label-text-color: white;
+        --mat-tab-header-active-hover-label-text-color: white;
+        --mat-tab-header-inactive-label-text-color: white;
+        --mat-tab-header-inactive-focus-label-text-color: white;
+        --mat-tab-header-inactive-hover-label-text-color: white;
+        --mat-tab-header-active-focus-indicator-color: white;
+        --mat-tab-header-active-hover-indicator-color: white;
     }
 
-    .mat-tab-group.mat-primary .mat-ink-bar {
-        border-radius: 5px;
-        height: 5px;
-        background-color: white !important;
-        margin: 5px;
-        width: calc(100% / 3 - 10px) !important;
-    }
-
-    .mat-tab-labels {
+    .mat-mdc-tab-labels {
         background-color: var(--slsp-purple);
         border-radius: 5px;
 
-        .mat-tab-label {
+        .mat-mdc-tab {
             opacity: 0.8;
         }
     }
 
-    .mat-tab-label-content {
-        color: white;
+    // MDC gives every tab its own full-width indicator. Preserve the old
+    // 5px inset on all sides, without assuming how many tabs are present.
+    .mat-mdc-tab .mdc-tab-indicator {
+        left: 5px;
+        right: 5px;
+        bottom: auto;
+        height: calc(100% - 5px);
+        width: auto;
     }
 
-    .mat-tab-label-active {
-        //background-color: #3398dc !important;
-        opacity: 1 !important;
+    .mat-mdc-tab {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .mat-mdc-tab.mdc-tab--active {
+        opacity: 1;
     }
 
     .mat-warn {
         color: #c94a41 !important;
+    }
+
+    .mat-mdc-progress-spinner.mat-warn {
+        --mdc-circular-progress-active-indicator-color: #c94a41;
+    }
+
+    .download-spinner {
+        --mdc-circular-progress-active-indicator-color: white;
     }
 
     .mat-success {
@@ -135,15 +157,37 @@ body[class*=cloudapp-theme] {
     padding: 0px 8px;
     border-radius: 0px 0px 5px 5px;
 
-    .mat-form-field {
+    .mat-mdc-form-field {
+        width: 100%;
+        min-width: 0;
+        --mdc-filled-text-field-container-color: transparent;
+        --mdc-filled-text-field-disabled-container-color: transparent;
+        --mdc-filled-text-field-label-text-size: 14px;
+        --mdc-filled-text-field-label-text-weight: 400;
+        --mat-form-field-container-text-size: 14px;
+        --mat-form-field-container-text-weight: 400;
+    }
+
+    // These header fields have no hints/errors. Keep the action buttons aligned
+    // with the input itself, rather than a reserved subscript row.
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+
+    .mat-mdc-form-field-focus-overlay {
+        background-color: transparent;
+    }
+
+    .header-area-box-id,
+    .header-area-request-area {
+        min-height: 58px;
+    }
+
+    .mat-mdc-form-field-infix {
         width: 100%;
     }
 
-    .mat-form-field-infix {
-        width: 100%;
-    }
-
-    .mat-flat-button {
+    .mat-mdc-unelevated-button {
         margin-left: 1rem;
         height: fit-content;
     }
@@ -154,7 +198,7 @@ body[class*=cloudapp-theme] {
         align-items: center;
         width: 100%;
 
-        .mat-form-field {
+        .mat-mdc-form-field {
             width: 100%;
         }
     }
@@ -191,7 +235,7 @@ body[class*=cloudapp-theme] {
 
         &.big {
             padding: 4px 8px;
-            align-items: end;
+            align-items: center;
         }
 
         &:hover:not(:disabled) {
