@@ -28,7 +28,7 @@
 
             <!-- Tab / Main View -->
             <div class="main-area" *ngIf="isLibraryAllowed">
-                <mat-tab-group [(selectedIndex)]="selectedTab" mat-stretch-tabs>
+                <mat-tab-group [(selectedIndex)]="selectedTab" [mat-stretch-tabs]="true">
                     <mat-tab label="{{ 'Main.Requests' | translate }}">
                         <app-requests></app-requests>
                     </mat-tab>
@@ -55,7 +55,7 @@
         <ng-container *ngIf="!isLibraryAllowed">
             <div class="info-now-allowed">
                 <h1>
-                    <mat-icon inline=true>error</mat-icon>
+                    <mat-icon>error</mat-icon>
                     {{ 'Welcome.AccessDenied' | translate }}
                 </h1>
                 <p>
@@ -75,7 +75,7 @@
     <ng-container *ngIf="!isUserHasRoles">
         <div class="info-now-allowed">
             <h1>
-                <mat-icon inline=true>error</mat-icon>
+                <mat-icon>error</mat-icon>
                 {{ 'Welcome.AccessDenied' | translate }}
             </h1>
             <p> {{ 'Welcome.NoRole' | translate }} </p>

@@ -5,14 +5,14 @@
         "CurrentAsDestination": "Current Library as Destination",
         "Destination": "Destination Library",
         "From": "From",
-        "HistoryRequestsPaging": "Showing {from} - {to} of {total} requests",
+        "HistoryRequestsPaging": "Showing {{from}} - {{to}} of {{total}} requests",
         "MarkAllAsRead": "Remove all errors",
         "NoRequests": "No requests sent to 7DM",
         "NoRequestsSearch": "No requests found for the selected filter",
         "RequestId": "Request ID",
         "Search": "Filter",
         "SelectAll": "Select all",
-        "Selected": "{selected}/{total}",
+        "Selected": "{{selected}}/{{total}}",
         "Sender": "Sender Library",
         "ShowErrors": "Show errors",
         "Status": {
@@ -52,14 +52,14 @@
             "BOX_OUTDATED": "Box is already sent.",
             "DEFAULT": "An error occurred while processing your request.",
             "DESTINATION_NON_COURIER_LIBRARY": "Destination library is not an SLSP courier valid library. Consider sending the document by post.",
-            "DESTINATION_NOT_FOUND": "Destination library not found ({destination}).",
-            "DESTINATION_NOT_FOUND_ITEM": "Destination library not found in item info ({destination}).",
+            "DESTINATION_NOT_FOUND": "Destination library not found ({{destination}}).",
+            "DESTINATION_NOT_FOUND_ITEM": "Destination library not found in item info ({{destination}}).",
             "EXTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
             "INTERNAL_ID_ALREADY_IN_DATABASE": "Request is already in your Today tab.",
             "INVALID_REQUEST_ID": "Invalid request ID.",
-            "PAEBA_ALREADY_IN_DATABASE": "7DM label barcode is already existing: {paeba}.",
+            "PAEBA_ALREADY_IN_DATABASE": "7DM label barcode is already existing: {{paeba}}.",
             "REQUEST_ID_NOT_FOUND": "Request ID not found, please check it.",
-            "SEVEN_DM_CODE_NOT_FOUND": "Library {destination} is not an SLSP courier library. Please consider to send the item post or contact SLSP if you think there is an error.",
+            "SEVEN_DM_CODE_NOT_FOUND": "Library {{destination}} is not an SLSP courier library. Please consider to send the item post or contact SLSP if you think there is an error.",
             "SENDING_DESTINATION_SAME": "Sender and destination libraries are the same.",
             "TIME_NOT_VALID": "Backend is currently disabled.",
             "UNAUTHORIZED": "Unauthorized request."
@@ -89,7 +89,7 @@
             },
             "Warning": "Warning"
         },
-        "RequestSent": "Item {barcode} transfer order sent to 7DM.",
+        "RequestSent": "Item {{barcode}} transfer order sent to 7DM.",
         "SendTo7DM": "Send to 7DM",
         "Status": {
             "Cancelling_Request": "Cancelling request...",
@@ -106,8 +106,7 @@
         "SearchPlaceholder": "barcode, box ID, request ID, destination library code",
         "Status": {
             "Searching_Requests": "Searching..."
-        },
-        "TodayRequests": "{number} {number, plural, =1 {request} other {requests}} sent to 7DM:"
+        }
     },
     "Welcome": {
         "AccessDenied": "Access denied",

@@ -30,7 +30,7 @@
 <!-- Current Time is not valid (after 7pm )-->
 <div class="request-failed" *ngIf="!isTimeValid">
     <h1>
-        <mat-icon color="warn" inline=true>timelapse</mat-icon>
+        <mat-icon color="warn">timelapse</mat-icon>
         {{ 'Requests.TimeNotValid' | translate }}
     </h1>
     <p>
@@ -43,25 +43,25 @@
     <div class="request-headers">
         <!-- Success -->
         <h1>
-            <mat-icon color="success" inline=true>check_circle</mat-icon>
+            <mat-icon color="success">check_circle</mat-icon>
             {{ 'Requests.RequestSent' | translate: { barcode: responseRequest.barcode } }}
         </h1>
         <!-- Warnings (Critical)-->
         <h1 class="request-info-info" *ngIf="responseRequest.isMultipleFulfilled">
-            <mat-icon color="warn" inline=true>warning</mat-icon>
+            <mat-icon color="warn">warning</mat-icon>
             <!-- {{ 'Requests.RequestInfo.MultipleFulfilled' | translate }} -->
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
 
         </h1>
         <h1 class="request-info-info" *ngIf="responseRequest.isRetryWithSameInternalId()">
-            <mat-icon color="warn" inline=true>warning</mat-icon>
+            <mat-icon color="warn">warning</mat-icon>
             <!-- {{ 'Requests.RequestInfo.Retried' | translate }}-->
             {{ 'Requests.RequestInfo.CheckWarning' | translate }}
         </h1>
         <!-- Warning (Info) -->
         <!-- 
         <h1 class="request-info-info" *ngIf="responseRequest.isNotRs">
-            <mat-icon inline=true>info</mat-icon>
+            <mat-icon>info</mat-icon>
             {{ 'Requests.RequestInfo.NotResourceSharing' | translate }}
         </h1>
         -->
@@ -74,7 +74,7 @@
 <div class="request-failed" *ngIf="responseErrorId">
     <div class="request-headers">
         <h1>
-            <mat-icon color="warn" inline=true>error</mat-icon>
+            <mat-icon color="warn">error</mat-icon>
             {{ responseErrorMessage }}
         </h1>
     </div>
